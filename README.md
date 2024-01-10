@@ -4,6 +4,12 @@
 
 This project contains the application's UI built with React, Vite, TypeScript, and SWC.
 
+## Repo Documentation
+- [Code of Conduct](./docs/CODE_OF_CONDUCT.md)
+- [Contributing](./docs/CONTRIBUTING.md)
+- [License](./docs/LICENSE.md)
+- [Security](./docs/SECURITY.md)
+
 ## System Requirements
 
 - [Node 19](https://nodejs.org/en/download)
