@@ -1,0 +1,115 @@
+$formation-image-path: "@department-of-veterans-affairs/formation/assets/img";
+@import "modules/m-overrides";
+
+// @import "@department-of-veterans-affairs/formation/sass/shared-variables";
+
+// @import "uswds/scss/uswds";
+// Vendor -------------- //
+// @import 'uswds/scss/lib/bourbon';
+// @import 'uswds/scss/lib/neat';
+@import 'uswds/scss/lib/normalize';
+
+// Core -------------- //
+@import 'uswds/scss/theme/uswds-theme-general';
+@import 'uswds/scss/theme/uswds-theme-typography';
+@import 'uswds/scss/theme/uswds-theme-spacing';
+@import 'uswds/scss/theme/uswds-theme-color';
+@import 'uswds/scss/theme/uswds-theme-utilities';
+@import 'uswds/scss/theme/uswds-theme-components';
+@import 'uswds/scss/theme/uswds-theme-custom-styles';
+
+@import 'uswds/scss/packages/required';
+@import 'uswds/scss/packages/uswds-utilities';
+@import 'uswds/scss/packages/uswds-fonts';
+@import 'uswds/scss/packages/uswds-components';
+
+@import 'uswds/scss/core/functions';
+@import 'uswds/scss/core/variables';
+
+// import 'uswds/scss/packages/typography.scss'
+// import 'uswds/scss/packages/global.scss'
+
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import '@fortawesome/fontawesome-free/scss/solid';
+@import '@fortawesome/fontawesome-free/scss/brands';
+@import '@fortawesome/fontawesome-free/scss/regular';
+
+// ============ SETTINGS ============//
+// Order matters here! Please don't change it.
+@import './base/b-mixins';
+@import './base/b-functions';
+@import './base/b-variables';
+@import './base/b-breakpoints';
+@import './base/b-element-overrides';
+@import './base/b-functions';
+@import './base/b-utils';
+@import './base/b-font-faces';
+@import './base/va';
+
+@import "@department-of-veterans-affairs/formation/sass/modules/m-alert";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-table";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-breadcrumbs";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-button";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-form-elements";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-megamenu";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-loading-indicator";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-print";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-dropdown";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-overlay";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-additional-info";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-hub-page-link-list";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-promo-banner";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-responsive-tables";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-action-link";
+@import "@department-of-veterans-affairs/formation/sass/mobile-typography";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-modal";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-process-list";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-nav-sidebar";
+@import "@department-of-veterans-affairs/formation/sass/modules/m-nav-linkslist";
+@import "@department-of-veterans-affairs/formation/sass/shame";
+
+@import "./modules/m-button";
+@import "./modules/m-footer";
+@import "./modules/m-crisis-line";
+@import "./modules/m-vet-nav";
+@import "./modules/m-downtime-notification";
+@import "./modules/m-layers";
+@import "./modules/m-header";
+@import "./modules/m-homepage";
+@import "./modules/m-homepage-preview";
+@import "./modules/m-veteran-banner";
+@import "./modules/m-cta-widget";
+@import "./modules/m-side-nav";
+@import "./modules/m-responsive-table";
+@import "./modules/m-campaign-landing-page";
+@import "./modules/m-form-expanding-group";
+@import "./modules/m-drupal-sidebarnav";
+@import "./modules/m-education-wizard";
+
+@import "./modules/facilities/m-facilities";
+@import "./modules/facilities/m-facility-detail";
+@import "./modules/facilities/m-facilities-general";
+@import "./modules/facilities/m-operating-status";
+@import "./modules/facilities/m-facility-events";
+
+@import "shame";
+
+// ----- VA UTILITIES (UTILITIY OOCSS) ---- //
+@import './utilities/background-color';
+@import './utilities/border';
+@import './utilities/color';
+@import './utilities/display';
+@import './utilities/flexbox';
+@import './utilities/font-family';
+@import './utilities/font-size';
+@import './utilities/font-style';
+@import './utilities/font-weight';
+@import './utilities/height-width';
+@import './utilities/line-height';
+@import './utilities/margins';
+@import './utilities/measure';
+@import './utilities/padding';
+@import './utilities/position';
+@import './utilities/text-align';
+@import './utilities/text-decoration';
+@import './utilities/visibility';
