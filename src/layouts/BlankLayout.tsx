@@ -3,6 +3,7 @@
  */
 import { styled } from '@mui/material/styles'
 import Box, { BoxProps } from '@mui/material/Box'
+import { Outlet } from 'react-router-dom'
 
 const BlankLayoutWrapper = styled(Box)<BoxProps>({
   height: '100%',
@@ -14,20 +15,17 @@ const BlankLayoutWrapper = styled(Box)<BoxProps>({
  * @param {React.ReactNode} props.children The child elements to render.
  * @returns {JSX.Element} The BlankLayout component.
  */
-const BlankLayout: React.FC<React.PropsWithChildren> = ({
-  children,
-}): JSX.Element => (
-  <BlankLayoutWrapper className="layout-wrapper">
+const BlankLayout: React.FC = (): JSX.Element => (
+  <BlankLayoutWrapper component="div" className="layout-wrapper">
     <Box
       className="app-content"
       sx={{
         minHeight: '100%',
         overflowX: 'hidden',
         position: 'relative',
-        marginRight: '10%',
       }}
     >
-      {children}
+      <Outlet />
     </Box>
   </BlankLayoutWrapper>
 )

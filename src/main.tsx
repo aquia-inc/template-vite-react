@@ -5,6 +5,7 @@
 import * as React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
+import { CssBaseline } from '@mui/material'
 import CONFIG from '@/utils/config'
 import router from '@/router/router'
 import onPerfEntry from '@/utils/onPerfEntry'
@@ -19,6 +20,7 @@ import './styles'
   // create the React root node and render the application
   ReactDOMClient.createRoot(rootElement).render(
     <React.StrictMode>
+      <CssBaseline />
       <RouterProvider router={router} />
     </React.StrictMode>
   )

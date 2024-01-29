@@ -9,12 +9,15 @@ import authLoader from '@/router/authLoader'
 import { RouteIds, Routes } from '@/router/constants'
 import configureCognito from '@/utils/configureCognito'
 import AppLayout from '@/layouts/AppLayout/AppLayout'
-import SignIn from '@/views/SignIn/SignIn'
-import SignOut from '@/views/SignOut/SignOut'
-import Dashboard from '@/views/Dashboard/Dashboard'
-import dashboardLoader from '@/views/Dashboard/Dashboard.loader'
+import Home from '@/pages/Home/Home'
+import SignIn from '@/pages/SignIn/SignIn'
+import SignOut from '@/pages/SignOut/SignOut'
+import Dashboard from '@/pages/Dashboard/Dashboard'
+import dashboardLoader from '@/pages/Dashboard/Dashboard.loader'
 import RootProvider from '@/Root'
-import NavigateToLogin from '@/components/react-router/NavigateToSignIn'
+import NavigateToHome from '@/components/react-router/NavigateToHome'
+import BlankLayout from '@/layouts/BlankLayout'
+import path from 'path'
 
 /**
  * The hash router for the application that defines routes
@@ -25,10 +28,6 @@ import NavigateToLogin from '@/components/react-router/NavigateToSignIn'
  */
 const router = createBrowserRouter([
   {
-    index: true,
-    element: <NavigateToLogin />,
-  },
-  {
     id: RouteIds.ROOT,
     path: '/',
     element: <RootProvider />,
@@ -36,21 +35,35 @@ const router = createBrowserRouter([
     loader: configureCognito,
     children: [
       {
-        id: RouteIds.AUTH,
-        path: Routes.AUTH,
+        id: RouteIds.PUBLIC,
+        element: <BlankLayout />,
         errorElement: <ErrorBoundary />,
         children: [
           {
-            id: RouteIds.LOGIN,
-            path: RouteIds.LOGIN,
-            element: <SignIn />,
+            index: true,
+            id: RouteIds.HOME,
+            path: Routes.HOME,
+            element: <Home />,
             errorElement: <ErrorBoundary />,
           },
           {
-            id: RouteIds.LOGOUT,
-            path: RouteIds.LOGOUT,
-            element: <SignOut />,
+            id: RouteIds.AUTH,
+            path: Routes.AUTH,
             errorElement: <ErrorBoundary />,
+            children: [
+              {
+                id: RouteIds.LOGIN,
+                path: RouteIds.LOGIN,
+                element: <SignIn />,
+                errorElement: <ErrorBoundary />,
+              },
+              {
+                id: RouteIds.LOGOUT,
+                path: RouteIds.LOGOUT,
+                element: <SignOut />,
+                errorElement: <ErrorBoundary />,
+              },
+            ],
           },
         ],
       },
@@ -74,7 +87,7 @@ const router = createBrowserRouter([
   },
   {
     path: '*',
-    element: <NavigateToLogin />,
+    element: <NavigateToHome />,
   },
 ])
 
