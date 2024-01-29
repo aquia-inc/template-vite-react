@@ -2,11 +2,11 @@
 
 ## Overview
 
-This project contains the application's UI built with React, Vite, TypeScript, and SWC.
+This project contains the application's UI built with React, Vite, TypeScript, and SWC. It requires Node.js v20, [nvm](https://github.com/nvm-sh/nvm) (or [n](https://github.com/tj/n)), and Yarn v4.
 
 ## System Requirements
 
-- [Node 19](https://nodejs.org/en/download)
+- [Node 20](https://nodejs.org/en/download)
 - [Yarn](https://yarnpkg.com/getting-started/install)
 - [GitLeaks](https://github.com/gitleaks/gitleaks/tree/master#installing)
 
@@ -20,7 +20,22 @@ git clone git@github.com:aquia/template-vite-react`
 cd template-vite-react
 ```
 
-2. Install dependencies:
+2. Setup Node.js and Yarn
+
+```shell
+# using nvm
+nvm install --latest-npm
+nvm use
+
+# using n
+n install auto
+n use auto
+
+# enable corepack
+corepack enable yarn
+```
+
+3. Install dependencies:
 
 ```shell
 yarn
