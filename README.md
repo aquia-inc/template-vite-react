@@ -77,7 +77,6 @@ First, run the post-install script to create the local development environment f
 sh ./scripts/post-install.sh
 ```
 
-
 To start the local development server, run the following from the root directory:
 
 ```shell
