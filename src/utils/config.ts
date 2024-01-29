@@ -1,9 +1,7 @@
 /**
- * Set global configuration for the application provided by webpack (craco) at build time.
+ * Set global configuration for the application provided by Vite environment variables
  * @module utils/config
  * @exports CONFIG
- * @exports storageTokenKeyName
- * @see {@link dashboard/craco.config.js}.
  */
 import type { AppConfig } from '@/types'
 
