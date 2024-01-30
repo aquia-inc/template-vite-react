@@ -10,6 +10,7 @@ export default defineConfig({
   define: {
     'process.env': {},
     global: {},
+    _global: {},
   },
   resolve: {
     alias: {
