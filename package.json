@@ -20,6 +20,7 @@
     "yarn": "4.0.2"
   },
   "scripts": {
+    "prepare": "husky",
     "start": "yarn run dev",
     "dev": "vite",
     "build": "tsc -p tsconfig.prod.json && vite build --mode production",
@@ -38,7 +39,6 @@
     "fix:other": "yarn run lint:other --write",
     "semantic-release": "semantic-release",
     "postinstall": "yarn run prepare",
-    "prepare": "husky install",
     "sb": "yarn run storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -122,17 +122,17 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-storybook": "^0.6.15",
-    "husky": "^8.0.3",
+    "husky": "^9.0.7",
     "jest": "^29.7.0",
     "jest-date-mock": "^1.0.8",
     "jest-environment-jsdom": "^29.7.0",
     "jest-environment-node": "^29.7.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-watch-typeahead": "^2.2.2",
-    "lint-staged": "^14.0.1",
+    "lint-staged": "^15.2.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.2.4",
-    "pretty-quick": "^3.3.1",
+    "pretty-quick": "^4.0.0",
     "prop-types": "^15.8.1",
     "react-docgen-typescript": "^2.2.2",
     "rimraf": "^5.0.5",
@@ -167,7 +167,7 @@
   "lint-staged": {
     "**/*.html": "prettier --parser html --fix",
     "**/*.{js,jsx,ts,tsx,cjs}": [
-      "yarn fix:js"
+      "yarn fix:js --cache"
     ],
     "**/*.{json,md,yaml,yml}": [
       "yarn fix:other"
