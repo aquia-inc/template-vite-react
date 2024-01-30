@@ -3,13 +3,11 @@
  * @module views/Dashboard/Dashboard.loader
  * @see {@link dashboard/Routes}
  */
-import getJWT from '@/utils/getJWT'
 import { Auth } from 'aws-amplify'
 import { defer } from 'react-router-dom'
 
 // @ts-ignore
-const dashboardLoader = async ({ request }: { request: Request }) => {
-  const jwt = await getJWT()
+const dashboardLoader = async () => {
   const userInfo = await Auth.currentUserInfo()
   return defer({
     username: userInfo.username,
