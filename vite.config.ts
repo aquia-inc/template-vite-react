@@ -3,12 +3,13 @@ import react from '@vitejs/plugin-react-swc'
 import EnvironmentPlugin from 'vite-plugin-environment'
 import { visualizer } from 'rollup-plugin-visualizer'
 import sass from 'sass'
+import fs from 'fs/promises'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   define: {
+    'process.env': {},
     /* eslint-disable prettier/prettier */
-    'process.env': ({}),
     global: ({}),
     _global: ({}),
     /* eslint-enable prettier/prettier */

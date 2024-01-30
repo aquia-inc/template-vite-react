@@ -49,7 +49,7 @@ jobs:
           restore-keys: ${{ runner.os }}-yarn-
 
       - name: INSTALL - dependencies
-        run: yarn install --immutable
+        run: yarn install
 
       - name: LINT, TEST
         run: yarn ci
