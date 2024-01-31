@@ -27,7 +27,7 @@
 
     /* Paths */
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
     },
 
     /* Plugins */
@@ -42,8 +42,8 @@
       "react",
       "uuid",
       "yup",
-      "@testing-library/jest-dom"
-    ]
+      "@testing-library/jest-dom",
+    ],
   },
   "include": ["src", "./declaration.d.ts"],
   "exclude": [
@@ -52,7 +52,7 @@
     "**/dist",
     "**/*.stories.(js|jsx|ts|tsx)",
     "**/*.mdx",
-    "**/.yarn"
+    "**/.yarn",
   ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }],
 }

@@ -9,7 +9,10 @@ import fs from 'fs/promises'
 export default defineConfig({
   define: {
     'process.env': {},
-    global: {},
+    /* eslint-disable prettier/prettier */
+    global: ({}),
+    _global: ({}),
+    /* eslint-enable prettier/prettier */
   },
   resolve: {
     alias: {

@@ -1,5 +1,5 @@
 import { JSXElementConstructor, ReactElement } from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import SignIn from '@/views/SignIn/SignIn'
 
@@ -39,22 +39,24 @@ test('submits correct form data in the SignIn page', async () => {
   // Setup to render the SignIn page
   const { user } = setup(<SignIn />)
 
-  // Type the email into the email field
-  await user.type(
-    screen.getByRole('textbox', { name: /email/i }),
-    'user@example.com'
-  )
+  await act(async () => {
+    // Type the email into the email field
+    await user.type(
+      screen.getByRole('textbox', { name: /email/i }),
+      'user@example.com'
+    )
 
-  // Type the password into the password field
-  await user.type(
-    screen.getByLabelText(/password/i, {
-      selector: 'input',
-    }),
-    'password'
-  )
+    // Type the password into the password field
+    await user.type(
+      screen.getByLabelText(/password/i, {
+        selector: 'input',
+      }),
+      'password'
+    )
 
-  // Save the form
-  await user.click(screen.getByRole('button', { name: /sign in/i }))
+    // Save the form
+    await user.click(screen.getByRole('button', { name: /sign in/i }))
+  })
 
   // Wait for form submission to complete
   waitFor(() => {
