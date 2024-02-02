@@ -9,7 +9,7 @@ import CONFIG from '@/utils/config'
 import router from '@/router/router'
 import onPerfEntry from '@/utils/onPerfEntry'
 import { SIGN_IN_GREETING } from '@/locales/en'
-import './styles'
+import '@/sass/style.scss'
 
 // IIFE that initializes the root node and renders the application.
 ;(async function () {
