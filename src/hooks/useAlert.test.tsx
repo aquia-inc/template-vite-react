@@ -39,7 +39,9 @@ describe('useAlert', () => {
     severity: 'info' as AlertColor,
   } as AlertState
 
-  const Wrapper = ({ children }: { children: JSX.Element }) => (
+  const Wrapper: React.FC<{
+    children: React.ReactNode
+  }> = ({ children }): JSX.Element => (
     <AlertProvider
       contextOverrides={{
         clearAlert: mockClearAlert,
@@ -47,7 +49,7 @@ describe('useAlert', () => {
         setData: mockSetData,
       }}
     >
-      {children}
+      <>{children}</>
     </AlertProvider>
   )
 
