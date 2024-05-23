@@ -1,3 +1,4 @@
+.yarnrc.yml
 .yarn/
 build/
 dist/
