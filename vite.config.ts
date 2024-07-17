@@ -9,8 +9,8 @@ export default defineConfig({
   define: {
     'process.env': {},
     /* eslint-disable prettier/prettier */
-    global: ({}),
-    _global: ({}),
+    global: {},
+    _global: {},
     /* eslint-enable prettier/prettier */
   },
   resolve: {
