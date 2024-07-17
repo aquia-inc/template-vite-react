@@ -8,10 +8,10 @@ import sass from 'sass'
 export default defineConfig({
   define: {
     'process.env': {},
-    /* eslint-disable prettier/prettier */
+    // prettier-ignore
     global: ({}),
+    // prettier-ignore
     _global: ({}),
-    /* eslint-enable prettier/prettier */
   },
   resolve: {
     alias: {
