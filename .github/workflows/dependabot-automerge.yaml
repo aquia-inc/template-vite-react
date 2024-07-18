@@ -5,7 +5,7 @@
 # minor upgrade, it enables auto-merge for the Dependabot PR using the GitHub CLI.
 name: Dependabot auto-merge
 
-on: pull_request
+on: pull_request_target
 
 permissions:
   contents: write
