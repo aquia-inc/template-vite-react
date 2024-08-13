@@ -7977,7 +7977,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.14.14":
+"@types/node@npm:*":
   version: 20.14.14
   resolution: "@types/node@npm:20.14.14"
   dependencies:
@@ -7992,6 +7992,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 10/95795b1aee78f2ca364caa14aeec6d793581be2d228e0293180ef1fe700fc3af12aa28afe94ee042d794c60ba51dbf7ac94fbfa074dba35512812f5f5ed506a7
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.14.15":
+  version: 20.14.15
+  resolution: "@types/node@npm:20.14.15"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 10/87a4a4313e886c1db1c8042004956095477e040f67df993fd16a2d50488c750bda81e85bf702c2e629e964605034e8dfe0cb91b65ce22b6b8eec37ece61c6b6c
   languageName: node
   linkType: hard
 
@@ -19438,7 +19447,7 @@ __metadata:
     "@types/babel__core": "npm:^7.20.5"
     "@types/jest": "npm:^29.5.12"
     "@types/lodash": "npm:^4.17.7"
-    "@types/node": "npm:^20.14.14"
+    "@types/node": "npm:^20.14.15"
     "@types/prop-types": "npm:^15.7.12"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
