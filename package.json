@@ -10,7 +10,8 @@
   },
   "author": "Aquia, Inc.",
   "contributors": [
-    "Sinan Bolel"
+    "Sinan Bolel",
+    "Alex Tran"
   ],
   "type": "module",
   "packageManager": "yarn@4.4.0",
