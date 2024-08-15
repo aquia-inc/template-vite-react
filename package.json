@@ -8,9 +8,9 @@
   "bugs": {
     "url": "https://github.com/aquia-inc/template-vite-react/issues"
   },
-  "author": "Aquia, Inc.",
+  "author": "Sinan Bolel | Aquia, Inc.",
   "contributors": [
-    "Sinan Bolel"
+    "Alex Tran"
   ],
   "type": "module",
   "packageManager": "yarn@4.4.0",
