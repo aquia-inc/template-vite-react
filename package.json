@@ -2,7 +2,7 @@
   "name": "template-vite-react",
   "private": true,
   "version": "0.0.0-semantic-release",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "description": "Boilerplate for React + Vite project",
   "homepage": "https://github.com/aquia-inc/template-vite-react#readme",
   "bugs": {
