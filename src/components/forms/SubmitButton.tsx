@@ -19,15 +19,25 @@ type SubmitButtonProps = {
  */
 const SubmitButton: React.FC<PropsWithChildren<SubmitButtonProps>> = ({
   children = 'Submit',
+  color = 'primary',
+  label = 'Submit',
+  size = 'large',
+  type = 'submit',
+  variant = 'contained',
   ...props
-}): JSX.Element => <Button {...props}>{children}</Button>
-
-SubmitButton.defaultProps = {
-  color: 'primary',
-  label: 'Submit',
-  size: 'large',
-  type: 'submit',
-  variant: 'contained',
-}
+}): JSX.Element => (
+  <Button
+    {...{
+      color,
+      label,
+      size,
+      type,
+      variant,
+      ...props,
+    }}
+  >
+    {children}
+  </Button>
+)
 
 export default SubmitButton
