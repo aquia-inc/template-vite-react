@@ -11580,12 +11580,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-refresh@npm:^0.4.9":
-  version: 0.4.9
-  resolution: "eslint-plugin-react-refresh@npm:0.4.9"
+"eslint-plugin-react-refresh@npm:^0.4.10":
+  version: 0.4.10
+  resolution: "eslint-plugin-react-refresh@npm:0.4.10"
   peerDependencies:
     eslint: ">=7"
-  checksum: 10/4a8fad22270ff2bba86bc34973228334194739b3b64dab0a13e35f1a55f8e0a66ab8861520c86f3acc3ecb3701c5bb68eca9f1f8f8a6144c17ef511ab07e02bc
+  checksum: 10/a31bbec7421b19aec948e3ebc481706ea722356442ee94bb0ff1836ca14a4db140b097c13751531dffeb7c06c45beb4afa306dc8f6fcd0a525223630e97dceb1
   languageName: node
   linkType: hard
 
@@ -19588,7 +19588,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.2.1"
     eslint-plugin-react: "npm:^7.35.0"
     eslint-plugin-react-hooks: "npm:^4.6.2"
-    eslint-plugin-react-refresh: "npm:^0.4.9"
+    eslint-plugin-react-refresh: "npm:^0.4.10"
     eslint-plugin-storybook: "npm:^0.8.0"
     husky: "npm:^8.0.3"
     jest: "npm:^29.7.0"
