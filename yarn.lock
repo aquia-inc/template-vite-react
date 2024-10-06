@@ -6275,9 +6275,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/github@npm:^10.1.6":
-  version: 10.1.6
-  resolution: "@semantic-release/github@npm:10.1.6"
+"@semantic-release/github@npm:^10.3.5":
+  version: 10.3.5
+  resolution: "@semantic-release/github@npm:10.3.5"
   dependencies:
     "@octokit/core": "npm:^6.0.0"
     "@octokit/plugin-paginate-rest": "npm:^11.0.0"
@@ -6297,7 +6297,7 @@ __metadata:
     url-join: "npm:^5.0.0"
   peerDependencies:
     semantic-release: ">=20.1.0"
-  checksum: 10/84232e11a8e305f6c1759aabb31956c5713b0328a7c0ac945e990a682268c2e4d51915d3ee68448fc92f813c6302a92214a88b435e635309927a12c07337fd15
+  checksum: 10/4573e0b494d2197967356c1e0d957644bbb55c61181549a1377adf18c9f54d6d480c0608d55d59732fdd57bfbe81710c62d8331f3df4593ad1f6b81ee326ea5a
   languageName: node
   linkType: hard
 
@@ -19581,7 +19581,7 @@ __metadata:
     "@popperjs/core": "npm:^2.11.8"
     "@semantic-release/changelog": "npm:^6.0.3"
     "@semantic-release/commit-analyzer": "npm:^13.0.0"
-    "@semantic-release/github": "npm:^10.1.6"
+    "@semantic-release/github": "npm:^10.3.5"
     "@semantic-release/npm": "npm:^12.0.1"
     "@semantic-release/release-notes-generator": "npm:^14.0.1"
     "@storybook/addon-essentials": "npm:^7.6.20"
