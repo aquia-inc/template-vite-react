@@ -65,7 +65,7 @@
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.53.0",
     "react-popper": "^2.3.0",
-    "react-router-dom": "^6.26.1",
+    "react-router-dom": "^6.26.2",
     "uswds": "^2.14.0",
     "uuid": "^9.0.1",
     "yup": "^1.4.0"
