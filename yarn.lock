@@ -8351,6 +8351,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/prop-types@npm:^15.7.13":
+  version: 15.7.13
+  resolution: "@types/prop-types@npm:15.7.13"
+  checksum: 10/8935cad87c683c665d09a055919d617fe951cb3b2d5c00544e3a913f861a2bd8d2145b51c9aa6d2457d19f3107ab40784c40205e757232f6a80cc8b1c815513c
+  languageName: node
+  linkType: hard
+
 "@types/qs@npm:*, @types/qs@npm:^6.9.5":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
@@ -19807,7 +19814,7 @@ __metadata:
     "@types/jest": "npm:^29.5.13"
     "@types/lodash": "npm:^4.17.10"
     "@types/node": "npm:^20.16.11"
-    "@types/prop-types": "npm:^15.7.12"
+    "@types/prop-types": "npm:^15.7.13"
     "@types/react": "npm:^18.3.11"
     "@types/react-dom": "npm:^18.3.0"
     "@types/react-helmet": "npm:^6.1.11"
