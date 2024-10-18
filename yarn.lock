@@ -18946,9 +18946,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.80.1":
-  version: 1.80.1
-  resolution: "sass@npm:1.80.1"
+"sass@npm:^1.80.2":
+  version: 1.80.2
+  resolution: "sass@npm:1.80.2"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^4.0.0"
@@ -18956,7 +18956,7 @@ __metadata:
     source-map-js: "npm:>=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 10/e45d392f474b50b7f20b9f7426312fb093ca42c74e058a9023ba73cc59702052ea1769836753970ed6320b473678399d50cc96da6cbf5e771b0b5a23ef685f55
+  checksum: 10/c9c379eb4eb1f6b1d031c9ecd0fcebcabc88dd7863abda50618cca3a7f4656b5e8ebc4544630cfda06fe163226d70299006aaf6d726f386bd092fd6bd599d009
   languageName: node
   linkType: hard
 
@@ -20084,7 +20084,7 @@ __metadata:
     react-router-dom: "npm:^6.27.0"
     rimraf: "npm:^6.0.1"
     rollup-plugin-visualizer: "npm:^5.12.0"
-    sass: "npm:^1.80.1"
+    sass: "npm:^1.80.2"
     semantic-release: "npm:^24.1.2"
     source-map-explorer: "npm:^2.5.3"
     storybook: "npm:^7.6.20"
