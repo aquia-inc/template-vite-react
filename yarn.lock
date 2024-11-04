@@ -18968,17 +18968,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.80.1":
-  version: 1.80.1
-  resolution: "sass@npm:1.80.1"
+"sass@npm:^1.80.6":
+  version: 1.80.6
+  resolution: "sass@npm:1.80.6"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^4.0.0"
     immutable: "npm:^4.0.0"
     source-map-js: "npm:>=0.6.2 <2.0.0"
+  dependenciesMeta:
+    "@parcel/watcher":
+      optional: true
   bin:
     sass: sass.js
-  checksum: 10/e45d392f474b50b7f20b9f7426312fb093ca42c74e058a9023ba73cc59702052ea1769836753970ed6320b473678399d50cc96da6cbf5e771b0b5a23ef685f55
+  checksum: 10/a01996fa06bb9249cdae623b9b86930cebfe98fd39bba8700bb76b022e436b83085ef84c22310d44ee6ea5992e13ea86d6422c4b687323bb17ad88597cb39e81
   languageName: node
   linkType: hard
 
@@ -20106,7 +20109,7 @@ __metadata:
     react-router-dom: "npm:^6.27.0"
     rimraf: "npm:^6.0.1"
     rollup-plugin-visualizer: "npm:^5.12.0"
-    sass: "npm:^1.80.1"
+    sass: "npm:^1.80.6"
     semantic-release: "npm:^24.1.2"
     source-map-explorer: "npm:^2.5.3"
     storybook: "npm:^7.6.20"
