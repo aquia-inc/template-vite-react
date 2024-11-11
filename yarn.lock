@@ -19083,9 +19083,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semantic-release@npm:^24.1.2":
-  version: 24.1.2
-  resolution: "semantic-release@npm:24.1.2"
+"semantic-release@npm:^24.2.0":
+  version: 24.2.0
+  resolution: "semantic-release@npm:24.2.0"
   dependencies:
     "@semantic-release/commit-analyzer": "npm:^13.0.0-beta.1"
     "@semantic-release/error": "npm:^4.0.0"
@@ -19118,7 +19118,7 @@ __metadata:
     yargs: "npm:^17.5.1"
   bin:
     semantic-release: bin/semantic-release.js
-  checksum: 10/f84964268a7b75bfec2c7915ebe3cda3ccff3fcb7f3ed15165dd05781e564517bdaba1716d176ddcb84b2a7415b2e6d6e7dd080e974fda38560b20f48adb632d
+  checksum: 10/31baade63bfc04324b50c107dbe8f59575c112176ff27226e4e1d996f4a23d0f3cfb3651a5863ae9ffc0250a2620941a752cd2474f632ace7206fbdc84f9ec30
   languageName: node
   linkType: hard
 
@@ -20183,7 +20183,7 @@ __metadata:
     rimraf: "npm:^6.0.1"
     rollup-plugin-visualizer: "npm:^5.12.0"
     sass: "npm:^1.80.6"
-    semantic-release: "npm:^24.1.2"
+    semantic-release: "npm:^24.2.0"
     source-map-explorer: "npm:^2.5.3"
     storybook: "npm:^7.6.20"
     typescript: "npm:^5.6.3"
