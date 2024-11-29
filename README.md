@@ -4,6 +4,13 @@
 
 This project contains the application's UI built with React, Vite, TypeScript, and SWC. It requires Node.js v20, [nvm](https://github.com/nvm-sh/nvm) (or [n](https://github.com/tj/n)), and Yarn v4.
 
+## Repo Documentation
+
+- [Code of Conduct](./docs/CODE_OF_CONDUCT.md)
+- [Contributing](./docs/CONTRIBUTING.md)
+- [License](./docs/LICENSE.md)
+- [Security](./docs/SECURITY.md)
+
 ## System Requirements
 
 - [Node 20](https://nodejs.org/en/download)
