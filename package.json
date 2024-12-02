@@ -107,7 +107,7 @@
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "@vitejs/plugin-react-swc": "^3.7.1",
+    "@vitejs/plugin-react-swc": "^3.7.2",
     "babel-plugin-transform-import-meta": "^2.2.1",
     "camelcase": "^6.3.0",
     "conventional-changelog-conventionalcommits": "^8.0.0",
