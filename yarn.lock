@@ -4627,10 +4627,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-free@npm:^6.6.0":
-  version: 6.6.0
-  resolution: "@fortawesome/fontawesome-free@npm:6.6.0"
-  checksum: 10/4673599d6a6e66db5542384fbe870ca8c06a450a20c629ed242e5f617a0a035f393fe8dfac9010688aa5d58a44bedc4c789cff0318956ae50c43bf98b4c7cb54
+"@fortawesome/fontawesome-free@npm:^6.7.1":
+  version: 6.7.1
+  resolution: "@fortawesome/fontawesome-free@npm:6.7.1"
+  checksum: 10/9e69ae169cdf9afa994bb9966e0e558317ffaeab4c145bef269ff7682ae758e48d6223e684cbbb19453448d2b4d85ece47978f55296a16ea865cc5aea08c22a8
   languageName: node
   linkType: hard
 
@@ -20135,7 +20135,7 @@ __metadata:
     "@commitlint/config-conventional": "npm:^19.5.0"
     "@emotion/react": "npm:^11.13.5"
     "@emotion/styled": "npm:^11.13.0"
-    "@fortawesome/fontawesome-free": "npm:^6.6.0"
+    "@fortawesome/fontawesome-free": "npm:^6.7.1"
     "@hookform/resolvers": "npm:^3.9.1"
     "@mui/icons-material": "npm:^5.16.7"
     "@mui/lab": "npm:^5.0.0-alpha.173"
