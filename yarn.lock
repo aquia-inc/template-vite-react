@@ -11444,10 +11444,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.0.0, dotenv@npm:^16.4.2, dotenv@npm:^16.4.5":
+"dotenv@npm:^16.0.0, dotenv@npm:^16.4.2":
   version: 16.4.5
   resolution: "dotenv@npm:16.4.5"
   checksum: 10/55a3134601115194ae0f924e54473459ed0d9fc340ae610b676e248cca45aa7c680d86365318ea964e6da4e2ea80c4514c1adab5adb43d6867fb57ff068f95c8
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.4.6":
+  version: 16.4.6
+  resolution: "dotenv@npm:16.4.6"
+  checksum: 10/86bf758c47ec2585cf171ded83f0ff8b7327d865116ab8a327ff9ec84e35cc8f7cd3f68cef7ce6ec2907310228a4ec4f310cf701615973aba4a9b57bdbb65c59
   languageName: node
   linkType: hard
 
@@ -20268,7 +20275,7 @@ __metadata:
     classnames: "npm:^2.5.1"
     clipboard-copy: "npm:^4.0.1"
     conventional-changelog-conventionalcommits: "npm:^8.0.0"
-    dotenv: "npm:^16.4.5"
+    dotenv: "npm:^16.4.6"
     eslint: "npm:^8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-import: "npm:^2.31.0"
