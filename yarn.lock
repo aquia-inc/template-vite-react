@@ -5092,19 +5092,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/icons-material@npm:^5.16.7":
-  version: 5.16.7
-  resolution: "@mui/icons-material@npm:5.16.7"
+"@mui/icons-material@npm:^5.16.8":
+  version: 5.16.8
+  resolution: "@mui/icons-material@npm:5.16.8"
   dependencies:
     "@babel/runtime": "npm:^7.23.9"
   peerDependencies:
     "@mui/material": ^5.0.0
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
+    "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
+    react: ^17.0.0 || ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10/39bd989f566951e8898e955309506b4f37eeed50bc3631869b5967ecb143c19372ea13e49994504f6c0e3969e8b73ad17cdc6cfc4eaff1201a852231539b83df
+  checksum: 10/1513a5c69b0adb4b70cdcf49fd01dc5d6ed058e7813e75a0524ac111cc97fb7ee2d154a433076d6526e88cd099442b6a6c336e1594c8b53d2191f3fb444a2f7e
   languageName: node
   linkType: hard
 
@@ -20223,7 +20223,7 @@ __metadata:
     "@emotion/styled": "npm:^11.13.0"
     "@fortawesome/fontawesome-free": "npm:^6.7.1"
     "@hookform/resolvers": "npm:^3.9.1"
-    "@mui/icons-material": "npm:^5.16.7"
+    "@mui/icons-material": "npm:^5.16.8"
     "@mui/lab": "npm:^5.0.0-alpha.174"
     "@mui/material": "npm:^5.16.7"
     "@mui/x-data-grid": "npm:^6.20.4"
