@@ -5085,10 +5085,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/core-downloads-tracker@npm:^5.16.7":
-  version: 5.16.7
-  resolution: "@mui/core-downloads-tracker@npm:5.16.7"
-  checksum: 10/b65c48ba2bf6bba6435ba9f2d6c33db0c8a85b3ff7599136a9682b72205bec76470ab5ed5e6e625d5bd012ed9bcbc641ed677548be80d217c9fb5d0435567062
+"@mui/core-downloads-tracker@npm:^5.16.9":
+  version: 5.16.9
+  resolution: "@mui/core-downloads-tracker@npm:5.16.9"
+  checksum: 10/25e7cf746627e12671e2bae4ea8f81967fbb7e05188c268052104d05f249eea1baa3f3d97f66d1242112afa944a7b025a331527392797d620acbcc1dde23a3df
   languageName: node
   linkType: hard
 
@@ -5137,15 +5137,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/material@npm:^5.16.7":
-  version: 5.16.7
-  resolution: "@mui/material@npm:5.16.7"
+"@mui/material@npm:^5.16.9":
+  version: 5.16.9
+  resolution: "@mui/material@npm:5.16.9"
   dependencies:
     "@babel/runtime": "npm:^7.23.9"
-    "@mui/core-downloads-tracker": "npm:^5.16.7"
-    "@mui/system": "npm:^5.16.7"
+    "@mui/core-downloads-tracker": "npm:^5.16.9"
+    "@mui/system": "npm:^5.16.8"
     "@mui/types": "npm:^7.2.15"
-    "@mui/utils": "npm:^5.16.6"
+    "@mui/utils": "npm:^5.16.8"
     "@popperjs/core": "npm:^2.11.8"
     "@types/react-transition-group": "npm:^4.4.10"
     clsx: "npm:^2.1.0"
@@ -5156,9 +5156,9 @@ __metadata:
   peerDependencies:
     "@emotion/react": ^11.5.0
     "@emotion/styled": ^11.3.0
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-    react-dom: ^17.0.0 || ^18.0.0
+    "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
+    react: ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@emotion/react":
       optional: true
@@ -5166,7 +5166,7 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: 10/67f118e5a4bc89553d87b1b5bfe8c37b979ee981415dfda39fba0b27d08636be91fa9f270ea674d19f5a23186f53be67e3eb397f03333a7342170f43db8d0058
+  checksum: 10/0bbdb2a0309e70b7e43f04c0af19dbe3d4d5180f69aecd599182d92e21869a449cba8f94dfc280c0e6aa26d3b5a0c72c424e5c445ee4a2fdd01e79e7c24639e1
   languageName: node
   linkType: hard
 
@@ -5246,7 +5246,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/system@npm:*, @mui/system@npm:^5.16.7":
+"@mui/system@npm:*":
   version: 5.16.7
   resolution: "@mui/system@npm:5.16.7"
   dependencies:
@@ -20225,7 +20225,7 @@ __metadata:
     "@hookform/resolvers": "npm:^3.9.1"
     "@mui/icons-material": "npm:^5.16.7"
     "@mui/lab": "npm:^5.0.0-alpha.174"
-    "@mui/material": "npm:^5.16.7"
+    "@mui/material": "npm:^5.16.9"
     "@mui/x-data-grid": "npm:^6.20.4"
     "@popperjs/core": "npm:^2.11.8"
     "@semantic-release/changelog": "npm:^6.0.3"
