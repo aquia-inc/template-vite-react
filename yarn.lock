@@ -193,16 +193,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-amplify/notifications@npm:1.6.15":
-  version: 1.6.15
-  resolution: "@aws-amplify/notifications@npm:1.6.15"
+"@aws-amplify/notifications@npm:1.6.16":
+  version: 1.6.16
+  resolution: "@aws-amplify/notifications@npm:1.6.16"
   dependencies:
     "@aws-amplify/cache": "npm:5.1.20"
     "@aws-amplify/core": "npm:5.8.14"
-    "@aws-amplify/rtn-push-notification": "npm:1.1.14"
+    "@aws-amplify/rtn-push-notification": "npm:1.1.15"
     lodash: "npm:^4.17.21"
     uuid: "npm:^3.2.1"
-  checksum: 10/f380de4ab8fd7bda1705ba354afde587238445714b5e6eeb775a0f1efa4e95c375dfe4672c664de9d54347afd3b5f503b1e55025f7b1933993447de3d0d75293
+  checksum: 10/da66b29b77324960653a47d89d9d021343a1eb1dc3bcf07b0f2a89d89ead257b1e42612b0493ec588a13b635e07a9515526266a320c735ba26f51e0fbfc4bf05
   languageName: node
   linkType: hard
 
@@ -243,10 +243,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-amplify/rtn-push-notification@npm:1.1.14":
-  version: 1.1.14
-  resolution: "@aws-amplify/rtn-push-notification@npm:1.1.14"
-  checksum: 10/21893436eb2b5d18822b6d64979612ab894f7bfd3bac5870d9248bfa19b34132da191857f30fa9e853e81eccac9ec8ab07be8b1addce611bde72a56b0f0cbaf3
+"@aws-amplify/rtn-push-notification@npm:1.1.15":
+  version: 1.1.15
+  resolution: "@aws-amplify/rtn-push-notification@npm:1.1.15"
+  checksum: 10/3ef80e7c94e3f915052fddabb574f431553d99a427f93163647a60425aff15782033aa4d7f32993fd61a07239b4f92ed5fd24995d6888fffe1dafaa0ad0aedcf
   languageName: node
   linkType: hard
 
@@ -9712,9 +9712,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-amplify@npm:^5.3.26":
-  version: 5.3.26
-  resolution: "aws-amplify@npm:5.3.26"
+"aws-amplify@npm:^5.3.27":
+  version: 5.3.27
+  resolution: "aws-amplify@npm:5.3.27"
   dependencies:
     "@aws-amplify/analytics": "npm:6.5.14"
     "@aws-amplify/api": "npm:5.4.16"
@@ -9724,12 +9724,12 @@ __metadata:
     "@aws-amplify/datastore": "npm:4.7.16"
     "@aws-amplify/geo": "npm:2.3.14"
     "@aws-amplify/interactions": "npm:5.2.21"
-    "@aws-amplify/notifications": "npm:1.6.15"
+    "@aws-amplify/notifications": "npm:1.6.16"
     "@aws-amplify/predictions": "npm:5.5.17"
     "@aws-amplify/pubsub": "npm:5.6.2"
     "@aws-amplify/storage": "npm:5.9.16"
     tslib: "npm:^2.0.0"
-  checksum: 10/9952ddc7dce3beb667c971ebb772c125fe9671a70ae15d6167a296c157a7a4cd03905d31d8b9507045c2b41b8d563d7ac6904c2a21f1606a3fcf47f1c853fdec
+  checksum: 10/caeda3d6272729b44934e7edb7a7f4f51f3e66c4f83dc5fcf211bacc9237ec116a22159389569b89d16d047096d9e89a540ec0aa68173d1d6e3467e0f186c458
   languageName: node
   linkType: hard
 
@@ -20298,7 +20298,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.18.0"
     "@typescript-eslint/parser": "npm:^7.18.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.2"
-    aws-amplify: "npm:^5.3.26"
+    aws-amplify: "npm:^5.3.27"
     babel-plugin-transform-import-meta: "npm:^2.2.1"
     camelcase: "npm:^6.3.0"
     classnames: "npm:^2.5.1"
