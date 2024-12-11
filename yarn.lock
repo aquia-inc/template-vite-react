@@ -5114,10 +5114,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/core-downloads-tracker@npm:^5.16.9":
-  version: 5.16.9
-  resolution: "@mui/core-downloads-tracker@npm:5.16.9"
-  checksum: 10/25e7cf746627e12671e2bae4ea8f81967fbb7e05188c268052104d05f249eea1baa3f3d97f66d1242112afa944a7b025a331527392797d620acbcc1dde23a3df
+"@mui/core-downloads-tracker@npm:^5.16.11":
+  version: 5.16.11
+  resolution: "@mui/core-downloads-tracker@npm:5.16.11"
+  checksum: 10/87243dedefde3ec4b9b9b84185d48598bc9b0966e829a1d656f47a72e739e3f07a31039d5c010894620693916f53cc146f2870c422d824eca93a8c6ac2d00498
   languageName: node
   linkType: hard
 
@@ -5166,12 +5166,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/material@npm:^5.16.9":
-  version: 5.16.9
-  resolution: "@mui/material@npm:5.16.9"
+"@mui/material@npm:^5.16.11":
+  version: 5.16.11
+  resolution: "@mui/material@npm:5.16.11"
   dependencies:
     "@babel/runtime": "npm:^7.23.9"
-    "@mui/core-downloads-tracker": "npm:^5.16.9"
+    "@mui/core-downloads-tracker": "npm:^5.16.11"
     "@mui/system": "npm:^5.16.8"
     "@mui/types": "npm:^7.2.15"
     "@mui/utils": "npm:^5.16.8"
@@ -5195,7 +5195,7 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: 10/0bbdb2a0309e70b7e43f04c0af19dbe3d4d5180f69aecd599182d92e21869a449cba8f94dfc280c0e6aa26d3b5a0c72c424e5c445ee4a2fdd01e79e7c24639e1
+  checksum: 10/cfad3b093004c2017458f5f3dc4c6d9a7b01daf797f1b702d22ec33643ba7b0ee13af1f21bfbb5db5676d10df8cfe60867771654f88722286d09a166562b6af4
   languageName: node
   linkType: hard
 
@@ -20261,7 +20261,7 @@ __metadata:
     "@hookform/resolvers": "npm:^3.9.1"
     "@mui/icons-material": "npm:^5.16.9"
     "@mui/lab": "npm:^5.0.0-alpha.174"
-    "@mui/material": "npm:^5.16.9"
+    "@mui/material": "npm:^5.16.11"
     "@mui/x-data-grid": "npm:^6.20.4"
     "@popperjs/core": "npm:^2.11.8"
     "@semantic-release/changelog": "npm:^6.0.3"
