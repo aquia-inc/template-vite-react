@@ -63,7 +63,7 @@
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.3.8",
     "react-helmet": "^6.1.0",
-    "react-hook-form": "^7.54.2",
+    "react-hook-form": "^7.56.2",
     "react-popper": "^2.3.0",
     "react-router-dom": "^6.30.0",
     "uswds": "^2.14.0",
