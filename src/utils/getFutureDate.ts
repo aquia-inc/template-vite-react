@@ -13,7 +13,8 @@ const getFutureDate = (
   daysToAdd: number,
   date: Date = new Date()
 ): TDateISO => {
-  const result = new Date(date.setDate(date.getDate() + daysToAdd))
+  const result = new Date(date)
+  result.setDate(result.getDate() + daysToAdd)
   return result.toISOString()
 }
 

@@ -41,7 +41,7 @@ corepack enable yarn
 yarn
 ```
 
-3. Install pre-commit hooks:
+4. Install pre-commit hooks:
 
 ```shell
 yarn prepare

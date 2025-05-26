@@ -7,38 +7,38 @@ describe('useFetch', () => {
     fetchMock.resetMocks()
   })
 
-  test('fetches data successfully', () => {
+  test('fetches data successfully', async () => {
     const data = { message: 'Test data' }
     fetchMock.mockResponseOnce(JSON.stringify(data))
 
     const { result, rerender } = renderHook(() => useFetch('https://test.com'))
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.loading).toBe(true)
     })
 
     rerender()
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.loading).toBe(false)
       expect(result.current.data).toEqual(data)
       expect(result.current.error).toBeNull()
     })
   })
 
-  test('handles fetch error', () => {
+  test('handles fetch error', async () => {
     const errorMessage = 'Fetch error'
     fetchMock.mockRejectOnce(new Error(errorMessage))
 
     const { result, rerender } = renderHook(() => useFetch('https://test.com'))
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.loading).toBe(true)
     })
 
     rerender()
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.loading).toBe(false)
       expect(result.current.data).toBeNull()
       expect(result.current.error).toEqual(new Error(errorMessage))

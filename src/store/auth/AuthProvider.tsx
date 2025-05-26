@@ -34,7 +34,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({
   useEffect(() => {
     /**
      * Async function to check the validity of the user session and set user state.
-     * @returns {Promise<void>} A promise that resolves when the user's sesson
+     * @returns {Promise<void>} A promise that resolves when the user's session
      *  is resolved to a valid session, or rejects if no valid session exists.
      */
     const init = async () => {
