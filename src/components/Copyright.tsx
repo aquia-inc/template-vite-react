@@ -10,19 +10,19 @@ import { COPYRIGHT_LABEL, ORG_NAME, ORG_URL } from '@/constants'
 
 type CopyrightProps = {
   sx?: SxProps
-  typograpyProps?: TypographyProps
+  typographyProps?: TypographyProps
 }
 
 const Copyright: React.FC<CopyrightProps> = ({
   sx,
-  typograpyProps,
-}): JSX.Element => (
+  typographyProps,
+}): React.JSX.Element => (
   <Container sx={{ m: 1, p: 2, ...sx }}>
     <Typography
       variant="body2"
       color="text.secondary"
       align="center"
-      {...typograpyProps}
+      {...typographyProps}
     >
       {`${COPYRIGHT_LABEL}`}{' '}
       <Link color="inherit" href={ORG_URL}>
