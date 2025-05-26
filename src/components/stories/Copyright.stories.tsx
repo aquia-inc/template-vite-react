@@ -7,7 +7,7 @@ export default {
   title: 'Components/Copyright',
   component: Copyright,
   argTypes: {
-    typograpyProps: { control: 'object' },
+    typographyProps: { control: 'object' },
     sx: { control: 'object' },
   },
 } as Meta<typeof Copyright>
@@ -15,7 +15,7 @@ export default {
 export const Default: Story = {}
 
 export const WithTypographyProps: Story = {
-  render: () => <Copyright typograpyProps={{ color: 'text.primary' }} />,
+  render: () => <Copyright typographyProps={{ color: 'text.primary' }} />,
   parameters: {
     title: 'With typography props',
   },
