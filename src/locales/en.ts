@@ -20,6 +20,8 @@ export const GENERIC_ERROR_MESSAGE = 'Something went wrong. Please try again.'
 export const SESSION_EXPIRED_MESSAGE =
   'Your session has expired. Please login again.'
 
+export const SESSION_EXPIRED_REDIRECT_NOTICE = 'Redirecting to login...'
+
 export const UNAUTHORIZED_ACCESS_MESSAGE =
   'Sorry, you do not have access to this page.'
 

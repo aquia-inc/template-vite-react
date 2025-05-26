@@ -13,17 +13,14 @@ import {
 } from 'react'
 import Dialog, { DialogProps } from '@mui/material/Dialog'
 
-type DialogState = {
+export type DialogState = {
   children: JSX.Element
   props?: DialogProps | null
 }
 
-const DialogContext = createContext([
-  (dialog: DialogState): void => {
-    // HACK: this is a hack to get around the unused variable error
-    return dialog as unknown as void
-  },
-])
+type DialogContextValue = [(dialog: DialogState) => void, () => void]
+
+const DialogContext = createContext<DialogContextValue>([() => {}, () => {}])
 
 const DialogProvider: React.FC<React.PropsWithChildren> = ({
   children,
@@ -44,7 +41,7 @@ const DialogProvider: React.FC<React.PropsWithChildren> = ({
     setOpen(false)
   }
 
-  const contextValue = useRef([openDialog, closeDialog])
+  const contextValue = useRef<DialogContextValue>([openDialog, closeDialog])
 
   return (
     <DialogContext.Provider value={contextValue.current}>

@@ -71,7 +71,9 @@ describe('loginUserFederated', () => {
 
     ;(Auth.federatedSignIn as jest.Mock).mockRejectedValue(mockError)
 
-    await loginUserFederated(mockDispatch)
+    await expect(loginUserFederated(mockDispatch)).rejects.toThrow(
+      'login failed'
+    )
 
     expect(mockDispatch).toHaveBeenCalledWith({
       type: AuthActions.LOGIN_FAILURE,
@@ -98,7 +100,9 @@ describe('loginUserFederated', () => {
       }),
     })
 
-    await loginUserFederated(mockDispatch)
+    await expect(loginUserFederated(mockDispatch)).rejects.toThrow(
+      'No JWT token found'
+    )
 
     expect(mockDispatch).toHaveBeenCalledWith({
       type: AuthActions.LOGIN_FAILURE,

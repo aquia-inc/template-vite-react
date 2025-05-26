@@ -47,5 +47,6 @@ export default async function loginUser(
     return data
   } catch (error) {
     dispatch({ type: AuthActions.LOGIN_FAILURE, error: error as Error })
+    throw error
   }
 }

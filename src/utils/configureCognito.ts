@@ -10,17 +10,25 @@
 import { Amplify } from 'aws-amplify'
 import CONFIG from '@/utils/config'
 
+const requireEnv = (value: string, name: string): string => {
+  if (!value) {
+    throw new Error(`${name} is not defined`)
+  }
+  return value
+}
+
 function configureCognito(): null {
   const options = {
-    region: CONFIG.AWS_REGION,
-    userPoolId: CONFIG.USER_POOL_ID || new Error('USER_POOL_ID is not defined'),
-    userPoolWebClientId:
-      CONFIG.USER_POOL_CLIENT_ID ||
-      new Error('USER_POOL_CLIENT_ID is not defined'),
+    region: requireEnv(CONFIG.AWS_REGION, 'AWS_REGION'),
+    userPoolId: requireEnv(CONFIG.USER_POOL_ID, 'USER_POOL_ID'),
+    userPoolWebClientId: requireEnv(
+      CONFIG.USER_POOL_CLIENT_ID,
+      'USER_POOL_CLIENT_ID'
+    ),
   }
 
   const oauth = {
-    domain: CONFIG.COGNITO_DOMAIN || new Error('COGNITO_DOMAIN is not defined'),
+    domain: requireEnv(CONFIG.COGNITO_DOMAIN, 'COGNITO_DOMAIN'),
     scope: ['openid', 'email', 'profile'],
     redirectSignIn: CONFIG.COGNITO_REDIRECT_SIGN_IN,
     redirectSignOut: CONFIG.COGNITO_REDIRECT_SIGN_OUT,

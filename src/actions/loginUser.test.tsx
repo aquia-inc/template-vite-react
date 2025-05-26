@@ -71,7 +71,9 @@ describe('loginUser action', () => {
 
   test('dispatches LOGIN_FAILURE action on failed login', async () => {
     signInFn.mockRejectedValue(new Error('Login failed'))
-    await loginUser(mockDispatch, payload)
+    await expect(loginUser(mockDispatch, payload)).rejects.toThrow(
+      'Login failed'
+    )
     expect(mockDispatch).toHaveBeenCalledWith({
       type: AuthActions.LOGIN_FAILURE,
       error: new Error('Login failed'),
@@ -82,7 +84,9 @@ describe('loginUser action', () => {
     sessionFn.mockResolvedValue({
       isValid: jest.fn().mockReturnValue(false),
     })
-    await loginUser(mockDispatch, payload)
+    await expect(loginUser(mockDispatch, payload)).rejects.toThrow(
+      'Invalid user session'
+    )
     expect(mockDispatch).toHaveBeenCalledWith({
       type: AuthActions.LOGIN_FAILURE,
       error: new Error('Invalid user session'),
@@ -96,7 +100,9 @@ describe('loginUser action', () => {
         getJwtToken: jest.fn().mockReturnValue(''),
       }),
     })
-    await loginUser(mockDispatch, payload)
+    await expect(loginUser(mockDispatch, payload)).rejects.toThrow(
+      'No JWT token'
+    )
     expect(mockDispatch).toHaveBeenCalledWith({
       type: AuthActions.LOGIN_FAILURE,
       error: new Error('No JWT token'),
@@ -107,7 +113,9 @@ describe('loginUser action', () => {
     signInFn.mockResolvedValue({
       getSignInUserSession: jest.fn().mockReturnValue(null),
     })
-    await loginUser(mockDispatch, payload)
+    await expect(loginUser(mockDispatch, payload)).rejects.toThrow(
+      'Invalid user'
+    )
     expect(mockDispatch).toHaveBeenCalledWith({
       type: AuthActions.LOGIN_FAILURE,
       error: new Error('Invalid user'),

@@ -10,6 +10,7 @@ import {
   GENERIC_ERROR_MESSAGE,
   NOT_FOUND_ERROR_MESSAGE,
   SESSION_EXPIRED_MESSAGE,
+  SESSION_EXPIRED_REDIRECT_NOTICE,
   UNAUTHORIZED_ACCESS_MESSAGE,
 } from '@/locales/en'
 import Typography from '@mui/material/Typography'
@@ -46,14 +47,13 @@ const ErrorBoundary: React.FC = (): JSX.Element => {
     setTimeout(() => navigate(Routes.AUTH_LOGOUT), 5000)
   }
 
-  console.log({ error })
-
   return (
     <Container sx={{ m: 3 }}>
       <Typography variant="h2">{title}</Typography>
       {error.data && <Typography variant="h3">{error.data}</Typography>}
       <p aria-label="error-message">
         <strong>{message}</strong>
+        {error.status === 401 && ` ${SESSION_EXPIRED_REDIRECT_NOTICE}`}
       </p>
     </Container>
   )

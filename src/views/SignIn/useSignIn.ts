@@ -84,9 +84,11 @@ const useSignIn = (): useSignInReturnType => {
       const { email, password } = data
       setLoading(true)
       try {
-        await loginUser(dispatch, { email, password })
+        const result = await loginUser(dispatch, { email, password })
         setLoading(false)
-        navigate(Routes.DASHBOARD)
+        if (result) {
+          navigate(Routes.DASHBOARD)
+        }
       } catch (error) {
         setLoading(false)
         setAlert({
