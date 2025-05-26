@@ -3,12 +3,10 @@
  * @module router/authLoader
  * @see {@link dashboard/Routes}
  */
-import { defer } from 'react-router-dom'
 import getJWT from '@/utils/getJWT'
 
-const authLoader = async (): Promise<unknown> =>
-  defer({
-    jwtToken: getJWT(),
-  })
+const authLoader = async (): Promise<unknown> => ({
+  jwtToken: getJWT(),
+})
 
 export default authLoader
