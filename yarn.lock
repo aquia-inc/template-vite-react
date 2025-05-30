@@ -8640,12 +8640,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.17.30":
-  version: 20.17.30
-  resolution: "@types/node@npm:20.17.30"
+"@types/node@npm:^20.17.55":
+  version: 20.17.55
+  resolution: "@types/node@npm:20.17.55"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10/69fd3b177417be77b459e8f1dd4e78c85c686167086920fbf35a9fda301709bbeee6a87ad2591fb1ddd96c65e725ec6bb527a06496626a1c94367d1361048f8d
+  checksum: 10/a61bb4879432cf49c61b3c330970ba5533abdded06dc2863131e9ff7ca334745e73bd2d727015bbd86a62d332b17e864ab2f5c7ff82dc0a39a1991cc362c9a5f
   languageName: node
   linkType: hard
 
@@ -20931,7 +20931,7 @@ __metadata:
     "@types/babel__core": "npm:^7.20.5"
     "@types/jest": "npm:^29.5.14"
     "@types/lodash": "npm:^4.17.16"
-    "@types/node": "npm:^20.17.30"
+    "@types/node": "npm:^20.17.55"
     "@types/prop-types": "npm:^15.7.14"
     "@types/react": "npm:^18.3.12"
     "@types/react-dom": "npm:^18.3.1"
