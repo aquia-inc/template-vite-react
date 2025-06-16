@@ -6036,6 +6036,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pkgr/core@npm:^0.2.7":
+  version: 0.2.7
+  resolution: "@pkgr/core@npm:0.2.7"
+  checksum: 10/b16959878940f3d3016b79a4b2c23fd518aaec6b47295baa3154fbcf6574fee644c51023bb69069fa3ea9cdcaca40432818f54695f11acc0ae326cf56676e4d1
+  languageName: node
+  linkType: hard
+
 "@pnpm/config.env-replace@npm:^1.1.0":
   version: 1.1.0
   resolution: "@pnpm/config.env-replace@npm:1.1.0"
@@ -14175,10 +14182,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ignore@npm:^5.1.1, ignore@npm:^5.2.0, ignore@npm:^5.2.4, ignore@npm:^5.3.0, ignore@npm:^5.3.1":
+"ignore@npm:^5.1.1, ignore@npm:^5.2.0, ignore@npm:^5.2.4, ignore@npm:^5.3.1":
   version: 5.3.1
   resolution: "ignore@npm:5.3.1"
   checksum: 10/0a884c2fbc8c316f0b9f92beaf84464253b73230a4d4d286697be45fca081199191ca33e1c2e82d9e5f851f5e9a48a78e25a35c951e7eb41e59f150db3530065
+  languageName: node
+  linkType: hard
+
+"ignore@npm:^7.0.5":
+  version: 7.0.5
+  resolution: "ignore@npm:7.0.5"
+  checksum: 10/f134b96a4de0af419196f52c529d5c6120c4456ff8a6b5a14ceaaa399f883e15d58d2ce651c9b69b9388491d4669dda47285d307e827de9304a53a1824801bc6
   languageName: node
   linkType: hard
 
@@ -18181,13 +18195,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picomatch@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "picomatch@npm:3.0.1"
-  checksum: 10/65ac837fedbd0640586f7c214f6c7481e1e12f41cdcd22a95eb6a2914d1773707ed0f0b5bd2d1e39b5ec7860b43a4c9150152332a3884cd8dd1d419b2a2fa5b5
-  languageName: node
-  linkType: hard
-
 "picomatch@npm:^4.0.2":
   version: 4.0.2
   resolution: "picomatch@npm:4.0.2"
@@ -18463,22 +18470,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pretty-quick@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "pretty-quick@npm:4.0.0"
+"pretty-quick@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "pretty-quick@npm:4.2.2"
   dependencies:
-    execa: "npm:^5.1.1"
-    find-up: "npm:^5.0.0"
-    ignore: "npm:^5.3.0"
+    "@pkgr/core": "npm:^0.2.7"
+    ignore: "npm:^7.0.5"
     mri: "npm:^1.2.0"
-    picocolors: "npm:^1.0.0"
-    picomatch: "npm:^3.0.1"
-    tslib: "npm:^2.6.2"
+    picocolors: "npm:^1.1.1"
+    picomatch: "npm:^4.0.2"
+    tinyexec: "npm:^0.3.2"
+    tslib: "npm:^2.8.1"
   peerDependencies:
     prettier: ^3.0.0
   bin:
     pretty-quick: lib/cli.mjs
-  checksum: 10/df92a7ff9a485beb1d47d59c2a2ccb73f753e0133c59e99c56f3ded473fcf75b442fd9e4d53df13fd586c45bbc3e161531bd9d790f7d50f8d0b0a28fbd95c4a3
+  checksum: 10/c41df74c35ee08c17d1681a8397f3914c78790e29b7e568a0fb6647d5583458355c022429b2a951f3aa638f51f9690f3ff7daedfb1994b16ccf211f303baa833
   languageName: node
   linkType: hard
 
@@ -21073,7 +21080,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     npm-run-all: "npm:^4.1.5"
     prettier: "npm:^3.5.3"
-    pretty-quick: "npm:^4.0.0"
+    pretty-quick: "npm:^4.2.2"
     prop-types: "npm:^15.8.1"
     react: "npm:^18.3.1"
     react-animate-height: "npm:^3.2.3"
@@ -21224,6 +21231,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tinyexec@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "tinyexec@npm:0.3.2"
+  checksum: 10/b9d5fed3166fb1acd1e7f9a89afcd97ccbe18b9c1af0278e429455f6976d69271ba2d21797e7c36d57d6b05025e525d2882d88c2ab435b60d1ddf2fea361de57
+  languageName: node
+  linkType: hard
+
 "tmpl@npm:1.0.5":
   version: 1.0.5
   resolution: "tmpl@npm:1.0.5"
@@ -21356,7 +21370,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0, tslib@npm:^2.5.0, tslib@npm:^2.6.2":
+"tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0, tslib@npm:^2.5.0":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 10/bd26c22d36736513980091a1e356378e8b662ded04204453d353a7f34a4c21ed0afc59b5f90719d4ba756e581a162ecbf93118dc9c6be5acf70aa309188166ca
