@@ -134,7 +134,7 @@
     "prettier": "^3.5.3",
     "pretty-quick": "^4.2.2",
     "prop-types": "^15.8.1",
-    "react-docgen-typescript": "^2.2.2",
+    "react-docgen-typescript": "^2.4.0",
     "rimraf": "^6.0.1",
     "rollup-plugin-visualizer": "^5.14.0",
     "sass": "^1.89.2",
