@@ -8741,10 +8741,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.17.16":
-  version: 4.17.16
-  resolution: "@types/lodash@npm:4.17.16"
-  checksum: 10/9a8bb7471a7521bd65d528e1bd14f79819a3eeb6f8a35a8a44649a7d773775c0813e93fd93bd32ccf350bb076c0bf02c6d47877c4625f526f6dd4d283c746aec
+"@types/lodash@npm:^4.17.18":
+  version: 4.17.18
+  resolution: "@types/lodash@npm:4.17.18"
+  checksum: 10/54ebb15b29925112dbe9da3abd99fb80d7202bc5ba20fc1b4fc8ea835d0012f00cbd9a3e7f367b70e7c3f2d5ee635964e3920a489625647b558f02994b3dd381
   languageName: node
   linkType: hard
 
@@ -21187,7 +21187,7 @@ __metadata:
     "@testing-library/user-event": "npm:^14.6.1"
     "@types/babel__core": "npm:^7.20.5"
     "@types/jest": "npm:^29.5.14"
-    "@types/lodash": "npm:^4.17.16"
+    "@types/lodash": "npm:^4.17.18"
     "@types/node": "npm:^20.19.1"
     "@types/prop-types": "npm:^15.7.15"
     "@types/react": "npm:^18.3.12"
