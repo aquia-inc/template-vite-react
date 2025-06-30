@@ -19077,12 +19077,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.54.2":
-  version: 7.54.2
-  resolution: "react-hook-form@npm:7.54.2"
+"react-hook-form@npm:^7.59.0":
+  version: 7.59.0
+  resolution: "react-hook-form@npm:7.59.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
-  checksum: 10/b156d15b6246c76d0275e5722d9056014693e014d0e3dec06e44bf2672ee549aaba4366de5144d18c4cab29e631f3b2b84269d4fd5727ca17aad9b970fde6960
+  checksum: 10/ff7a98e65f57b7468f4ea1b17435e69dcc68f276db6e0e10d513394c95d30dc6068333e3a453c8321627068dffcfacc49ff228c6ae7d8448c349469ab24457b2
   languageName: node
   linkType: hard
 
@@ -21234,7 +21234,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     react-dropzone: "npm:^14.3.8"
     react-helmet: "npm:^6.1.0"
-    react-hook-form: "npm:^7.54.2"
+    react-hook-form: "npm:^7.59.0"
     react-popper: "npm:^2.3.0"
     react-router-dom: "npm:^6.30.1"
     rimraf: "npm:^6.0.1"
