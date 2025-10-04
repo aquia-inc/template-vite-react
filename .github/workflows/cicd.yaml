@@ -21,10 +21,10 @@ jobs:
       CI: true
     steps:
       - name: CHECKOUT
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: INSTALL - node.js, yarn
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -42,7 +42,7 @@ jobs:
 
       - name: CACHE - yarn dependencies
         id: yarn-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.yarn-cache-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}

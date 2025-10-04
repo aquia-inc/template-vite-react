@@ -5,11 +5,12 @@ import theme from '../src/theme/theme'
 
 export const decorators = [
   withThemeFromJSXProvider({
-  themes: {
-    light: theme,
-    dark: theme,
-  },
-  defaultTheme: 'light',
-  Provider: ThemeProvider,
-  GlobalStyles: CssBaseline,
-})];
+    themes: {
+      light: theme,
+      dark: theme,
+    },
+    defaultTheme: 'light',
+    Provider: ThemeProvider,
+    GlobalStyles: CssBaseline,
+  }),
+]
