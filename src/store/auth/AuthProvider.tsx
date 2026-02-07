@@ -72,7 +72,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({
         // if the unauthenticated user is trying to navigate to a
         // protected app route, redirect them to the login page.
         if (!matchProtectedRoute && location.pathname !== Routes.AUTH_LOGOUT) {
-          // navigate(Routes.DASHBOARD)
+          navigate(Routes.DASHBOARD)
         }
       } catch (error) {
         dispatch({
@@ -82,7 +82,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({
         // if the unauthenticated user is trying to navigate to a
         // protected app route, redirect them to the login page.
         if (matchProtectedRoute) {
-          // navigate(Routes.AUTH_LOGIN)
+          navigate(Routes.AUTH_LOGIN)
         }
       }
     }
