@@ -112,7 +112,7 @@
     "camelcase": "^6.3.0",
     "conventional-changelog-conventionalcommits": "^8.0.0",
     "dotenv": "^16.5.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.26.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jest": "^27.9.0",
