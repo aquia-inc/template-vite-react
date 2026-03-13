@@ -3,7 +3,7 @@
  * @module components/ErrorBoundary
  */
 import { useNavigate, useRouteError } from 'react-router-dom'
-import { ErrorResponse } from '@remix-run/router'
+import { isRouteErrorResponse } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import { Routes } from '@/router/constants'
 import {
@@ -21,15 +21,22 @@ const ErrorMessageMap = new Map<number, string>([
   [404, NOT_FOUND_ERROR_MESSAGE],
 ])
 
-const useErrorMessage = (error: ErrorResponse): string =>
-  ErrorMessageMap.get((error.status || 400) ?? 0) ?? GENERIC_ERROR_MESSAGE
+const useErrorMessage = (error: unknown): string => {
+  if (isRouteErrorResponse(error)) {
+    return (
+      ErrorMessageMap.get((error.status || 400) ?? 0) ?? GENERIC_ERROR_MESSAGE
+    )
+  }
 
-const useErrorTitle = (error: ErrorResponse): string => {
-  if (error.status && error.statusText) {
+  return GENERIC_ERROR_MESSAGE
+}
+
+const useErrorTitle = (error: unknown): string => {
+  if (isRouteErrorResponse(error) && error.status && error.statusText) {
     return `${error.status} ${error.statusText}`
   }
 
-  return `Uknown Error`
+  return `Unknown Error`
 }
 
 /**
@@ -38,20 +45,23 @@ const useErrorTitle = (error: ErrorResponse): string => {
  */
 const ErrorBoundary: React.FC = (): JSX.Element => {
   const navigate = useNavigate()
-  const error = useRouteError() as ErrorResponse
+  const error = useRouteError()
   const title = useErrorTitle(error)
   const message = useErrorMessage(error)
+  const details = isRouteErrorResponse(error)
+    ? error.data
+    : error instanceof Error
+      ? error.message
+      : null
 
-  if (error.status === 401) {
+  if (isRouteErrorResponse(error) && error.status === 401) {
     setTimeout(() => navigate(Routes.AUTH_LOGOUT), 5000)
   }
-
-  console.log({ error })
 
   return (
     <Container sx={{ m: 3 }}>
       <Typography variant="h2">{title}</Typography>
-      {error.data && <Typography variant="h3">{error.data}</Typography>}
+      {details && <Typography variant="h3">{details}</Typography>}
       <p aria-label="error-message">
         <strong>{message}</strong>
       </p>

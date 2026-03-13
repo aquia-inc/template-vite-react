@@ -3,7 +3,7 @@
  * @module layouts/AppLayout/AppLayout
  */
 import { useCallback, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLoaderData } from 'react-router-dom'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -27,6 +27,7 @@ import { DASHBOARD_TITLE } from '@/locales/en'
  * @returns {JSX.Element} The main application layout component.
  */
 const AppLayout: React.FC = (): JSX.Element => {
+  const { jwtToken } = useLoaderData() as { jwtToken: string }
   const [drawerOpen, setDrawerOpen] = useState(true)
 
   const toggleDrawer = useCallback(() => {
@@ -116,7 +117,7 @@ const AppLayout: React.FC = (): JSX.Element => {
             pt: (theme) => theme.spacing(4),
           }}
         >
-          <Outlet />
+          {jwtToken && <Outlet />}
         </Container>
       </Box>
     </>
