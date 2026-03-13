@@ -23,8 +23,7 @@ import '@/sass/style.scss'
     </React.StrictMode>
   )
 
-  // if NODE_ENV is production, return early. otherwise, run dev tools.
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     console.debug(SIGN_IN_GREETING, CONFIG)
 
     // enable React performance measurement tools.
