@@ -29,7 +29,7 @@ test('handles form submission', async () => {
   await act(async () => {
     result.current.handleSubmit()
   })
-  waitFor(() => {
+  await waitFor(() => {
     expect(result.current.loading).toBe(false)
     expect(loginUser).toHaveBeenCalledWith(expect.any(Function), {
       email: 'test@test.com',
@@ -44,7 +44,7 @@ test('handles federated sign in', async () => {
   await act(async () => {
     await result.current.handleFederatedSignIn()
   })
-  waitFor(() => {
+  await waitFor(() => {
     expect(Auth.federatedSignIn).toHaveBeenCalledWith({ provider: 'COGNITO' })
   })
 })
@@ -54,7 +54,7 @@ test('toggles password visibility', async () => {
   await act(() => {
     result.current.setShowPassword(true)
   })
-  waitFor(() => {
+  await waitFor(() => {
     expect(result.current.showPassword).toBe(true)
   })
 })
@@ -67,7 +67,7 @@ test('handles form submission error', async () => {
   await act(async () => {
     result.current.handleSubmit()
   })
-  waitFor(() => {
+  await waitFor(() => {
     expect(result.current.loading).toBe(false)
     expect(setAlertMock).toHaveBeenCalledWith({
       message: 'There was an error logging in. Please try again.',
@@ -84,7 +84,7 @@ test('handles federated sign in error', async () => {
   await act(async () => {
     await result.current.handleFederatedSignIn()
   })
-  waitFor(() => {
+  await waitFor(() => {
     expect(setAlertMock).toHaveBeenCalledWith({
       message: 'There was an error with the identity provider.',
       severity: 'error',
