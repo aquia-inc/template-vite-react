@@ -22,7 +22,7 @@ const Avatar = forwardRef(
 
     const getAvatarStyles = (
       skin: ThemeSkin | undefined,
-      skinColor: ThemeColor
+      skinColor: ThemeColor,
     ) => {
       if (skin === 'light') {
         return { ...bgColors[`${skinColor}Light`] }
@@ -53,7 +53,7 @@ const Avatar = forwardRef(
         sx={!src && skin && color ? Object.assign(colors[color], sx) : sx}
       />
     )
-  }
+  },
 )
 
 Avatar.defaultProps = {

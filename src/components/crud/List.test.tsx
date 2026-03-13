@@ -20,7 +20,7 @@ beforeEach(() => {
 
 test('renders all items', () => {
   const { getByText, getAllByRole, getByRole } = render(
-    <List items={items} schema={schema} deleteItem={deleteItemMock} />
+    <List items={items} schema={schema} deleteItem={deleteItemMock} />,
   )
   const grid = getByRole('grid')
   const rows = getAllByRole('row')
@@ -49,7 +49,7 @@ test('renders a column title from either the field label or name in title-case',
         },
       ]}
       deleteItem={deleteItemMock}
-    />
+    />,
   )
 
   const rows = getAllByRole('row')[0]
@@ -60,7 +60,7 @@ test('renders a column title from either the field label or name in title-case',
 
 test('deletes an item when delete button is clicked', async () => {
   const { getAllByLabelText } = render(
-    <List items={items} schema={schema} deleteItem={deleteItemMock} />
+    <List items={items} schema={schema} deleteItem={deleteItemMock} />,
   )
 
   const deleteButtons = getAllByLabelText('delete')

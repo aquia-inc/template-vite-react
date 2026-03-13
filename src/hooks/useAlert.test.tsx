@@ -87,7 +87,7 @@ describe('useAlert', () => {
       () => {
         expect(result.current.state).toEqual(initialState)
       },
-      { timeout: TIMEOUT + 10 }
+      { timeout: TIMEOUT + 10 },
     )
   })
 

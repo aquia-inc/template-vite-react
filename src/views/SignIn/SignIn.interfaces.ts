@@ -25,7 +25,7 @@ export type useSignInReturnType = {
   }>
   handleFederatedSignIn: () => Promise<void>
   handleSubmit: (
-    e?: BaseSyntheticEvent<unknown, unknown, unknown> | undefined
+    e?: BaseSyntheticEvent<unknown, unknown, unknown> | undefined,
   ) => Promise<void>
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>

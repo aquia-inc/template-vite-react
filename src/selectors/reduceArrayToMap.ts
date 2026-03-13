@@ -7,14 +7,14 @@
  */
 const reduceArrayToMap = <T extends { id: string }>(
   array: T[],
-  map: Record<string, T> = {}
+  map: Record<string, T> = {},
 ): Record<string, T> =>
   array.reduce(
     (acc, item) => ({
       ...acc,
       [item.id]: item,
     }),
-    map
+    map,
   )
 
 export default reduceArrayToMap

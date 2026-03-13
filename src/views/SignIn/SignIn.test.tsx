@@ -7,7 +7,7 @@ function setup(
   jsx: ReactElement<
     typeof SignIn,
     string | JSXElementConstructor<typeof SignIn>
-  >
+  >,
 ) {
   return {
     user: userEvent.setup(),
@@ -43,7 +43,7 @@ test('submits correct form data in the SignIn page', async () => {
     // Type the email into the email field
     await user.type(
       screen.getByRole('textbox', { name: /email/i }),
-      'user@example.com'
+      'user@example.com',
     )
 
     // Type the password into the password field
@@ -51,7 +51,7 @@ test('submits correct form data in the SignIn page', async () => {
       screen.getByLabelText(/password/i, {
         selector: 'input',
       }),
-      'password'
+      'password',
     )
 
     // Save the form

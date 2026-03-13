@@ -46,6 +46,6 @@ test('throws an error for unhandled action type', () => {
   const action = { type: 'UNHANDLED_ACTION' }
   // @ts-expect-error
   expect(() => AuthReducer(INITIAL_STATE, action)).toThrow(
-    'Unhandled action type: UNHANDLED_ACTION'
+    'Unhandled action type: UNHANDLED_ACTION',
   )
 })

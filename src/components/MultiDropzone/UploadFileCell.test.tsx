@@ -18,7 +18,7 @@ test('renders correctly when uploading', () => {
       uploading={true}
       uploadStatus={UploadStatus.UPLOADING}
       onRemoveFile={handleRemove}
-    />
+    />,
   )
 
   expect(screen.getByText(/Uploading.../i)).toBeInTheDocument()
@@ -32,7 +32,7 @@ test('renders correctly when upload is complete', () => {
       uploading={false}
       uploadStatus={UploadStatus.COMPLETE}
       onRemoveFile={handleRemove}
-    />
+    />,
   )
 
   expect(screen.getByTestId('CheckIcon')).toBeInTheDocument()
@@ -46,7 +46,7 @@ test('renders correctly when there is an error after uploading is done', () => {
       uploading={false}
       uploadStatus={UploadStatus.ERROR}
       onRemoveFile={handleRemove}
-    />
+    />,
   )
 
   expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument()
@@ -63,7 +63,7 @@ test('renders correctly when there is an error', () => {
       uploading={false}
       uploadStatus={UploadStatus.ERROR}
       onRemoveFile={handleRemove}
-    />
+    />,
   )
 
   expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument()
@@ -80,12 +80,12 @@ test('renders correctly when there is an error while uploading is active', () =>
       uploading={true}
       uploadStatus={UploadStatus.ERROR}
       onRemoveFile={handleRemove}
-    />
+    />,
   )
 
   expect(screen.getByText(/testFile.json/)).toBeInTheDocument()
   expect(
-    screen.getByText(/Something went wrong. Try again./i)
+    screen.getByText(/Something went wrong. Try again./i),
   ).toBeInTheDocument()
 })
 
@@ -96,7 +96,7 @@ test('calls onRemoveFile when delete button is clicked', () => {
       uploading={false}
       uploadStatus={UploadStatus.UPLOADING}
       onRemoveFile={handleRemove}
-    />
+    />,
   )
 
   fireEvent.click(screen.getByRole('button'))
@@ -113,16 +113,16 @@ test('renders progress bar when showProgressBar and does not render CircularProg
       uploading={true}
       uploadStatus={UploadStatus.UPLOADING}
       onRemoveFile={handleRemove}
-    />
+    />,
   )
 
   const progressBars = screen.getAllByRole('progressbar')
 
   expect(
-    progressBars.find((e) => e.classList.contains('MuiCircularProgress-root'))
+    progressBars.find((e) => e.classList.contains('MuiCircularProgress-root')),
   ).not.toBeDefined()
   expect(
-    progressBars.find((e) => e.classList.contains('MuiLinearProgress-root'))
+    progressBars.find((e) => e.classList.contains('MuiLinearProgress-root')),
   ).toBeInTheDocument()
 })
 
@@ -135,13 +135,13 @@ test('renders CircularProgress when showLoadingSpinner is true', () => {
       uploading={true}
       uploadStatus={UploadStatus.UPLOADING}
       onRemoveFile={handleRemove}
-    />
+    />,
   )
 
   expect(
     screen
       .getAllByRole('progressbar')
-      .find((e) => e.classList.contains('MuiCircularProgress-root'))
+      .find((e) => e.classList.contains('MuiCircularProgress-root')),
   ).toBeInTheDocument()
 })
 
@@ -152,7 +152,7 @@ test('renders DeleteIcon when upload is not complete and not uploading', () => {
       uploading={false}
       uploadStatus={UploadStatus.UPLOADING}
       onRemoveFile={handleRemove}
-    />
+    />,
   )
 
   expect(screen.getByTestId('DeleteIcon')).toBeInTheDocument()
@@ -165,7 +165,7 @@ test('renders ErrorIcon when hasError is true', () => {
       uploading={false}
       uploadStatus={UploadStatus.ERROR}
       onRemoveFile={handleRemove}
-    />
+    />,
   )
 
   expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument()

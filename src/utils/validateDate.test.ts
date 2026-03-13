@@ -6,7 +6,7 @@ test('returns undefined if dateString is undefined', () => {
 
 test('throws error if dateString cannot be converted into a valid date', () => {
   expect(() => validateDate('2023-02-32T00:00:00.000Z')).toThrow(
-    'Invalid date object'
+    'Invalid date object',
   )
 })
 

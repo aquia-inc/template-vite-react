@@ -17,7 +17,7 @@ const AuthReducer = (
     type: AuthActions
     payload?: AuthState
     error?: Error | null
-  }
+  },
 ) => {
   switch (type) {
     case AuthActions.LOGIN_REQUEST:

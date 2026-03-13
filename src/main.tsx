@@ -20,7 +20,7 @@ import '@/sass/style.scss'
   ReactDOMClient.createRoot(rootElement).render(
     <React.StrictMode>
       <RouterProvider router={router} />
-    </React.StrictMode>
+    </React.StrictMode>,
   )
 
   // if NODE_ENV is production, return early. otherwise, run dev tools.
@@ -29,9 +29,8 @@ import '@/sass/style.scss'
 
     // enable React performance measurement tools.
     // see https://create-react-app.dev/docs/measuring-performance/
-    const { onCLS, onFID, onFCP, onINP, onLCP, onTTFB } = await import(
-      'web-vitals'
-    )
+    const { onCLS, onFID, onFCP, onINP, onLCP, onTTFB } =
+      await import('web-vitals')
 
     onCLS(onPerfEntry)
     onFID(onPerfEntry)

@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
  * @returns {object} - An object containing the data, error, and loading state
  */
 const useFetch = (
-  url: string
+  url: string,
 ): {
   loading: boolean
   error: Error | null
