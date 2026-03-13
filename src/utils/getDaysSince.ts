@@ -11,15 +11,11 @@ const getDaysSince = (date: Date): number => {
   }
   const now = new Date()
   const lastUploadDate = new Date(date)
-  const nowUtc = Date.UTC(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate()
-  )
+  const nowUtc = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
   const lastUploadUtc = Date.UTC(
     lastUploadDate.getFullYear(),
     lastUploadDate.getMonth(),
-    lastUploadDate.getDate()
+    lastUploadDate.getDate(),
   )
 
   return Math.floor((nowUtc - lastUploadUtc) / (1000 * 3600 * 24))
