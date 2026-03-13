@@ -8,6 +8,7 @@ import { RouterProvider } from 'react-router-dom'
 import CONFIG from '@/utils/config'
 import router from '@/router/router'
 import onPerfEntry from '@/utils/onPerfEntry'
+import { getRuntimeEnv } from '@/utils/runtime'
 import { SIGN_IN_GREETING } from '@/locales/en'
 import '@/sass/style.scss'
 
@@ -23,7 +24,7 @@ import '@/sass/style.scss'
     </React.StrictMode>
   )
 
-  if (import.meta.env.DEV) {
+  if (getRuntimeEnv().DEV) {
     console.debug(SIGN_IN_GREETING, CONFIG)
 
     // enable React performance measurement tools.

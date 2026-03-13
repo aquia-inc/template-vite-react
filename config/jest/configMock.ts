@@ -1,17 +1,5 @@
-import type { AppConfig } from '@/types'
+import { createAppConfig } from '@/utils/appConfig'
 
-const readBooleanEnv = (value: string | undefined) => value === 'true'
-
-const CONFIG = {
-  AWS_REGION: process.env.VITE_AWS_REGION ?? '',
-  CF_DOMAIN: process.env.VITE_CF_DOMAIN ?? '',
-  API_URL: `${process.env.VITE_CF_DOMAIN ?? ''}/api`,
-  COGNITO_DOMAIN: process.env.VITE_COGNITO_DOMAIN ?? '',
-  COGNITO_REDIRECT_SIGN_IN: process.env.VITE_COGNITO_REDIRECT_SIGN_IN ?? '',
-  COGNITO_REDIRECT_SIGN_OUT: process.env.VITE_COGNITO_REDIRECT_SIGN_OUT ?? '',
-  USER_POOL_CLIENT_ID: process.env.VITE_USER_POOL_CLIENT_ID ?? '',
-  USER_POOL_ID: process.env.VITE_USER_POOL_ID ?? '',
-  IDP_ENABLED: readBooleanEnv(process.env.VITE_IDP_ENABLED),
-} satisfies AppConfig
+const CONFIG = createAppConfig(process.env)
 
 export default CONFIG

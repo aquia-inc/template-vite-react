@@ -8,6 +8,7 @@ module.exports = {
     '!src/main.tsx',
     '!src/mocks/**',
     '!src/utils/config.ts',
+    '!src/utils/runtime.ts',
   ],
   coveragePathIgnorePatterns: [],
   setupFilesAfterEnv: ['./config/jest/setupTests.ts'],
