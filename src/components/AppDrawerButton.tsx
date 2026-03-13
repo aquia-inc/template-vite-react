@@ -2,11 +2,11 @@
  * @module components/AppDrawerButton
  */
 import { Link as RouterLink } from 'react-router-dom'
+import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import { GridSeparatorIcon } from '@mui/x-data-grid'
 
 type AppDrawerButtonProps = {
   icon?: React.ReactNode
@@ -30,7 +30,7 @@ const AppDrawerButton: React.FC<AppDrawerButtonProps> = ({
   <Link to={to} component={RouterLink}>
     <ListItemButton sx={{ margin: 'auto', border: '0' }}>
       {icon && <ListItemIcon>{icon}</ListItemIcon>}
-      <GridSeparatorIcon sx={{ visibility: 'hidden' }} />
+      <Box component="span" sx={{ display: 'inline-block', width: 12 }} />
       <ListItemText primary={label} />
     </ListItemButton>
   </Link>

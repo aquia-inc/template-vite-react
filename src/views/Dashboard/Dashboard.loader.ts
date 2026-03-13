@@ -4,14 +4,13 @@
  * @see {@link dashboard/Routes}
  */
 import { Auth } from 'aws-amplify'
-import { defer } from 'react-router-dom'
 
 // @ts-ignore
-const dashboardLoader = async () => {
+const dashboardLoader = async (): Promise<{ username: string }> => {
   const userInfo = await Auth.currentUserInfo()
-  return defer({
+  return {
     username: userInfo.username,
-  })
+  }
 }
 
 export default dashboardLoader
