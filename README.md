@@ -57,10 +57,28 @@ yarn build
 
 ## Testing
 
-To run all tests, run the following from the root directory:
+To run unit tests, run the following from the root directory:
 
 ```shell
 yarn test
+```
+
+To install Playwright browser dependencies, run:
+
+```shell
+yarn test:e2e:install
+```
+
+To run Playwright E2E smoke tests, run:
+
+```shell
+yarn test:e2e
+```
+
+For headed browser debugging:
+
+```shell
+yarn test:e2e:headed
 ```
 
 To lint all files, run the following from the root directory:
@@ -68,6 +86,8 @@ To lint all files, run the following from the root directory:
 ```shell
 yarn lint
 ```
+
+CI runs both `yarn ci` (lint + Jest) and `yarn test:e2e` on pull requests.
 
 ## Developing
 

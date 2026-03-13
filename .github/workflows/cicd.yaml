@@ -51,8 +51,14 @@ jobs:
       - name: INSTALL - dependencies
         run: yarn install
 
-      - name: LINT, TEST
+      - name: INSTALL - Playwright browser
+        run: yarn test:e2e:install
+
+      - name: LINT, UNIT TEST
         run: yarn ci
+
+      - name: E2E TEST
+        run: yarn test:e2e
 
       - name: BUILD
         run: yarn build

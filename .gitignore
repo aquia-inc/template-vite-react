@@ -45,6 +45,10 @@ coverage/
 .eslintcache
 stats.*
 
+# playwright
+playwright-report/
+test-results/
+
 # yarn
 .yarn/*
 !.yarn/patches

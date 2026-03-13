@@ -2,6 +2,7 @@
  * @module components/PasswordVisibilityToggle.tsx
  */
 import { useCallback } from 'react'
+import type { ElementType } from 'react'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import VisibilityOutline from '@mui/icons-material/Visibility'
@@ -11,6 +12,17 @@ type PasswordVisibilityToggleProps = {
   showPassword: boolean
   setShowPassword: (value: boolean) => void
 }
+
+const resolveIconComponent = (iconModule: unknown): ElementType => {
+  if (iconModule && typeof iconModule === 'object' && 'default' in iconModule) {
+    return (iconModule as { default: ElementType }).default
+  }
+
+  return iconModule as ElementType
+}
+
+const VisibilityIconComponent = resolveIconComponent(VisibilityOutline)
+const VisibilityOffIconComponent = resolveIconComponent(VisibilityOffIcon)
 
 const PasswordVisibilityToggle: React.FC<PasswordVisibilityToggleProps> = ({
   showPassword,
@@ -29,7 +41,11 @@ const PasswordVisibilityToggle: React.FC<PasswordVisibilityToggleProps> = ({
         onClick={handleClick}
         aria-label={showPassword ? 'Hide password' : 'Show password'}
       >
-        {showPassword ? <VisibilityOutline /> : <VisibilityOffIcon />}
+        {showPassword ? (
+          <VisibilityIconComponent />
+        ) : (
+          <VisibilityOffIconComponent />
+        )}
       </IconButton>
     </InputAdornment>
   )
