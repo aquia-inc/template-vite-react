@@ -13,7 +13,7 @@ test('removes the id property from each item in an array', () => {
 
   // check that the object keys does not contain id
   expect(
-    Object.keys(result).reduce((acc, item) => acc && item !== 'id', true)
+    Object.keys(result).reduce((acc, item) => acc && item !== 'id', true),
   ).toBe(true)
 
   // check that the input array is not mutated

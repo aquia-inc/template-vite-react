@@ -72,7 +72,7 @@ const CreateForm: React.FC<CreateFormProps> = ({
       if (disabled) return
       onSubmitProp(data)
     },
-    [onSubmitProp, disabled]
+    [onSubmitProp, disabled],
   )
 
   const onClose = useCallback(() => {

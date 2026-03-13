@@ -24,7 +24,7 @@ beforeEach(() => {
       }}
     >
       <AlertMessage />
-    </AlertContext.Provider>
+    </AlertContext.Provider>,
   )
 })
 

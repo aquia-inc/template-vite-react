@@ -11,7 +11,7 @@ export default async function loginUserFederated(
     type: AuthActions
     payload?: unknown
     error?: Error
-  }>
+  }>,
 ) {
   try {
     dispatch({ type: AuthActions.LOGIN_REQUEST })

@@ -3,7 +3,7 @@ import CenteredCardContent from '@/components/mui/CardContent'
 
 test('renders without crashing', () => {
   const { getByTestId } = render(
-    <CenteredCardContent data-testid="card-content" />
+    <CenteredCardContent data-testid="card-content" />,
   )
   expect(getByTestId('card-content')).toBeInTheDocument()
 })
@@ -12,7 +12,7 @@ test('renders its children', () => {
   const { getByText } = render(
     <CenteredCardContent>
       <div>Test Child</div>
-    </CenteredCardContent>
+    </CenteredCardContent>,
   )
   expect(getByText('Test Child')).toBeTruthy()
 })
@@ -21,7 +21,7 @@ test('applies the correct styles', () => {
   const { getByText } = render(
     <CenteredCardContent>
       <div>Test Child</div>
-    </CenteredCardContent>
+    </CenteredCardContent>,
   )
   const child = getByText('Test Child')
   const styles = window.getComputedStyle(child.parentNode as Element)

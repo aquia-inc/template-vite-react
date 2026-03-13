@@ -181,13 +181,13 @@ const MultiDropZone: React.FC<MultiDropzoneProps> = ({
         message: getErrorMessage(
           errors[0],
           { fileList, maxSize },
-          textOverrides
+          textOverrides,
         ),
       }))
       // add new errors to the list of errors
       setErrors(() => [...currentErrors])
     },
-    [fileList, maxSize, onFileSelect, textOverrides]
+    [fileList, maxSize, onFileSelect, textOverrides],
   )
 
   /**
@@ -200,7 +200,7 @@ const MultiDropZone: React.FC<MultiDropzoneProps> = ({
       onRemoveFile(id)
       setErrors(errors.filter(({ id: errorId }) => id !== errorId))
     },
-    [errors, onRemoveFile]
+    [errors, onRemoveFile],
   )
 
   // set the dropzone props

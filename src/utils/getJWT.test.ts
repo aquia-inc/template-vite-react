@@ -31,6 +31,6 @@ test('returns a 401 Response when the session is invalid', async () => {
   await expect(promise).rejects.toBeInstanceOf(Response)
   await expect(promise).rejects.toHaveProperty(
     'status',
-    AuthErrorStatus.UNAUTHORIZED
+    AuthErrorStatus.UNAUTHORIZED,
   )
 })

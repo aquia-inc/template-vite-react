@@ -8,7 +8,7 @@ test('throws an error when used outside AuthProvider', () => {
   waitFor(() => {
     expect(result.current).toBeDefined()
     expect(result.current).toEqual(
-      new Error('useAuthDispatch must be used within an AuthProvider')
+      new Error('useAuthDispatch must be used within an AuthProvider'),
     )
   })
 })

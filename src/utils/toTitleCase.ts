@@ -7,7 +7,7 @@
 const toTitleCase = (input: string): string =>
   input.replace(
     /\w\S*/g,
-    (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
+    (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase(),
   )
 
 export default toTitleCase

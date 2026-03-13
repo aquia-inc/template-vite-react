@@ -29,7 +29,7 @@ export const Auth = {
         }
 
         return resolve(currentUser)
-      })
+      }),
   ),
   currentSession: jest.fn().mockImplementation(() => {
     const session = {
@@ -76,7 +76,7 @@ export const Auth = {
           name: 'UserNotFoundException',
           message: 'User does not exist.',
         })
-      })
+      }),
   ),
   signUp: jest.fn().mockImplementation(
     ({ username, _pass, attributes }) =>
@@ -90,7 +90,7 @@ export const Auth = {
           },
         }
         return resolve(newUser)
-      })
+      }),
   ),
   confirmSignUp: jest.fn().mockImplementation(
     (email, code) =>
@@ -110,7 +110,7 @@ export const Auth = {
           name: 'CodeMismatchException',
           message: 'Invalid verification code provided, please try again.',
         })
-      })
+      }),
   ),
   updateUserAttributes: jest.fn(),
 }

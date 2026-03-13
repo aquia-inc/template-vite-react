@@ -20,7 +20,7 @@ test('applies passed props correctly', () => {
   render(
     <SubmitButton color="secondary" variant="outlined">
       Save
-    </SubmitButton>
+    </SubmitButton>,
   )
   const buttonElement = screen.getByRole('button')
   expect(buttonElement).toHaveClass('MuiButton-outlined')

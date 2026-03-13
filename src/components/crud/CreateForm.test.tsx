@@ -50,7 +50,7 @@ test('renders the form when open is true', async () => {
       onClose={onCloseMock}
       onSubmit={onSubmitMock}
       schema={schema}
-    />
+    />,
   )
   const nameField = getByLabelText(/Name/)
   const addressField = getByLabelText(/Address/)
@@ -66,7 +66,7 @@ test('calls onSubmit with form data when form is submitted', async () => {
       onSubmit={onSubmitMock}
       schema={schema}
       submitLabel="Submit"
-    />
+    />,
   )
 
   const nameField = getByLabelText(/Name/)
@@ -91,7 +91,7 @@ test('calls onClose when Cancel button is clicked', async () => {
       onClose={onCloseMock}
       onSubmit={onSubmitMock}
       schema={schema}
-    />
+    />,
   )
 
   act(() => {
@@ -122,7 +122,7 @@ test('submits form data only when all required fields are filled and form is not
         mode: 'onChange',
       }}
       submitLabel="Submit"
-    />
+    />,
   )
 
   const form = getByRole('form')

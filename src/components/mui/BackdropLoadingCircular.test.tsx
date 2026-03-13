@@ -12,7 +12,7 @@ test('does not render anything when loading is false', () => {
   render(
     <ThemeProvider theme={theme}>
       <BackdropLoadingCircular loading={false} />
-    </ThemeProvider>
+    </ThemeProvider>,
   )
   expect(screen.queryByTestId('circular-progress')).not.toBeInTheDocument()
 })
@@ -21,7 +21,7 @@ test('renders a Backdrop with CircularProgress when loading is true', () => {
   render(
     <ThemeProvider theme={theme}>
       <BackdropLoadingCircular loading={true} />
-    </ThemeProvider>
+    </ThemeProvider>,
   )
   expect(screen.getByTestId('circular-progress')).toBeInTheDocument()
 })
@@ -31,7 +31,7 @@ test('has border radius 2 when the breakpoint is down', () => {
   render(
     <ThemeProvider theme={theme}>
       <BackdropLoadingCircular loading={true} />
-    </ThemeProvider>
+    </ThemeProvider>,
   )
 
   const backdrop = screen.getByRole('presentation', { hidden: true })
@@ -43,7 +43,7 @@ test('has border radius 0 when the breakpoint is up', () => {
   render(
     <ThemeProvider theme={theme}>
       <BackdropLoadingCircular loading={true} />
-    </ThemeProvider>
+    </ThemeProvider>,
   )
   const backdrop = screen.getByRole('presentation', { hidden: true })
   expect(backdrop).toHaveStyle({ borderRadius: 0 })

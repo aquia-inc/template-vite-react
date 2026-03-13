@@ -12,7 +12,7 @@ test('renders without crashing', () => {
       onRemoveFile={() => ({})}
       uploadedFiles={[]}
       uploading={false}
-    />
+    />,
   )
 
   expect(container.firstChild).toBeInTheDocument()
@@ -40,13 +40,13 @@ test('calls onFileSelect when a file is dropped', () => {
       onRemoveFile={() => ({})}
       uploadedFiles={[]}
       uploading={false}
-    />
+    />,
   )
 
   act(() => {
     fireEvent.drop(
       screen.getByLabelText('Drag and Drop File Selection'),
-      dataTransfer
+      dataTransfer,
     )
 
     waitFor(() => {
@@ -63,7 +63,7 @@ test('calls onRemoveFile when a file is removed', () => {
       onRemoveFile={handleRemoveFile}
       uploadedFiles={[{ id: '1', name: 'hello.png', progress: 0 }]}
       uploading={false}
-    />
+    />,
   )
 
   fireEvent.click(screen.getByRole('button', { name: /file-action/i }))
@@ -78,7 +78,7 @@ test('displays uploaded files', () => {
       onRemoveFile={onRemoveFile}
       uploadedFiles={[{ id: '1', name: 'hello.png', progress: 0 }]}
       uploading={false}
-    />
+    />,
   )
 
   const uploadedFile = screen.getByText('hello.png')
@@ -102,7 +102,7 @@ test('displays an error message when a file exceeds the maxSize', () => {
       maxSize={10}
       maxFiles={1}
       uploading={false}
-    />
+    />,
   )
 
   // Create a mock file larger than maxSize
@@ -126,7 +126,7 @@ test('displays an error message when a file exceeds the maxSize', () => {
   act(() => {
     fireEvent.drop(
       screen.getByLabelText('Drag and Drop File Selection'),
-      dataTransfer
+      dataTransfer,
     )
 
     waitFor(() => {

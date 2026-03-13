@@ -2,7 +2,7 @@
  * The view at the /login route that renders the sign in form.
  * @module views/SignIn/SignIn
  */
-import React, { memo, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -66,18 +66,6 @@ const SignInForm: React.FC = () => {
     setShowPassword,
   } = useSignIn()
 
-  const ShowPasswordButton = memo(
-    Object.assign(
-      () => (
-        <PasswordVisibilityToggle
-          showPassword={showPassword}
-          setShowPassword={setShowPassword}
-        />
-      ),
-      { displayName: 'ShowPasswordButton' }
-    ) as React.FC
-  )
-
   return (
     <Stack
       component="form"
@@ -100,7 +88,12 @@ const SignInForm: React.FC = () => {
         name="password"
         InputProps={{
           autoComplete: 'current-password',
-          endAdornment: <ShowPasswordButton />,
+          endAdornment: (
+            <PasswordVisibilityToggle
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+            />
+          ),
           type: showPassword ? 'text' : 'password',
         }}
       />

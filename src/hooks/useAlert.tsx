@@ -94,7 +94,7 @@ export const AlertProvider = ({
       if (!autoHide) return
       setTimeoutId(setTimeout(clearAlert, timeout))
     },
-    [clearAlert, contextOverrides, isControlled, state.message, state.severity]
+    [clearAlert, contextOverrides, isControlled, state.message, state.severity],
   )
 
   const setData = useCallback(
@@ -107,7 +107,7 @@ export const AlertProvider = ({
         ...values,
       }))
     },
-    [contextOverrides, isControlled]
+    [contextOverrides, isControlled],
   )
 
   return (

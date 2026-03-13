@@ -16,7 +16,7 @@ beforeEach(() => {
 
 test('throws an error if no JWT token is provided', async () => {
   await expect(apiRequest({ jwtToken: '', path: 'test' })).rejects.toThrow(
-    'No JWT token provided'
+    'No JWT token provided',
   )
 })
 

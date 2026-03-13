@@ -41,7 +41,7 @@ test('renders auth session error and navigate to logout after 5 seconds', () => 
   render(<ErrorBoundary />)
 
   expect(
-    screen.getByText(/Your session has expired. Please login again./i)
+    screen.getByText(/Your session has expired. Please login again./i),
   ).toBeInTheDocument()
 
   jest.advanceTimersByTime(5000)
@@ -53,6 +53,6 @@ test('renders generic error message', () => {
   routeErrorMock.mockReturnValue(new Error('Something went wrong'))
   render(<ErrorBoundary />)
   expect(
-    screen.getByText(/Something went wrong. Please try again./i)
+    screen.getByText(/Something went wrong. Please try again./i),
   ).toBeInTheDocument()
 })

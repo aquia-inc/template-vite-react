@@ -58,7 +58,7 @@ class AuthError extends Error {
 
     // Get the enum key from the status code
     this.#key = (Entries.find(
-      ([, value]: [string, AuthErrorStatus]) => value === this.#status
+      ([, value]: [string, AuthErrorStatus]) => value === this.#status,
     )?.[0] || AuthErrorKeys.UNKNOWN) as AuthErrorKeys
 
     // Get the status text from the enum key
