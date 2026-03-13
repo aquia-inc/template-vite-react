@@ -18,6 +18,7 @@ export type TFieldValues = {
 }
 
 export type useSignInReturnType = {
+  authEnabled: boolean
   control: unknown
   errors: FieldErrors<{
     email: string

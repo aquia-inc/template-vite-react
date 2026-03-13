@@ -10,6 +10,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import useAuthState from '@/store/auth/useAuthState'
 import { Routes } from '@/router/constants'
+import CONFIG from '@/utils/config'
 
 // ** Styled Components
 const ButtonBox = styled(Box)({ mr: 1, ml: 1, pr: 1, pl: 1 })
@@ -19,19 +20,26 @@ const ButtonContainerBox = styled(Box)({ mr: 2, ml: 2, pr: 2, pl: 2 })
  * Internal component for a login button to be rendered HeaderAuthButton.
  * @returns {JSX.Element} Button that navigates to login view on click.
  */
-const LoginButton: React.FC = (): JSX.Element => (
-  <ButtonBox>
-    <Button
-      component={RouterLink}
-      to={Routes.AUTH_LOGIN}
-      color="primary"
-      variant="contained"
-      role="button"
-    >
-      Login
-    </Button>
-  </ButtonBox>
-)
+const LoginButton: React.FC = (): JSX.Element =>
+  CONFIG.AUTH_ENABLED ? (
+    <ButtonBox>
+      <Button
+        component={RouterLink}
+        to={Routes.AUTH_LOGIN}
+        color="primary"
+        variant="contained"
+        role="button"
+      >
+        Login
+      </Button>
+    </ButtonBox>
+  ) : (
+    <ButtonBox>
+      <Button color="primary" variant="contained" role="button" disabled>
+        Login
+      </Button>
+    </ButtonBox>
+  )
 
 /**
  * Internal component for a logout button to be rendered by HeaderAuthButton.

@@ -16,6 +16,8 @@ import {
   useSignInReturnType,
 } from '@/views/SignIn/SignIn.interfaces'
 import { Routes } from '@/router/constants'
+import { AUTH_DISABLED_HELP as AUTH_DISABLED_HELP_TEXT } from '@/locales/en'
+import CONFIG from '@/utils/config'
 
 /**
  * A custom hook to retrieve methods and state pertaining to the SignIn.
@@ -25,6 +27,7 @@ const useSignIn = (): useSignInReturnType => {
   const { setAlert } = useAlert()
   const dispatch = useAuthDispatch()
   const navigate = useNavigate()
+  const authEnabled = CONFIG.AUTH_ENABLED
 
   const [loading, setLoading] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -67,6 +70,14 @@ const useSignIn = (): useSignInReturnType => {
   })
 
   const handleFederatedSignIn = useCallback(async () => {
+    if (!authEnabled) {
+      setAlert({
+        message: AUTH_DISABLED_HELP_TEXT,
+        severity: 'warning',
+      })
+      return
+    }
+
     try {
       await Auth.federatedSignIn({
         provider: 'COGNITO',
@@ -77,10 +88,18 @@ const useSignIn = (): useSignInReturnType => {
         severity: 'error',
       })
     }
-  }, [setAlert])
+  }, [authEnabled, setAlert])
 
   const onSubmit = useCallback(
     async (data: TFieldValues) => {
+      if (!authEnabled) {
+        setAlert({
+          message: AUTH_DISABLED_HELP_TEXT,
+          severity: 'warning',
+        })
+        return
+      }
+
       const { email, password } = data
       setLoading(true)
       try {
@@ -95,10 +114,11 @@ const useSignIn = (): useSignInReturnType => {
         })
       }
     },
-    [dispatch, navigate, setAlert],
+    [authEnabled, dispatch, navigate, setAlert],
   )
 
   return {
+    authEnabled,
     loading,
     setLoading,
     showPassword,
