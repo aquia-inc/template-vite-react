@@ -14,12 +14,12 @@ jest.mock('react-router-dom', () => ({
 jest.mock('@/hooks/useAlert')
 jest.mock('@/store/auth/useAuthDispatch')
 jest.mock('@/store/auth/useAuthState')
-;(useAuthDispatch as jest.Mock).mockReturnValue(jest.fn())
-;(useNavigate as jest.Mock).mockReturnValue(jest.fn())
 const setAlertMock = jest.fn()
 
 beforeEach(() => {
   jest.clearAllMocks()
+  ;(useAuthDispatch as jest.Mock).mockReturnValue(jest.fn())
+  ;(useNavigate as jest.Mock).mockReturnValue(jest.fn())
   ;(useAlert as jest.Mock).mockReturnValue({ setAlert: setAlertMock })
 })
 
@@ -27,7 +27,11 @@ test('handles form submission', async () => {
   ;(loginUser as jest.Mock).mockResolvedValueOnce({})
   const { result } = renderHook(useSignIn)
   await act(async () => {
-    result.current.handleSubmit()
+    result.current.setValue('email', 'test@test.com')
+    result.current.setValue('password', 'password')
+  })
+  await act(async () => {
+    await result.current.handleSubmit()
   })
   await waitFor(() => {
     expect(result.current.loading).toBe(false)
@@ -65,7 +69,11 @@ test('handles form submission error', async () => {
   )
   const { result } = renderHook(useSignIn)
   await act(async () => {
-    result.current.handleSubmit()
+    result.current.setValue('email', 'test@test.com')
+    result.current.setValue('password', 'password')
+  })
+  await act(async () => {
+    await result.current.handleSubmit()
   })
   await waitFor(() => {
     expect(result.current.loading).toBe(false)
