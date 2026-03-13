@@ -2,5 +2,6 @@
 .yarn/
 build/
 dist/
+storybook-static/
 **/node_modules/
 **/coverage
