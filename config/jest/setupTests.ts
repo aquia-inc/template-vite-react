@@ -17,6 +17,11 @@ if (process.env.NODE_ENV === 'test') {
   process.env.VITE_CF_DOMAIN = 'https://localhost:3000/'
   process.env.VITE_USER_POOL_ID = 'us-east-1_123456789'
   process.env.VITE_USER_POOL_CLIENT_ID = '1234567890123456789012'
+  process.env.VITE_COGNITO_DOMAIN =
+    'https://example.auth.us-east-1.amazoncognito.com'
+  process.env.VITE_COGNITO_REDIRECT_SIGN_IN = 'https://localhost:3000/sign-in'
+  process.env.VITE_COGNITO_REDIRECT_SIGN_OUT = 'https://localhost:3000/sign-out'
+  process.env.VITE_IDP_ENABLED = 'false'
 }
 
 window.matchMedia = (query) => ({

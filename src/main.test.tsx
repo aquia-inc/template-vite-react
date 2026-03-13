@@ -11,6 +11,7 @@ describe.skip('main', () => {
 
   let mockConsoleDebug: jest.Mock
   let mockCreateRoot: jest.Mock
+  let mockGetRuntimeEnv: jest.Mock
   let mockRender: jest.Mock
 
   beforeAll(() => {
@@ -39,6 +40,12 @@ describe.skip('main', () => {
         createRoot: mockCreateRoot,
       }))
 
+      mockGetRuntimeEnv = jest.fn(() => ({ DEV: false }))
+
+      jest.doMock('@/utils/runtime', () => ({
+        getRuntimeEnv: mockGetRuntimeEnv,
+      }))
+
       CONFIG = require('@/utils/config').default
     })
   })
@@ -56,7 +63,7 @@ describe.skip('main', () => {
   })
 
   test('logs config and imports web-vitals in development mode', () => {
-    process.env.NODE_ENV = 'development'
+    mockGetRuntimeEnv.mockReturnValue({ DEV: true })
     // use a sandbox registry for the modules that are loaded inside the callback function
     jest.isolateModules(async () => {
       // require main to run the IIFE inside an isolated module
@@ -77,7 +84,7 @@ describe.skip('main', () => {
   })
 
   test('does not log config or import web-vitals in production mode', () => {
-    process.env.NODE_ENV = 'production'
+    mockGetRuntimeEnv.mockReturnValue({ DEV: false })
     // use a sandbox registry for the modules that are loaded inside the callback function
     jest.isolateModules(async () => {
       // require main to run the IIFE inside an isolated module

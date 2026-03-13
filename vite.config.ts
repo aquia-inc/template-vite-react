@@ -1,59 +1,23 @@
-import { defineConfig, transformWithEsbuild, type PluginOption } from 'vite'
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig, type PluginOption } from 'vite'
 import react from '@vitejs/plugin-react-swc'
-import EnvironmentPlugin from 'vite-plugin-environment'
 import { visualizer } from 'rollup-plugin-visualizer'
-import sass from 'sass'
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
   define: {
-    'process.env': {},
-    // prettier-ignore
-    global: ({}),
-    // prettier-ignore
-    _global: ({}),
+    global: 'globalThis',
   },
   resolve: {
     alias: {
-      '@': '/src',
-      'npm:': '/node_modules/',
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        implementation: sass,
-      },
-    },
-  },
-  plugins: [
-    react(),
-    EnvironmentPlugin('all'),
-    visualizer() as PluginOption,
-    {
-      name: 'load+transform-js-files-as-jsx',
-      async transform(code, id) {
-        if (!id.match(/src\/.*\.js$/)) {
-          return null
-        }
-        return transformWithEsbuild(code, id, {
-          loader: 'jsx',
-          jsx: 'automatic',
-        })
-      },
-    },
-  ],
+  plugins: [react(), visualizer() as PluginOption],
   server: {
     watch: {
       ignored: ['**/coverage/**'],
     },
   },
   appType: 'spa',
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        '.js': 'jsx',
-      },
-    },
-  },
 })

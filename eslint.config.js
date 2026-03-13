@@ -1,3 +1,4 @@
+import { defineConfig, globalIgnores } from 'eslint/config'
 import js from '@eslint/js'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
@@ -11,16 +12,22 @@ import eslintConfigPrettier from 'eslint-config-prettier'
 const sourceFiles = ['**/*.{js,mjs,cjs,jsx,ts,tsx}']
 const testFiles = ['**/*.{test,spec}.{js,jsx,ts,tsx}']
 
-export default [
+export default defineConfig([
+  globalIgnores([
+    '.eslintcache',
+    '.yarn/**',
+    'build',
+    'build/**',
+    'coverage',
+    'coverage/**',
+    'dist',
+    'dist/**',
+    'node_modules/**',
+    'public/**',
+    'storybook-static',
+    'storybook-static/**',
+  ]),
   {
-    ignores: [
-      '.yarn/**',
-      'build/**',
-      'coverage/**',
-      'dist/**',
-      'node_modules/**',
-      'public/**',
-    ],
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
     },
@@ -101,4 +108,4 @@ export default [
       'react/prop-types': 'off',
     },
   },
-]
+])

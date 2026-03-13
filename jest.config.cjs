@@ -5,7 +5,10 @@ module.exports = {
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.stories.(js|jsx|ts|tsx)',
     '!src/**/*.d.ts',
+    '!src/main.tsx',
     '!src/mocks/**',
+    '!src/utils/config.ts',
+    '!src/utils/runtime.ts',
   ],
   coveragePathIgnorePatterns: [],
   setupFilesAfterEnv: ['./config/jest/setupTests.ts'],
@@ -25,6 +28,7 @@ module.exports = {
   ],
   modulePaths: ['<rootDir>/src'],
   moduleNameMapper: {
+    '^@/utils/config$': '<rootDir>/config/jest/configMock.ts',
     '^@/(.*)$': '<rootDir>/src/$1',
     '^react-native$': 'react-native-web',
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
