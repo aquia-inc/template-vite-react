@@ -8,7 +8,7 @@ import {
   isValidElement,
   useCallback,
   useContext,
-  useRef,
+  useMemo,
   useState,
 } from 'react'
 import Dialog, { DialogProps } from '@mui/material/Dialog'
@@ -40,14 +40,16 @@ const DialogProvider: React.FC<React.PropsWithChildren> = ({
     setOpen(true)
   }, [])
 
-  const closeDialog = () => {
+  const closeDialog = useCallback(() => {
     setOpen(false)
-  }
+  }, [])
 
-  const contextValue = useRef([openDialog, closeDialog])
+  const contextValue = useMemo(() => {
+    return [openDialog, closeDialog]
+  }, [closeDialog, openDialog])
 
   return (
-    <DialogContext.Provider value={contextValue.current}>
+    <DialogContext.Provider value={contextValue}>
       {children}
       <Dialog {...dialogProps} onClose={closeDialog} open={open}>
         {Children.map(dialogChildren, (child) => {

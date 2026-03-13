@@ -9,7 +9,7 @@ test('renders an avatar image when avatarSrc is provided', () => {
       avatarSrc={avatarSrc}
       email="test@example.com"
       name="Test User"
-    />
+    />,
   )
   const avatar = screen.getByRole('img')
   expect(avatar).toBeInTheDocument()

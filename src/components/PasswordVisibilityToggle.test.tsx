@@ -13,7 +13,7 @@ test('renders without crashing', () => {
     <PasswordVisibilityToggle
       showPassword={false}
       setShowPassword={setShowPassword}
-    />
+    />,
   )
 
   expect(getByRole('button')).toBeInTheDocument()
@@ -24,7 +24,7 @@ test('changes icon when clicked', async () => {
     <PasswordVisibilityToggle
       showPassword={false}
       setShowPassword={setShowPassword}
-    />
+    />,
   )
   const button = getByRole('button')
 
@@ -40,7 +40,7 @@ test('changes icon when clicked', async () => {
     <PasswordVisibilityToggle
       showPassword={true}
       setShowPassword={setShowPassword}
-    />
+    />,
   )
 
   await act(async () => {
@@ -57,7 +57,7 @@ test('calls setShowPassword with correct argument when clicked', async () => {
     <PasswordVisibilityToggle
       showPassword={false}
       setShowPassword={setShowPassword}
-    />
+    />,
   )
   const button = getByRole('button')
 
@@ -75,7 +75,7 @@ test('prevents default on mouse down', async () => {
     <PasswordVisibilityToggle
       showPassword={false}
       setShowPassword={setShowPassword}
-    />
+    />,
   )
   const button = getByRole('button')
   const preventDefault = jest.fn()

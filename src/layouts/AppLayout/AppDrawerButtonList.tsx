@@ -16,7 +16,7 @@ const AppDrawerButtonList: React.FC = (): JSX.Element => {
         to: Routes.DASHBOARD,
       },
     ],
-    []
+    [],
   )
 
   return (

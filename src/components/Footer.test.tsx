@@ -8,7 +8,7 @@ const renderWithTheme = () => {
   render(
     <ThemeProvider theme={theme}>
       <Footer />
-    </ThemeProvider>
+    </ThemeProvider>,
   )
 }
 
@@ -17,7 +17,7 @@ test('renders the StickyFooter with light theme', () => {
   const footerElement = screen.getByRole('contentinfo')
   expect(footerElement).toBeInTheDocument()
   expect(footerElement).toHaveStyle(
-    `background-color: ${theme.palette.grey[200]}`
+    `background-color: ${theme.palette.grey[200]}`,
   )
 })
 

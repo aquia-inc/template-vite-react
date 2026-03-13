@@ -57,7 +57,7 @@ export const VerticalCenteredFlexBox = styled(Box)<BoxProps>(({ theme }) => ({
 }))
 
 export const FormControlLabel = styled(
-  MuiFormControlLabel
+  MuiFormControlLabel,
 )<FormControlLabelProps>(({ theme }) => ({
   '& .MuiFormControlLabel-label': {
     fontSize: theme.typography.body2.fontSize,

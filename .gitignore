@@ -39,8 +39,10 @@ tmp/
 **/.DS_Store
 
 # coverage and stats
+coverage/
 **/coverage/**
 .coverage
+.eslintcache
 stats.*
 
 # yarn

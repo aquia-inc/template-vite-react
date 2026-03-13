@@ -21,7 +21,7 @@ import '@/sass/style.scss'
   ReactDOMClient.createRoot(rootElement).render(
     <React.StrictMode>
       <RouterProvider router={router} />
-    </React.StrictMode>
+    </React.StrictMode>,
   )
 
   if (getRuntimeEnv().DEV) {
@@ -29,9 +29,8 @@ import '@/sass/style.scss'
 
     // enable React performance measurement tools.
     // see https://create-react-app.dev/docs/measuring-performance/
-    const { onCLS, onFID, onFCP, onINP, onLCP, onTTFB } = await import(
-      'web-vitals'
-    )
+    const { onCLS, onFID, onFCP, onINP, onLCP, onTTFB } =
+      await import('web-vitals')
 
     onCLS(onPerfEntry)
     onFID(onPerfEntry)

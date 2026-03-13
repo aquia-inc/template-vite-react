@@ -34,7 +34,7 @@ describe('MUI Avatar Component', () => {
     const { getByTestId } = render(
       <ThemeProvider theme={theme}>
         <Avatar data-testid="avatar" />
-      </ThemeProvider>
+      </ThemeProvider>,
     )
     expect(getByTestId('avatar')).toBeInTheDocument()
   })
@@ -44,12 +44,12 @@ describe('MUI Avatar Component', () => {
       const { getByTestId } = render(
         <ThemeProvider theme={theme}>
           <Avatar data-testid="avatar" color="secondary" skin="light-static" />
-        </ThemeProvider>
+        </ThemeProvider>,
       )
       const avatarElement = getByTestId('avatar')
       expect(avatarElement).toHaveAttribute('skin', 'light-static')
       expect(avatarElement).toHaveStyle(
-        `background-color: ${lighten(theme.palette.secondary.main, 0.88)}`
+        `background-color: ${lighten(theme.palette.secondary.main, 0.88)}`,
       )
     })
 
@@ -57,12 +57,12 @@ describe('MUI Avatar Component', () => {
       const { getByTestId } = render(
         <ThemeProvider theme={theme}>
           <Avatar data-testid="avatar" color="secondary" skin="light" />
-        </ThemeProvider>
+        </ThemeProvider>,
       )
       const avatarElement = getByTestId('avatar')
       expect(avatarElement).toHaveAttribute('skin', 'light')
       expect(avatarElement).toHaveStyle(
-        `background-color: ${hexToRGBA(theme.palette.secondary.main, 0.12)}`
+        `background-color: ${hexToRGBA(theme.palette.secondary.main, 0.12)}`,
       )
     })
   })
@@ -71,7 +71,7 @@ describe('MUI Avatar Component', () => {
     const { getByTestId } = render(
       <ThemeProvider theme={theme}>
         <Avatar data-testid="avatar" />
-      </ThemeProvider>
+      </ThemeProvider>,
     )
     const avatarElement = getByTestId('avatar')
     expect(avatarElement).toHaveAttribute('skin', 'filled')
@@ -94,7 +94,7 @@ describe('MUI Avatar Component', () => {
             height: 40,
           }}
         />
-      </ThemeProvider>
+      </ThemeProvider>,
     )
     const avatarElement = getByTestId('avatar')
     expect(avatarElement).not.toHaveAttribute('src')

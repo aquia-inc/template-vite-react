@@ -46,7 +46,6 @@ describe.skip('main', () => {
         getRuntimeEnv: mockGetRuntimeEnv,
       }))
 
-      require('react-dom/client').default
       CONFIG = require('@/utils/config').default
     })
   })
@@ -57,7 +56,7 @@ describe.skip('main', () => {
       require('@/main')
       // expect the root node to be created and the application to be rendered
       expect(mockCreateRoot).toHaveBeenCalledWith(
-        document.getElementById('root')
+        document.getElementById('root'),
       )
       expect(mockRender).toHaveBeenCalledTimes(1)
     })
@@ -72,9 +71,8 @@ describe.skip('main', () => {
       // expect the config to be logged to the console at the debug level
       expect(mockConsoleDebug).toHaveBeenCalledWith(SIGN_IN_GREETING, CONFIG)
       // import global mock of web-vitals to verify that the on* functions were called
-      const { onCLS, onFID, onFCP, onINP, onLCP, onTTFB } = await import(
-        'web-vitals'
-      )
+      const { onCLS, onFID, onFCP, onINP, onLCP, onTTFB } =
+        await import('web-vitals')
       // expect the on* functions to have been called
       expect(onCLS).toHaveBeenCalled()
       expect(onFID).toHaveBeenCalled()
@@ -94,9 +92,8 @@ describe.skip('main', () => {
       // expect the config to not be logged to the console
       expect(mockConsoleDebug).not.toHaveBeenCalled()
       // import global mock of web-vitals and verify that the on* functions were called
-      const { onCLS, onFID, onFCP, onINP, onLCP, onTTFB } = await import(
-        'web-vitals'
-      )
+      const { onCLS, onFID, onFCP, onINP, onLCP, onTTFB } =
+        await import('web-vitals')
       // expect the on* functions to not have been called
       expect(onCLS).not.toHaveBeenCalled()
       expect(onFID).not.toHaveBeenCalled()

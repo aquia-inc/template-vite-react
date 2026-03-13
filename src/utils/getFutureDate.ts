@@ -11,7 +11,7 @@
  */
 const getFutureDate = (
   daysToAdd: number,
-  date: Date = new Date()
+  date: Date = new Date(),
 ): TDateISO => {
   const result = new Date(date.setDate(date.getDate() + daysToAdd))
   return result.toISOString()

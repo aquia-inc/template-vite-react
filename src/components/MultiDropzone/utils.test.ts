@@ -81,7 +81,7 @@ describe('getErrorMessage', () => {
     }
 
     expect(getErrorMessage(error, params, textOverrides)).toBe(
-      'Please upload a valid file type: jpg, png.'
+      'Please upload a valid file type: jpg, png.',
     )
   })
 
@@ -92,7 +92,7 @@ describe('getErrorMessage', () => {
     }
     const params = { fileList: 'jpg, png', maxSize: 20000 }
     expect(getErrorMessage(error, params)).toBe(
-      'Only the following file types are accepted: jpg, png.'
+      'Only the following file types are accepted: jpg, png.',
     )
   })
 
@@ -106,7 +106,7 @@ describe('getErrorMessage', () => {
       fileTooLargeError: 'File is too large. It should be less than:',
     }
     expect(getErrorMessage(error, params, textOverrides)).toContain(
-      'File is too large. It should be less than:'
+      'File is too large. It should be less than:',
     )
   })
 
@@ -120,7 +120,7 @@ describe('getErrorMessage', () => {
       fileTypeError: 'Please upload a valid file type:',
     }
     expect(getErrorMessage(error, params, textOverrides)).toBe(
-      'Please upload a valid file type: json.'
+      'Please upload a valid file type: json.',
     )
   })
 
@@ -134,7 +134,7 @@ describe('getErrorMessage', () => {
       fileTooLargeError: 'File is too large. It should be less than:',
     }
     expect(getErrorMessage(error, params, textOverrides)).toContain(
-      'File is too large. It should be less than: 0 Bytes.'
+      'File is too large. It should be less than: 0 Bytes.',
     )
   })
 
@@ -145,7 +145,7 @@ describe('getErrorMessage', () => {
     }
     const params = { fileList: 'jpg, png', maxSize: 20000 }
     expect(getErrorMessage(error, params)).toContain(
-      'File is too large. It must be less than 20 KB.'
+      'File is too large. It must be less than 20 KB.',
     )
   })
 
@@ -156,7 +156,7 @@ describe('getErrorMessage', () => {
     }
     const params = { maxSize: 20000 }
     expect(getErrorMessage(error, params)).toContain(
-      'File is too large. It must be less than 20 KB.'
+      'File is too large. It must be less than 20 KB.',
     )
   })
 
@@ -167,7 +167,7 @@ describe('getErrorMessage', () => {
     }
     const params = { fileList: '', maxSize: 20000 }
     expect(getErrorMessage(error, params)).toBe(
-      'Only the following file types are accepted: NONE.'
+      'Only the following file types are accepted: NONE.',
     )
   })
 

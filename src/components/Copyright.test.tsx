@@ -8,7 +8,7 @@ beforeEach(() => {
 
 test('renders the copyright statement', () => {
   const copyrightStatement = screen.getByText(
-    new RegExp(`${COPYRIGHT_LABEL}`, 'i')
+    new RegExp(`${COPYRIGHT_LABEL}`, 'i'),
   )
   expect(copyrightStatement).toBeInTheDocument()
 })

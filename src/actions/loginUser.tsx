@@ -16,7 +16,7 @@ type UserData = {
 
 export default async function loginUser(
   dispatch: React.Dispatch<AuthActionParams>,
-  payload: LoginParams
+  payload: LoginParams,
 ): Promise<UserData | undefined> {
   try {
     dispatch({ type: AuthActions.LOGIN_REQUEST })

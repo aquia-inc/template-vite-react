@@ -67,7 +67,7 @@ const UploadFileCell: React.FC<UploadFileCellProps> = ({
         ERROR: <ErrorIcon />,
       }[uploadStatus],
     }),
-    [uploadStatus, uploading]
+    [uploadStatus, uploading],
   )
 
   const mapDisplayText: { [s in UploadStatus]: string } = useMemo(
@@ -76,7 +76,7 @@ const UploadFileCell: React.FC<UploadFileCellProps> = ({
       COMPLETE: DEFAULT_CELL_UPLOADED_TEXT,
       ERROR: error ?? DEFAULT_CELL_ERROR_TEXT,
     }),
-    [error]
+    [error],
   )
 
   const handleRemoveFile = useCallback(
@@ -84,7 +84,7 @@ const UploadFileCell: React.FC<UploadFileCellProps> = ({
       event.stopPropagation()
       onRemoveFile(id)
     },
-    [id, onRemoveFile]
+    [id, onRemoveFile],
   )
 
   return (

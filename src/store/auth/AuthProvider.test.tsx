@@ -60,7 +60,7 @@ describe('AuthProvider', () => {
           <AuthDispatchContext.Provider value={mockDispatch}>
             <Content />
           </AuthDispatchContext.Provider>
-        </AuthStateContext.Provider>
+        </AuthStateContext.Provider>,
       )
     })
 
@@ -89,7 +89,7 @@ describe('AuthProvider', () => {
           <AuthDispatchContext.Provider value={mockDispatch}>
             <Content />
           </AuthDispatchContext.Provider>
-        </AuthStateContext.Provider>
+        </AuthStateContext.Provider>,
       )
     })
 
@@ -129,7 +129,7 @@ describe('AuthProvider', () => {
           <AuthDispatchContext.Provider value={mockDispatch}>
             <Content />
           </AuthDispatchContext.Provider>
-        </AuthStateContext.Provider>
+        </AuthStateContext.Provider>,
       )
     })
 
@@ -147,14 +147,14 @@ describe('AuthProvider', () => {
 
     // @ts-expect-error
     mockAuth.currentAuthenticatedUser.mockRejectedValue(
-      new Error('No user or session')
+      new Error('No user or session'),
     )
 
     act(() => {
       render(
         <AuthDispatchContext.Provider value={mockDispatch}>
           <Content />
-        </AuthDispatchContext.Provider>
+        </AuthDispatchContext.Provider>,
       )
     })
 
@@ -176,7 +176,7 @@ describe('AuthProvider', () => {
       render(
         <AuthDispatchContext.Provider value={mockDispatch}>
           <Content />
-        </AuthDispatchContext.Provider>
+        </AuthDispatchContext.Provider>,
       )
     })
 
@@ -198,7 +198,7 @@ describe('AuthProvider', () => {
       render(
         <AuthDispatchContext.Provider value={mockDispatch}>
           <Content />
-        </AuthDispatchContext.Provider>
+        </AuthDispatchContext.Provider>,
       )
     })
 

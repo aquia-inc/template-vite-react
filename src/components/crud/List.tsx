@@ -28,7 +28,7 @@ const List: React.FC<ListProps> = ({
         field: field.name,
         flex: 1,
         headerName: toTitleCase(field.label || field.name),
-      })
+      }),
     ),
     {
       field: 'action',

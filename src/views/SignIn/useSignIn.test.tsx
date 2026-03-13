@@ -61,7 +61,7 @@ test('toggles password visibility', async () => {
 
 test('handles form submission error', async () => {
   ;(loginUser as jest.Mock).mockRejectedValueOnce(
-    new AuthError({ status: 400, message: 'Invalid credentials' })
+    new AuthError({ status: 400, message: 'Invalid credentials' }),
   )
   const { result } = renderHook(useSignIn)
   await act(async () => {
@@ -78,7 +78,7 @@ test('handles form submission error', async () => {
 
 test('handles federated sign in error', async () => {
   ;(Auth.federatedSignIn as jest.Mock).mockRejectedValueOnce(
-    new AuthError({ status: 401, message: 'Unauthorized federated sign in' })
+    new AuthError({ status: 401, message: 'Unauthorized federated sign in' }),
   )
   const { result } = renderHook(useSignIn)
   await act(async () => {

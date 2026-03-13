@@ -26,7 +26,7 @@ test('returns initials from the email if the name is not provided', () => {
 
 test('returns initials from the email if the name is a single character', () => {
   expect(getInitials({ name: 'J', email: 'john.doe@example.com' })).toEqual(
-    'JD'
+    'JD',
   )
 })
 

@@ -30,7 +30,7 @@ import {
  */
 export const getUploadStatus = (
   progress: number,
-  error?: string
+  error?: string,
 ): UploadStatus => {
   if (error) return UploadStatus.ERROR
   if (progress < 100) return UploadStatus.UPLOADING
@@ -45,7 +45,7 @@ export const getUploadStatus = (
 export const formatMimeType = (values: FileType[]): Accept => {
   const formatedValues = {} as Accept
   values.forEach(
-    (value) => (formatedValues[FileMimeTypes[value]] = [`.${value}`])
+    (value) => (formatedValues[FileMimeTypes[value]] = [`.${value}`]),
   )
   return formatedValues
 }
@@ -87,7 +87,7 @@ export const formatAcceptFileList = (accept: Accept): string =>
 export const getErrorMessage = (
   { code, message }: FileError,
   { fileList = '', maxSize }: { fileList?: string; maxSize?: number },
-  textOverrides?: TextOverrides
+  textOverrides?: TextOverrides,
 ): string => {
   switch (code) {
     case ErrorCode.FileInvalidType:

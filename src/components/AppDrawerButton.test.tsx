@@ -17,7 +17,7 @@ beforeEach(() => {
   render(
     <BrowserRouter>
       <AppDrawerButton {...mockProps} />
-    </BrowserRouter>
+    </BrowserRouter>,
   )
 })
 
