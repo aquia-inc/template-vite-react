@@ -62,7 +62,7 @@ const useSignIn = (): useSignInReturnType => {
           .string()
           .min(8, 'Password must be at least 8 characters')
           .required('Password is required'),
-      })
+      }),
     ),
   })
 
@@ -71,7 +71,7 @@ const useSignIn = (): useSignInReturnType => {
       await Auth.federatedSignIn({
         provider: 'COGNITO',
       } as FederatedSignInOptions)
-    } catch (error) {
+    } catch {
       setAlert({
         message: 'There was an error with the identity provider.',
         severity: 'error',
@@ -87,7 +87,7 @@ const useSignIn = (): useSignInReturnType => {
         await loginUser(dispatch, { email, password })
         setLoading(false)
         navigate(Routes.DASHBOARD)
-      } catch (error) {
+      } catch {
         setLoading(false)
         setAlert({
           message: 'There was an error logging in. Please try again.',
@@ -95,7 +95,7 @@ const useSignIn = (): useSignInReturnType => {
         })
       }
     },
-    [dispatch, navigate, setAlert]
+    [dispatch, navigate, setAlert],
   )
 
   return {
@@ -111,7 +111,7 @@ const useSignIn = (): useSignInReturnType => {
     getValues,
     handleFederatedSignIn,
     handleSubmit: handleSubmitInternal(onSubmit) as ((
-      e?: BaseSyntheticEvent<unknown, unknown, unknown> | undefined
+      e?: BaseSyntheticEvent<unknown, unknown, unknown> | undefined,
     ) => Promise<void>) &
       UseFormHandleSubmit<TFieldValues>,
     register,

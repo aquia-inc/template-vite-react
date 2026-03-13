@@ -31,12 +31,10 @@ declare module '@mui/material/SvgIcon' {
 }
 
 declare module '@mui/material' {
-  interface MixinOverrides {
+  interface Mixins {
     drawer: CSSProperties
     toolbar: CSSProperties
   }
-
-  interface Mixins extends MixinOverrides {}
 }
 
 // ** Base theme with breakpoints, direction, spacing

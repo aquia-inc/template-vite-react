@@ -28,7 +28,7 @@ function useCopyToClipboard(): [CopiedValue, CopyFn, ClearFn] {
       await navigator.clipboard.writeText(text)
       setCopiedText(text)
       return true
-    } catch (error) {
+    } catch {
       setCopiedText(null)
       return false
     }
