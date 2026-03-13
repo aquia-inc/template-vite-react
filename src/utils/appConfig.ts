@@ -1,4 +1,5 @@
 import type { AppConfig } from '@/types'
+import { isCognitoConfigValid } from '@/utils/cognitoConfig'
 
 type AppConfigEnv = {
   VITE_AWS_REGION?: string
@@ -27,19 +28,28 @@ export const buildApiUrl = (cfDomain: string) => {
 
 export const createAppConfig = (env: AppConfigEnv): AppConfig => {
   const cfDomain = env.VITE_CF_DOMAIN ?? ''
-
-  return {
-    //* AWS configuration
+  const authConfig = {
     AWS_REGION: env.VITE_AWS_REGION ?? '',
-    CF_DOMAIN: cfDomain,
-    API_URL: buildApiUrl(cfDomain),
     COGNITO_DOMAIN: env.VITE_COGNITO_DOMAIN ?? '',
     COGNITO_REDIRECT_SIGN_IN: env.VITE_COGNITO_REDIRECT_SIGN_IN ?? '',
     COGNITO_REDIRECT_SIGN_OUT: env.VITE_COGNITO_REDIRECT_SIGN_OUT ?? '',
     USER_POOL_CLIENT_ID: env.VITE_USER_POOL_CLIENT_ID ?? '',
     USER_POOL_ID: env.VITE_USER_POOL_ID ?? '',
+  }
+
+  return {
+    //* AWS configuration
+    AWS_REGION: authConfig.AWS_REGION,
+    CF_DOMAIN: cfDomain,
+    API_URL: buildApiUrl(cfDomain),
+    COGNITO_DOMAIN: authConfig.COGNITO_DOMAIN,
+    COGNITO_REDIRECT_SIGN_IN: authConfig.COGNITO_REDIRECT_SIGN_IN,
+    COGNITO_REDIRECT_SIGN_OUT: authConfig.COGNITO_REDIRECT_SIGN_OUT,
+    USER_POOL_CLIENT_ID: authConfig.USER_POOL_CLIENT_ID,
+    USER_POOL_ID: authConfig.USER_POOL_ID,
 
     //* Feature flags
+    AUTH_ENABLED: isCognitoConfigValid(authConfig),
     IDP_ENABLED: readBooleanEnv(env.VITE_IDP_ENABLED),
   }
 }

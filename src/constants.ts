@@ -6,6 +6,8 @@
 //* Application Strings
 export const ORG_NAME = 'Aquia'
 export const ORG_URL = 'https://aquia.us/'
+export const TEMPLATE_GITHUB_URL =
+  'https://github.com/aquia-inc/template-vite-react'
 export const COPYRIGHT_LABEL = `Copyright © ${new Date()
   .getFullYear()
   .toString()}`
