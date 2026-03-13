@@ -9,7 +9,7 @@ jest.mock('react-router-dom', () => ({
 }))
 
 beforeEach(() => {
-  ;(useLoaderData as jest.Mock).mockReturnValue('jwt-token')
+  ;(useLoaderData as jest.Mock).mockReturnValue({ jwtToken: 'jwt-token' })
 })
 
 test('renders the main application layout', () => {
