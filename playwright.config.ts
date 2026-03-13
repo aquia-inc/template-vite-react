@@ -5,7 +5,7 @@ const isCI = process.env.CI === 'true'
 const e2eEnv = {
   VITE_AWS_REGION: 'us-east-1',
   VITE_CF_DOMAIN: baseURL,
-  VITE_COGNITO_DOMAIN: 'example.auth.us-east-1.amazoncognito.com',
+  VITE_COGNITO_DOMAIN: 'https://example.auth.us-east-1.amazoncognito.com',
   VITE_COGNITO_REDIRECT_SIGN_IN: `${baseURL}/auth/login`,
   VITE_COGNITO_REDIRECT_SIGN_OUT: `${baseURL}/auth/logout`,
   VITE_USER_POOL_CLIENT_ID: '12345678901234567890123456',
