@@ -20,6 +20,7 @@ export type AppConfig = {
 } & AppFeatureFlags
 
 export type AppFeatureFlags = {
+  AUTH_ENABLED: boolean
   IDP_ENABLED: boolean
 }
 

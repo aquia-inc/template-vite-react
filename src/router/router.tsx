@@ -3,9 +3,10 @@
  * @module router/router
  * @see {@link dashboard/main} for usage.
  */
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, RouteObject } from 'react-router-dom'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import authLoader from '@/router/authLoader'
+import homeLoader from '@/router/homeLoader'
 import { RouteIds, Routes } from '@/router/constants'
 import configureCognito from '@/utils/configureCognito'
 import AppLayout from '@/layouts/AppLayout/AppLayout'
@@ -13,8 +14,9 @@ import SignIn from '@/views/SignIn/SignIn'
 import SignOut from '@/views/SignOut/SignOut'
 import Dashboard from '@/views/Dashboard/Dashboard'
 import dashboardLoader from '@/views/Dashboard/Dashboard.loader'
+import Home from '@/views/Home/Home'
 import RootProvider from '@/Root'
-import NavigateToLogin from '@/components/react-router/NavigateToSignIn'
+import NavigateToHome from '@/components/react-router/NavigateToHome'
 
 /**
  * The hash router for the application that defines routes
@@ -23,18 +25,21 @@ import NavigateToLogin from '@/components/react-router/NavigateToSignIn'
  * @see {@link https://reactrouter.com/web/api/BrowserRouter BrowserRouter}
  * @see {@link https://reactrouter.com/en/main/route/loader loader}
  */
-const router = createBrowserRouter([
-  {
-    index: true,
-    element: <NavigateToLogin />,
-  },
+export const appRoutes: RouteObject[] = [
   {
     id: RouteIds.ROOT,
-    path: '/',
+    path: Routes.ROOT,
     element: <RootProvider />,
     errorElement: <ErrorBoundary />,
     loader: configureCognito,
     children: [
+      {
+        index: true,
+        id: RouteIds.HOME,
+        element: <Home />,
+        errorElement: <ErrorBoundary />,
+        loader: homeLoader,
+      },
       {
         id: RouteIds.AUTH,
         path: Routes.AUTH,
@@ -70,12 +75,14 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: '*',
+        element: <NavigateToHome />,
+      },
     ],
   },
-  {
-    path: '*',
-    element: <NavigateToLogin />,
-  },
-])
+]
+
+const router = createBrowserRouter(appRoutes)
 
 export default router

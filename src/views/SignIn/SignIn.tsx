@@ -3,6 +3,7 @@
  * @module views/SignIn/SignIn
  */
 import React, { ReactNode } from 'react'
+import Alert from '@mui/material/Alert'
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -26,6 +27,8 @@ import {
 } from '@/views/SignIn/SignIn.components'
 import { TContext, TFieldValues } from '@/views/SignIn/SignIn.interfaces'
 import {
+  AUTH_DISABLED_HELP,
+  AUTH_DISABLED_MESSAGE,
   PUBLIC_APP_NAME,
   SIGN_IN_CTA,
   SIGN_IN_CTA_IDP,
@@ -58,6 +61,7 @@ const LoadingIcon: React.FC = () => {
 
 const SignInForm: React.FC = () => {
   const {
+    authEnabled,
     control,
     loading,
     handleFederatedSignIn,
@@ -75,11 +79,13 @@ const SignInForm: React.FC = () => {
       onSubmit={handleSubmit}
       spacing={3}
     >
+      {!authEnabled && <Alert severity="warning">{AUTH_DISABLED_HELP}</Alert>}
       <InputFormControl<TFieldValues, TContext>
         control={control}
         name="email"
         InputProps={{
           autoComplete: 'username',
+          disabled: !authEnabled,
           placeholder: SIGN_IN_EMAIL_PLACEHOLDER,
         }}
       />
@@ -88,8 +94,10 @@ const SignInForm: React.FC = () => {
         name="password"
         InputProps={{
           autoComplete: 'current-password',
+          disabled: !authEnabled,
           endAdornment: (
             <PasswordVisibilityToggle
+              disabled={!authEnabled}
               showPassword={showPassword}
               setShowPassword={setShowPassword}
             />
@@ -97,7 +105,12 @@ const SignInForm: React.FC = () => {
           type: showPassword ? 'text' : 'password',
         }}
       />
-      <SubmitButton disabled={loading} fullWidth name="login" role="button">
+      <SubmitButton
+        disabled={loading || !authEnabled}
+        fullWidth
+        name="login"
+        role="button"
+      >
         {SIGN_IN_CTA}
       </SubmitButton>
       <LoadingIcon />
@@ -107,6 +120,7 @@ const SignInForm: React.FC = () => {
             or...
           </Typography>
           <Button
+            disabled={!authEnabled}
             fullWidth
             onClick={handleFederatedSignIn}
             role="button"
@@ -127,6 +141,9 @@ const SignInForm: React.FC = () => {
 const SignIn = (): JSX.Element => {
   const { breakpoints } = useTheme()
   const hidden = useMediaQuery(breakpoints.down('md'))
+  const directions = CONFIG.AUTH_ENABLED
+    ? SIGN_IN_DIRECTIONS
+    : AUTH_DISABLED_MESSAGE
 
   return (
     <BoxWrapper
@@ -174,7 +191,7 @@ const SignIn = (): JSX.Element => {
           <VerticalCenteredFlexBox>
             <Box sx={{ mb: 6 }}>
               <Typography variant="h5">{`${SIGN_IN_GREETING} 👋🏻`}</Typography>
-              <Typography variant="body2">{SIGN_IN_DIRECTIONS}</Typography>
+              <Typography variant="body2">{directions}</Typography>
             </Box>
             <SignInForm />
           </VerticalCenteredFlexBox>

@@ -9,6 +9,11 @@ export const SIGN_IN_GREETING = 'Welcome to the app!'
 
 export const SIGN_IN_DIRECTIONS = 'Please sign-in to your account.'
 
+export const AUTH_DISABLED_MESSAGE = 'Authentication is currently disabled.'
+
+export const AUTH_DISABLED_HELP =
+  'Provide valid Cognito environment variables to enable the sign-in experience.'
+
 export const SIGN_IN_CTA = 'Sign In'
 
 export const SIGN_IN_CTA_IDP = 'Login with IDP'

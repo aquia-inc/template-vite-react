@@ -11,6 +11,7 @@ import { INITIAL_STATE } from '@/store/auth/constants'
 import AuthDispatchContext from '@/store/auth/AuthDispatchContext'
 import AuthStateContext from '@/store/auth/AuthStateContext'
 import { Routes } from '@/router/constants'
+import CONFIG from '@/utils/config'
 
 /**
  * The AuthContextProvider is used to provide user data to components.
@@ -32,6 +33,10 @@ const AuthProvider: React.FC<AuthProviderProps> = ({
    *  it sets the user state to null and clears local storage.
    */
   useEffect(() => {
+    if (!CONFIG.AUTH_ENABLED) {
+      return
+    }
+
     /**
      * Async function to check the validity of the user session and set user state.
      * @returns {Promise<void>} A promise that resolves when the user's sesson
