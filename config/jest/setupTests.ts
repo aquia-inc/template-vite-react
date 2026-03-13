@@ -1,9 +1,24 @@
 /**
  * @module @cyclone-dx/ui/sbom/utils/setupTests
  */
+import { TextDecoder, TextEncoder } from 'node:util'
+
 // global mocks
 jest.mock('aws-amplify')
 jest.mock('web-vitals')
+
+globalThis.IS_REACT_ACT_ENVIRONMENT = true
+window.IS_REACT_ACT_ENVIRONMENT = true
+
+Object.defineProperty(globalThis, 'TextEncoder', {
+  configurable: true,
+  value: TextEncoder,
+})
+
+Object.defineProperty(globalThis, 'TextDecoder', {
+  configurable: true,
+  value: TextDecoder,
+})
 
 // enable mocking of fetch requests
 import { enableFetchMocks } from 'jest-fetch-mock'

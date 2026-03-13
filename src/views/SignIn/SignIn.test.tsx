@@ -1,7 +1,10 @@
 import { JSXElementConstructor, ReactElement } from 'react'
-import { act, render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { useNavigate } from 'react-router-dom'
+import loginUser from '@/actions/loginUser'
 import SignIn from '@/views/SignIn/SignIn'
+import { Routes } from '@/router/constants'
 
 function setup(
   jsx: ReactElement<
@@ -18,51 +21,37 @@ function setup(
 jest.mock('react-router-dom', () => ({
   useNavigate: jest.fn(),
 }))
+jest.mock('@/actions/loginUser')
+
+const useNavigateMock = useNavigate as jest.Mock
+const navigateMock = jest.fn()
 
 beforeEach(() => {
   jest.clearAllMocks()
+  useNavigateMock.mockReturnValue(navigateMock)
 })
 
 test('submits correct form data in the SignIn page', async () => {
-  const mockSubmit = jest.fn()
-
-  jest.mock('react-hook-form', () => ({
-    useForm: () => ({
-      control: {
-        email: '',
-        password: '',
-      },
-      handleSubmit: mockSubmit,
-    }),
-  }))
-
-  // Setup to render the SignIn page
+  ;(loginUser as jest.Mock).mockResolvedValueOnce({})
   const { user } = setup(<SignIn />)
 
-  await act(async () => {
-    // Type the email into the email field
-    await user.type(
-      screen.getByRole('textbox', { name: /email/i }),
-      'user@example.com',
-    )
+  await user.type(
+    screen.getByRole('textbox', { name: /email/i }),
+    'user@example.com',
+  )
+  await user.type(
+    screen.getByLabelText(/password/i, {
+      selector: 'input',
+    }),
+    'password',
+  )
+  await user.click(screen.getByRole('button', { name: /sign in/i }))
 
-    // Type the password into the password field
-    await user.type(
-      screen.getByLabelText(/password/i, {
-        selector: 'input',
-      }),
-      'password',
-    )
-
-    // Save the form
-    await user.click(screen.getByRole('button', { name: /sign in/i }))
-  })
-
-  // Wait for form submission to complete
-  waitFor(() => {
-    expect(mockSubmit).toHaveBeenCalledWith({
+  await waitFor(() => {
+    expect(loginUser).toHaveBeenCalledWith(expect.any(Function), {
       email: 'user@example.com',
       password: 'password',
     })
+    expect(navigateMock).toHaveBeenCalledWith(Routes.DASHBOARD)
   })
 })
