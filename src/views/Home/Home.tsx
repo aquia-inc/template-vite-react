@@ -376,36 +376,46 @@ const Home: React.FC = (): JSX.Element => {
             stitch together after the first commit.
           </Typography>
         </Stack>
-        <Grid container spacing={3}>
+        <Box
+          sx={{
+            alignItems: 'start',
+            display: 'grid',
+            columnGap: 3,
+            gridTemplateColumns: {
+              xs: 'minmax(0, 1fr)',
+              sm: 'repeat(2, minmax(0, 1fr))',
+              md: 'repeat(3, minmax(0, 1fr))',
+            },
+            rowGap: 4,
+          }}
+        >
           {featureCards.map((feature) => (
-            <Grid item xs={12} sm={6} md={4} key={feature.title}>
-              <Paper
-                elevation={0}
-                sx={{
-                  backgroundColor: alpha(theme.palette.common.white, 0.78),
-                  border: `1px solid ${alpha(theme.palette.divider, 0.9)}`,
-                  borderRadius: 5,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 2,
-                  height: '100%',
-                  p: 3,
-                }}
-              >
-                <Chip
-                  label={feature.badge}
-                  color="primary"
-                  size="small"
-                  sx={{ alignSelf: 'flex-start', fontWeight: 700 }}
-                />
-                <Typography variant="h6">{feature.title}</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {feature.description}
-                </Typography>
-              </Paper>
-            </Grid>
+            <Paper
+              key={feature.title}
+              elevation={0}
+              sx={{
+                backgroundColor: alpha(theme.palette.common.white, 0.78),
+                border: `1px solid ${alpha(theme.palette.divider, 0.9)}`,
+                borderRadius: 5,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+                p: 3,
+              }}
+            >
+              <Chip
+                label={feature.badge}
+                color="primary"
+                size="small"
+                sx={{ alignSelf: 'flex-start', fontWeight: 700 }}
+              />
+              <Typography variant="h6">{feature.title}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                {feature.description}
+              </Typography>
+            </Paper>
           ))}
-        </Grid>
+        </Box>
       </Container>
 
       <Container maxWidth="lg" sx={{ pb: { xs: 8, md: 10 } }}>
