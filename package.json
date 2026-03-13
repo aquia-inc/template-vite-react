@@ -109,7 +109,7 @@
     "@vitejs/plugin-react-swc": "^4.3.0",
     "camelcase": "^6.3.0",
     "conventional-changelog-conventionalcommits": "^8.0.0",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.6.1",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
