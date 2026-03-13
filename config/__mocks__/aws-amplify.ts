@@ -1,3 +1,7 @@
+export const Amplify = {
+  configure: jest.fn(),
+}
+
 const users: {
   [key: string]: {
     username: string
@@ -45,6 +49,9 @@ export const Auth = {
       getAccessToken: () => ({ getJwtToken: () => '123456' }),
     }
     return Promise.resolve(session)
+  }),
+  currentUserInfo: jest.fn().mockResolvedValue({
+    username: 'abc123',
   }),
   signOut: jest.fn(),
   signIn: jest.fn().mockImplementation(
