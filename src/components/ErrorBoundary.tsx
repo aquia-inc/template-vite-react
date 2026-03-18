@@ -4,6 +4,7 @@
  */
 import { useNavigate, useRouteError } from 'react-router-dom'
 import { isRouteErrorResponse } from 'react-router-dom'
+import { useEffect } from 'react'
 import Container from '@mui/material/Container'
 import { Routes } from '@/router/constants'
 import {
@@ -46,6 +47,8 @@ const useErrorTitle = (error: unknown): string => {
 const ErrorBoundary: React.FC = (): JSX.Element => {
   const navigate = useNavigate()
   const error = useRouteError()
+  const isUnauthorizedRouteError =
+    isRouteErrorResponse(error) && error.status === 401
   const title = useErrorTitle(error)
   const message = useErrorMessage(error)
   const details = isRouteErrorResponse(error)
@@ -54,9 +57,18 @@ const ErrorBoundary: React.FC = (): JSX.Element => {
       ? error.message
       : null
 
-  if (isRouteErrorResponse(error) && error.status === 401) {
-    setTimeout(() => navigate(Routes.AUTH_LOGOUT), 5000)
-  }
+  useEffect(() => {
+    if (!isUnauthorizedRouteError) {
+      return undefined
+    }
+
+    const timeoutId = window.setTimeout(
+      () => navigate(Routes.AUTH_LOGOUT),
+      5000,
+    )
+
+    return () => window.clearTimeout(timeoutId)
+  }, [isUnauthorizedRouteError, navigate])
 
   return (
     <Container sx={{ m: 3 }}>
