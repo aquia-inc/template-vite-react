@@ -5,11 +5,15 @@
  */
 import { Auth } from 'aws-amplify'
 
-// @ts-ignore
+type DashboardUserInfo = {
+  username?: string | null
+}
+
 const dashboardLoader = async (): Promise<{ username: string }> => {
-  const userInfo = await Auth.currentUserInfo()
+  const userInfo = (await Auth.currentUserInfo()) as DashboardUserInfo | null
+
   return {
-    username: userInfo.username,
+    username: userInfo?.username ?? '',
   }
 }
 

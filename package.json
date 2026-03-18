@@ -64,7 +64,6 @@
     "react-dropzone": "^15.0.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.71.2",
-    "react-popper": "^2.3.0",
     "react-router-dom": "^7.13.1",
     "uswds": "^2.14.0",
     "uuid": "^9.0.1",

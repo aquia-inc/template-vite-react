@@ -1,12 +1,19 @@
-import { createContext } from 'react'
+import { PropsWithChildren, useContext } from 'react'
+import { renderHook } from '@testing-library/react'
 import AuthDispatchContext from '@/store/auth/AuthDispatchContext'
 import { AuthActionParams } from '@/store/auth/types'
 
-test('creates a context with the provided value', () => {
-  const context = createContext((value: AuthActionParams) => value)
+test('provides the dispatch function to consumers', () => {
+  const dispatch = jest.fn((value: AuthActionParams) => value)
+  const wrapper = ({ children }: PropsWithChildren): JSX.Element => (
+    <AuthDispatchContext.Provider value={dispatch}>
+      {children}
+    </AuthDispatchContext.Provider>
+  )
 
-  expect(context).toBeDefined()
-  expect(context).not.toBeNull()
-  expect(typeof context.Provider).toBe('object')
-  expect(typeof AuthDispatchContext.Provider).toBe('object')
+  const { result } = renderHook(() => useContext(AuthDispatchContext), {
+    wrapper,
+  })
+
+  expect(result.current).toBe(dispatch)
 })
