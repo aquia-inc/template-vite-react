@@ -1,16 +1,7 @@
-import { BrowserRouter, useLoaderData } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { render, screen, fireEvent } from '@testing-library/react'
 import AppLayout from '@/layouts/AppLayout/AppLayout'
 import { DASHBOARD_TITLE } from '@/locales/en'
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLoaderData: jest.fn(),
-}))
-
-beforeEach(() => {
-  ;(useLoaderData as jest.Mock).mockReturnValue({ jwtToken: 'jwt-token' })
-})
 
 test('renders the main application layout', () => {
   render(<AppLayout />, { wrapper: (props) => <BrowserRouter {...props} /> })
