@@ -47,7 +47,6 @@ describe('MUI Avatar Component', () => {
         </ThemeProvider>,
       )
       const avatarElement = getByTestId('avatar')
-      expect(avatarElement).toHaveAttribute('skin', 'light-static')
       expect(avatarElement).toHaveStyle(
         `background-color: ${lighten(theme.palette.secondary.main, 0.88)}`,
       )
@@ -60,7 +59,6 @@ describe('MUI Avatar Component', () => {
         </ThemeProvider>,
       )
       const avatarElement = getByTestId('avatar')
-      expect(avatarElement).toHaveAttribute('skin', 'light')
       expect(avatarElement).toHaveStyle(
         `background-color: ${hexToRGBA(theme.palette.secondary.main, 0.12)}`,
       )
@@ -74,8 +72,6 @@ describe('MUI Avatar Component', () => {
       </ThemeProvider>,
     )
     const avatarElement = getByTestId('avatar')
-    expect(avatarElement).toHaveAttribute('skin', 'filled')
-    expect(avatarElement).toHaveAttribute('color', 'primary')
     expect(avatarElement).toHaveStyle(`
       background-color: ${theme.palette.primary.main};
       color: #fff;

@@ -8,7 +8,7 @@ import getJWT from '@/utils/getJWT'
 import { Routes } from '@/router/constants'
 import CONFIG from '@/utils/config'
 
-const authLoader = async (): Promise<null | Response> => {
+const authLoader = async (): Promise<Response | null> => {
   if (!CONFIG.AUTH_ENABLED) {
     return redirect(Routes.HOME)
   }

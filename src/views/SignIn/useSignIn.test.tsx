@@ -15,11 +15,13 @@ jest.mock('@/hooks/useAlert')
 jest.mock('@/store/auth/useAuthDispatch')
 jest.mock('@/store/auth/useAuthState')
 const setAlertMock = jest.fn()
+const dispatchMock = jest.fn()
+const navigateMock = jest.fn()
 
 beforeEach(() => {
   jest.clearAllMocks()
-  ;(useAuthDispatch as jest.Mock).mockReturnValue(jest.fn())
-  ;(useNavigate as jest.Mock).mockReturnValue(jest.fn())
+  ;(useAuthDispatch as jest.Mock).mockReturnValue(dispatchMock)
+  ;(useNavigate as jest.Mock).mockReturnValue(navigateMock)
   ;(useAlert as jest.Mock).mockReturnValue({ setAlert: setAlertMock })
 })
 
@@ -35,10 +37,11 @@ test('handles form submission', async () => {
   })
   await waitFor(() => {
     expect(result.current.loading).toBe(false)
-    expect(loginUser).toHaveBeenCalledWith(expect.any(Function), {
+    expect(loginUser).toHaveBeenCalledWith(dispatchMock, {
       email: 'test@test.com',
       password: 'password',
     })
+    expect(navigateMock).toHaveBeenCalled()
   })
 })
 

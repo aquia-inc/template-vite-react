@@ -2,10 +2,10 @@
  * @module components/AppDrawer
  */
 import { styled } from '@mui/material/styles'
-import MuiDrawer from '@mui/material/Drawer'
+import MuiDrawer, { DrawerProps } from '@mui/material/Drawer'
 import { MuiDrawerWidth } from '@/theme/theme'
 
-const AppDrawer = styled(MuiDrawer, {
+const StyledDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
   '& .MuiPaper-root': {
@@ -54,9 +54,12 @@ const AppDrawer = styled(MuiDrawer, {
   },
 }))
 
-AppDrawer.defaultProps = {
-  role: 'navigation',
-  variant: 'permanent',
-}
+const AppDrawer = ({
+  role = 'navigation',
+  variant = 'permanent',
+  ...props
+}: DrawerProps): JSX.Element => (
+  <StyledDrawer role={role} variant={variant} {...props} />
+)
 
 export default AppDrawer
