@@ -71,11 +71,9 @@ describe.skip('main', () => {
       // expect the config to be logged to the console at the debug level
       expect(mockConsoleDebug).toHaveBeenCalledWith(SIGN_IN_GREETING, CONFIG)
       // import global mock of web-vitals to verify that the on* functions were called
-      const { onCLS, onFID, onFCP, onINP, onLCP, onTTFB } =
-        await import('web-vitals')
+      const { onCLS, onFCP, onINP, onLCP, onTTFB } = await import('web-vitals')
       // expect the on* functions to have been called
       expect(onCLS).toHaveBeenCalled()
-      expect(onFID).toHaveBeenCalled()
       expect(onFCP).toHaveBeenCalled()
       expect(onINP).toHaveBeenCalled()
       expect(onLCP).toHaveBeenCalled()
@@ -92,11 +90,9 @@ describe.skip('main', () => {
       // expect the config to not be logged to the console
       expect(mockConsoleDebug).not.toHaveBeenCalled()
       // import global mock of web-vitals and verify that the on* functions were called
-      const { onCLS, onFID, onFCP, onINP, onLCP, onTTFB } =
-        await import('web-vitals')
+      const { onCLS, onFCP, onINP, onLCP, onTTFB } = await import('web-vitals')
       // expect the on* functions to not have been called
       expect(onCLS).not.toHaveBeenCalled()
-      expect(onFID).not.toHaveBeenCalled()
       expect(onFCP).not.toHaveBeenCalled()
       expect(onINP).not.toHaveBeenCalled()
       expect(onLCP).not.toHaveBeenCalled()

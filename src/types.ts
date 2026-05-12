@@ -2,12 +2,6 @@
  * Type definitions for the application.
  * @module types
  */
-import type {
-  CognitoIdToken,
-  CognitoUser,
-  CognitoUserSession,
-} from 'amazon-cognito-identity-js'
-
 export type AppConfig = {
   AWS_REGION: string | 'us-east-1'
   API_URL: string
@@ -35,10 +29,10 @@ export type CognitoUserInfo = {
 }
 
 export type UserState = {
-  user: CognitoUser
+  user: unknown
   userInfo: CognitoUserInfo
-  userSession: CognitoUserSession
-  idToken: CognitoIdToken
+  userSession: unknown
+  idToken: unknown
   jwtToken: string
 }
 

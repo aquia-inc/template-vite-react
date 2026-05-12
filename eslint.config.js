@@ -49,7 +49,7 @@ export default defineConfig([
     },
     settings: {
       react: {
-        version: 'detect',
+        version: '19.2',
       },
     },
   },
@@ -85,6 +85,16 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+  {
+    files: ['config/jest/setupTests.cjs'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
+        ...globals.node,
+      },
     },
   },
   ...storybook.configs['flat/recommended'],

@@ -1,13 +1,14 @@
-import { Auth } from 'aws-amplify'
+import { fetchAuthSession, getCurrentUser } from 'aws-amplify/auth'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
 import { appRoutes } from '@/router/router'
 
 const createSession = (jwtToken = '123456') => ({
-  getAccessToken: () => ({
-    getJwtToken: () => jwtToken,
-  }),
-  isValid: () => true,
+  tokens: {
+    accessToken: {
+      toString: () => jwtToken,
+    },
+  },
 })
 
 const renderRoute = (initialEntry: string) => {
@@ -23,16 +24,14 @@ const renderRoute = (initialEntry: string) => {
 
 beforeEach(() => {
   jest.clearAllMocks()
-  ;(Auth.currentUserInfo as jest.Mock).mockResolvedValue({
+  ;(getCurrentUser as jest.Mock).mockResolvedValue({
     username: 'developer',
   })
 })
 
 test('unauthenticated visit to / renders the home page', async () => {
-  ;(Auth.currentSession as jest.Mock).mockRejectedValue(new Error('No session'))
-  ;(Auth.currentAuthenticatedUser as jest.Mock).mockRejectedValue(
-    new Error('No user'),
-  )
+  ;(fetchAuthSession as jest.Mock).mockRejectedValue(new Error('No session'))
+  ;(getCurrentUser as jest.Mock).mockRejectedValue(new Error('No user'))
 
   renderRoute('/')
 
@@ -44,8 +43,8 @@ test('unauthenticated visit to / renders the home page', async () => {
 })
 
 test('authenticated visit to / redirects to /app', async () => {
-  ;(Auth.currentSession as jest.Mock).mockResolvedValue(createSession())
-  ;(Auth.currentAuthenticatedUser as jest.Mock).mockResolvedValue({
+  ;(fetchAuthSession as jest.Mock).mockResolvedValue(createSession())
+  ;(getCurrentUser as jest.Mock).mockResolvedValue({
     username: 'developer',
   })
 
@@ -58,10 +57,8 @@ test('authenticated visit to / redirects to /app', async () => {
 })
 
 test('unauthenticated visit to /app redirects to login', async () => {
-  ;(Auth.currentSession as jest.Mock).mockRejectedValue(new Error('No session'))
-  ;(Auth.currentAuthenticatedUser as jest.Mock).mockRejectedValue(
-    new Error('No user'),
-  )
+  ;(fetchAuthSession as jest.Mock).mockRejectedValue(new Error('No session'))
+  ;(getCurrentUser as jest.Mock).mockRejectedValue(new Error('No user'))
 
   renderRoute('/app')
 
@@ -71,10 +68,8 @@ test('unauthenticated visit to /app redirects to login', async () => {
 })
 
 test('unknown routes fall back to the home page', async () => {
-  ;(Auth.currentSession as jest.Mock).mockRejectedValue(new Error('No session'))
-  ;(Auth.currentAuthenticatedUser as jest.Mock).mockRejectedValue(
-    new Error('No user'),
-  )
+  ;(fetchAuthSession as jest.Mock).mockRejectedValue(new Error('No session'))
+  ;(getCurrentUser as jest.Mock).mockRejectedValue(new Error('No user'))
 
   renderRoute('/missing')
 

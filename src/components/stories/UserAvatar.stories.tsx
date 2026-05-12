@@ -1,4 +1,4 @@
-import { StoryObj } from '@storybook/react'
+import type { StoryObj } from '@storybook/react-vite'
 import UserAvatar from '@/components/UserAvatar'
 
 type Story = StoryObj<typeof UserAvatar>

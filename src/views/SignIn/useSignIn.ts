@@ -1,8 +1,7 @@
 /**
  * @module views/SignIn/useSignIn
  */
-import { Auth } from 'aws-amplify'
-import { FederatedSignInOptions } from '@aws-amplify/auth/lib/types'
+import { signInWithRedirect } from 'aws-amplify/auth'
 import { BaseSyntheticEvent, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm, UseFormHandleSubmit } from 'react-hook-form'
@@ -12,6 +11,7 @@ import loginUser from '@/actions/loginUser'
 import useAlert from '@/hooks/useAlert'
 import useAuthDispatch from '@/store/auth/useAuthDispatch'
 import {
+  TContext,
   TFieldValues,
   useSignInReturnType,
 } from '@/views/SignIn/SignIn.interfaces'
@@ -46,11 +46,12 @@ const useSignIn = (): useSignInReturnType => {
     setError,
     setFocus,
     setValue,
+    setValues,
     subscribe,
     trigger,
     unregister,
     watch,
-  } = useForm({
+  } = useForm<TFieldValues, TContext, TFieldValues>({
     defaultValues: {
       email: '',
       password: '',
@@ -80,9 +81,7 @@ const useSignIn = (): useSignInReturnType => {
     }
 
     try {
-      await Auth.federatedSignIn({
-        provider: 'COGNITO',
-      } as FederatedSignInOptions)
+      await signInWithRedirect()
     } catch {
       setAlert({
         message: 'There was an error with the identity provider.',
@@ -141,6 +140,7 @@ const useSignIn = (): useSignInReturnType => {
     setError,
     setFocus,
     setValue,
+    setValues,
     subscribe,
     trigger,
     unregister,

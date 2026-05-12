@@ -2,7 +2,7 @@
  * Helper to return the Cognito JWT Token from the current session.
  * @module utils/getJWT
  */
-import { Auth } from 'aws-amplify'
+import { fetchAuthSession } from 'aws-amplify/auth'
 import AuthError from '@/errors/AuthError'
 
 /**
@@ -10,8 +10,8 @@ import AuthError from '@/errors/AuthError'
  * @returns {Promise<string>} The Cognito JWT Token.
  */
 const getJWT = async (): Promise<string> => {
-  const session = await Auth.currentSession()
-  const jwtToken = session.getAccessToken().getJwtToken()
+  const session = await fetchAuthSession()
+  const jwtToken = session.tokens?.accessToken?.toString()
 
   if (!jwtToken) {
     throw new AuthError().toResponse()

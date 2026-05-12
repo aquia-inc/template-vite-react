@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react'
+import type { Meta } from '@storybook/react-vite'
 import TextField from '@mui/material/TextField'
 import List from './List'
 import { useState } from 'react'
@@ -51,9 +51,7 @@ export default {
       },
     },
     deleteItem: {
-      control: {
-        type: 'function',
-      },
+      control: false,
     },
   },
 } as Meta

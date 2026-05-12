@@ -18,15 +18,18 @@ function configureCognito(): null {
   // Configure Amplify Auth with the Cognito User Pool
   Amplify.configure({
     Auth: {
-      region: CONFIG.AWS_REGION,
-      userPoolId: CONFIG.USER_POOL_ID,
-      userPoolWebClientId: CONFIG.USER_POOL_CLIENT_ID,
-      oauth: {
-        domain: CONFIG.COGNITO_DOMAIN,
-        scope: ['openid', 'email', 'profile'],
-        redirectSignIn: CONFIG.COGNITO_REDIRECT_SIGN_IN,
-        redirectSignOut: CONFIG.COGNITO_REDIRECT_SIGN_OUT,
-        responseType: 'code',
+      Cognito: {
+        userPoolId: CONFIG.USER_POOL_ID,
+        userPoolClientId: CONFIG.USER_POOL_CLIENT_ID,
+        loginWith: {
+          oauth: {
+            domain: CONFIG.COGNITO_DOMAIN,
+            scopes: ['openid', 'email', 'profile'],
+            redirectSignIn: [CONFIG.COGNITO_REDIRECT_SIGN_IN],
+            redirectSignOut: [CONFIG.COGNITO_REDIRECT_SIGN_OUT],
+            responseType: 'code',
+          },
+        },
       },
     },
   })

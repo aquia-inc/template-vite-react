@@ -1,5 +1,5 @@
-import type { StoryObj, Meta } from '@storybook/react'
-import { useArgs } from '@storybook/client-api'
+import type { StoryObj, Meta } from '@storybook/react-vite'
+import { useArgs } from 'storybook/preview-api'
 import MultiDropzone from '@/components/MultiDropzone/MultiDropzone'
 
 type Story = StoryObj<typeof MultiDropzone>
@@ -12,13 +12,13 @@ export default {
       control: 'object',
     },
     onFileSelect: {
-      control: 'function',
+      control: false,
     },
     uploading: {
       control: 'boolean',
     },
     onRemoveFile: {
-      control: 'function',
+      control: false,
     },
   },
   args: {

@@ -1,4 +1,4 @@
-import type { StoryObj, Meta } from '@storybook/react'
+import type { StoryObj, Meta } from '@storybook/react-vite'
 import { styled } from '@mui/material/styles'
 import MuiAlert, { AlertColor } from '@mui/material/Alert'
 import Box from '@mui/material/Box'
