@@ -1,7 +1,11 @@
 /**
  * @module store/auth/AuthProvider
  */
-import { fetchAuthSession, getCurrentUser } from 'aws-amplify/auth'
+import {
+  fetchAuthSession,
+  fetchUserAttributes,
+  getCurrentUser,
+} from 'aws-amplify/auth'
 import { useEffect, useReducer } from 'react'
 import { useLocation, useMatch, useNavigate } from 'react-router-dom'
 import { AuthActions } from '@/actions/actionTypes'
@@ -44,9 +48,10 @@ const AuthProvider: React.FC<AuthProviderProps> = ({
      */
     const init = async () => {
       try {
-        const [user, session] = await Promise.all([
+        const [user, session, attributes] = await Promise.all([
           getCurrentUser(),
           fetchAuthSession(),
+          fetchUserAttributes(),
         ])
 
         if (!user || !session) {
@@ -64,6 +69,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({
           payload: {
             jwtToken,
             username: user.username,
+            email: attributes.email,
             identityId: session.identityId,
             credentials: session.credentials,
           },

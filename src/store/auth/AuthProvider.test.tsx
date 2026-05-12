@@ -1,11 +1,16 @@
 import { screen, render, act, waitFor } from '@testing-library/react'
 import { useLocation, useMatch, useNavigate } from 'react-router-dom'
-import { fetchAuthSession, getCurrentUser } from 'aws-amplify/auth'
+import {
+  fetchAuthSession,
+  fetchUserAttributes,
+  getCurrentUser,
+} from 'aws-amplify/auth'
 import { AuthActions } from '@/actions/actionTypes'
 import AuthProvider from '@/store/auth/AuthProvider'
 import AuthDispatchContext from '@/store/auth/AuthDispatchContext'
 import AuthStateContext from '@/store/auth/AuthStateContext'
 import { Routes } from '@/router/constants'
+import { AuthState } from '@/store/auth/types'
 
 jest.mock('@/utils/config', () => {
   const { createAppConfig } = jest.requireActual('@/utils/appConfig')
@@ -27,6 +32,20 @@ jest.mock('@/utils/config', () => {
 const Content = () => (
   <AuthProvider>
     <div>Child component</div>
+  </AuthProvider>
+)
+
+const StateSnapshot = () => (
+  <AuthStateContext.Consumer>
+    {(state: AuthState) => (
+      <output data-testid="auth-state">{JSON.stringify(state)}</output>
+    )}
+  </AuthStateContext.Consumer>
+)
+
+const ContentWithState = () => (
+  <AuthProvider>
+    <StateSnapshot />
   </AuthProvider>
 )
 
@@ -66,27 +85,54 @@ describe('AuthProvider', () => {
   test('initializes the AuthContext on mount', async () => {
     const mockLocation = { pathname: Routes.AUTH_LOGIN }
     const mockMatch = { path: Routes.DASHBOARD }
-    const mockState = { jwtToken: 'mockJwtToken' }
 
     mockUseLocation.mockReturnValue(mockLocation)
     mockUseMatch.mockReturnValue(mockMatch)
-
-    await act(async () => {
-      render(
-        <AuthStateContext.Provider value={mockState}>
-          <AuthDispatchContext.Provider value={mockDispatch}>
-            <Content />
-          </AuthDispatchContext.Provider>
-        </AuthStateContext.Provider>,
-      )
+    ;(getCurrentUser as jest.Mock).mockResolvedValue({
+      username: 'abc123',
+      userId: 'abc123',
+    })
+    ;(fetchAuthSession as jest.Mock).mockResolvedValue({
+      credentials: {
+        accessKeyId: 'testAccessKeyId',
+        secretAccessKey: 'testSecretAccessKey',
+        sessionToken: 'testSessionToken',
+        expiration: new Date('2024-01-01T00:00:00.000Z'),
+      },
+      identityId: 'testIdentityId',
+      tokens: {
+        accessToken: {
+          toString: () => '123456',
+        },
+      },
+    })
+    ;(fetchUserAttributes as jest.Mock).mockResolvedValue({
+      email: 'demo@test.com',
     })
 
-    waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledTimes(1)
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: AuthActions.LOGIN_SUCCESS,
-        payload: structuredClone(mockState),
-      })
+    await act(async () => {
+      render(<ContentWithState />)
+    })
+
+    await waitFor(() => {
+      expect(getCurrentUser).toHaveBeenCalled()
+      expect(fetchAuthSession).toHaveBeenCalled()
+      expect(fetchUserAttributes).toHaveBeenCalled()
+      expect(screen.getByTestId('auth-state')).toHaveTextContent(
+        JSON.stringify({
+          jwtToken: '123456',
+          error: null,
+          username: 'abc123',
+          email: 'demo@test.com',
+          identityId: 'testIdentityId',
+          credentials: {
+            accessKeyId: 'testAccessKeyId',
+            secretAccessKey: 'testSecretAccessKey',
+            sessionToken: 'testSessionToken',
+            expiration: '2024-01-01T00:00:00.000Z',
+          },
+        }),
+      )
       expect(mockNavigate).not.toHaveBeenCalled()
     })
   })
