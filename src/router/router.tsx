@@ -18,6 +18,7 @@ import Home from '@/views/Home/Home'
 import RootProvider from '@/Root'
 import NavigateToHome from '@/components/react-router/NavigateToHome'
 import { getRouterBasename } from '@/utils/publicBasePath'
+import CONFIG from '@/utils/config'
 
 /**
  * The hash router for the application that defines routes
@@ -85,7 +86,7 @@ export const appRoutes: RouteObject[] = [
 ]
 
 const router = createBrowserRouter(appRoutes, {
-  basename: getRouterBasename(import.meta.env.VITE_PUBLIC_BASE_PATH),
+  basename: getRouterBasename(CONFIG.PUBLIC_BASE_PATH),
 })
 
 export default router

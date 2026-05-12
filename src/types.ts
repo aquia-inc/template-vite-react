@@ -12,6 +12,7 @@ export type AppConfig = {
   AWS_REGION: string | 'us-east-1'
   API_URL: string
   CF_DOMAIN: string
+  PUBLIC_BASE_PATH: string
   COGNITO_DOMAIN: string
   COGNITO_REDIRECT_SIGN_IN: string
   COGNITO_REDIRECT_SIGN_OUT: string
