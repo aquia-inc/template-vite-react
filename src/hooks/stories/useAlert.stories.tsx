@@ -15,8 +15,6 @@ const Button = styled(MuiButton)({
   right: 10,
 })
 
-Button.defaultProps = { variant: 'contained', size: 'large' }
-
 const AlertComponent = ({
   autoHide = true,
   message = DEFAULT_MESSAGE,
@@ -38,6 +36,8 @@ const AlertComponent = ({
       )}
       {!isVisible && (
         <Button
+          size="large"
+          variant="contained"
           onClick={() =>
             setAlert({
               autoHide,
@@ -50,7 +50,11 @@ const AlertComponent = ({
           Show alert
         </Button>
       )}
-      {isVisible && <Button onClick={clearAlert}>Clear alert</Button>}
+      {isVisible && (
+        <Button size="large" variant="contained" onClick={clearAlert}>
+          Clear alert
+        </Button>
+      )}
     </Box>
   )
 }

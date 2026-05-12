@@ -214,7 +214,7 @@ const Home: React.FC = (): JSX.Element => {
 
       <Container maxWidth="lg" sx={{ py: { xs: 8, md: 10 } }}>
         <Grid container spacing={4} alignItems="stretch">
-          <Grid item xs={12} md={7}>
+          <Grid size={{ xs: 12, md: 7 }}>
             <Stack spacing={3}>
               <Chip
                 label="Developer template"
@@ -277,7 +277,7 @@ const Home: React.FC = (): JSX.Element => {
             </Stack>
           </Grid>
 
-          <Grid item xs={12} md={5}>
+          <Grid size={{ xs: 12, md: 5 }}>
             <Paper
               elevation={0}
               sx={{
@@ -420,7 +420,7 @@ const Home: React.FC = (): JSX.Element => {
 
       <Container maxWidth="lg" sx={{ pb: { xs: 8, md: 10 } }}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={0}
               sx={{
@@ -492,7 +492,7 @@ const Home: React.FC = (): JSX.Element => {
             </Paper>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={0}
               sx={{

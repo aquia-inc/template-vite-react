@@ -5,7 +5,7 @@
  * @see https://material-ui.com/customization/themes/ for documentation.
  */
 import { createTheme } from '@mui/material/styles'
-import { CSSProperties } from '@mui/material/styles/createMixins'
+import type { CSSProperties } from 'react'
 
 export const MuiDrawerWidth = 200
 
@@ -30,10 +30,9 @@ declare module '@mui/material/SvgIcon' {
   }
 }
 
-declare module '@mui/material' {
+declare module '@mui/material/styles' {
   interface Mixins {
     drawer: CSSProperties
-    toolbar: CSSProperties
   }
 }
 
@@ -1009,7 +1008,7 @@ theme = createTheme(theme, {
       styleOverrides: {
         paper: {
           boxShadow: theme.shadows[6],
-          borderRadius: theme.shape.borderRadius * 1.5,
+          borderRadius: Number(theme.shape.borderRadius) * 1.5,
           border: `1px solid ${theme.palette.primary.dark}`,
         },
       },

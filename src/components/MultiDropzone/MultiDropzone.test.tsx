@@ -1,5 +1,4 @@
 import { render, fireEvent, screen, waitFor } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import MultiDropzone from '@/components/MultiDropzone/MultiDropzone'
 
 const onFileSelect = jest.fn()
@@ -18,21 +17,9 @@ test('renders without crashing', () => {
   expect(container.firstChild).toBeInTheDocument()
 })
 
-test('calls onFileSelect when a file is dropped', () => {
+test('calls onFileSelect when a file is dropped', async () => {
   const handleFileSelect = jest.fn()
-
   const file = new File(['hello'], 'hello.png', { type: 'image/png' })
-  const dataTransfer = {
-    files: [file],
-    items: [
-      {
-        kind: 'file',
-        type: file.type,
-        getAsFile: () => file,
-      },
-    ],
-    types: ['Files'],
-  }
 
   render(
     <MultiDropzone
@@ -43,15 +30,12 @@ test('calls onFileSelect when a file is dropped', () => {
     />,
   )
 
-  act(() => {
-    fireEvent.drop(
-      screen.getByLabelText('Drag and Drop File Selection'),
-      dataTransfer,
-    )
+  fireEvent.change(screen.getByLabelText(/drag and drop file selection/i), {
+    target: { files: [file] },
+  })
 
-    waitFor(() => {
-      expect(handleFileSelect).toHaveBeenCalledWith([file])
-    })
+  await waitFor(() => {
+    expect(handleFileSelect).toHaveBeenCalledWith([file])
   })
 })
 
@@ -86,19 +70,12 @@ test('displays uploaded files', () => {
   expect(uploadedFile).toBeInTheDocument()
 })
 
-test('displays an error message when a file exceeds the maxSize', () => {
+test('displays an error message when a file exceeds the maxSize', async () => {
   render(
     <MultiDropzone
       onFileSelect={() => ({})}
       onRemoveFile={() => ({})}
-      uploadedFiles={[
-        {
-          id: '1',
-          name: 'hello.png',
-          progress: 0,
-          error: 'File is too large.',
-        },
-      ]}
+      uploadedFiles={[]}
       maxSize={10}
       maxFiles={1}
       uploading={false}
@@ -110,27 +87,13 @@ test('displays an error message when a file exceeds the maxSize', () => {
     type: 'image/png',
   })
 
-  // Create a mock DataTransfer object with file larger than maxSize
-  const dataTransfer = {
-    files: [file],
-    items: [
-      {
-        kind: 'file',
-        type: file.type,
-        getAsFile: () => file,
-      },
-    ],
-    types: ['json'],
-  }
+  fireEvent.change(screen.getByLabelText(/drag and drop file selection/i), {
+    target: { files: [file] },
+  })
 
-  act(() => {
-    fireEvent.drop(
-      screen.getByLabelText('Drag and Drop File Selection'),
-      dataTransfer,
+  await waitFor(() => {
+    expect(screen.getAllByText(/File is too large\./i).length).toBeGreaterThan(
+      0,
     )
-
-    waitFor(() => {
-      expect(screen.getByText(/File is too large./i)).toBeInTheDocument()
-    })
   })
 })
