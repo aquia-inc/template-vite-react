@@ -59,19 +59,14 @@ const AuthProvider: React.FC<AuthProviderProps> = ({
           throw new Error('No jwtToken')
         }
 
-        // TODO: implement refresh sessions
-        // user.refreshSession(
-        //   session.getRefreshToken(),
-        //   async (err: any, session: CognitoUserSession) => {
-        //     if (err) {
-        //       throw err
-        //     }
-        //   }
-        // )
-
         dispatch({
           type: AuthActions.LOGIN_SUCCESS,
-          payload: { jwtToken },
+          payload: {
+            jwtToken,
+            username: user.username,
+            identityId: session.identityId,
+            credentials: session.credentials,
+          },
         })
 
         // if the unauthenticated user is trying to navigate to a

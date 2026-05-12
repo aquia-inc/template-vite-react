@@ -7,6 +7,23 @@ import AuthDispatchContext from '@/store/auth/AuthDispatchContext'
 import AuthStateContext from '@/store/auth/AuthStateContext'
 import { Routes } from '@/router/constants'
 
+jest.mock('@/utils/config', () => {
+  const { createAppConfig } = jest.requireActual('@/utils/appConfig')
+
+  return {
+    __esModule: true,
+    default: createAppConfig({
+      VITE_AWS_REGION: 'us-east-1',
+      VITE_COGNITO_DOMAIN: 'https://example.auth.us-east-1.amazoncognito.com',
+      VITE_COGNITO_REDIRECT_SIGN_IN: 'https://localhost:3000/auth/login',
+      VITE_COGNITO_REDIRECT_SIGN_OUT: 'https://localhost:3000/auth/logout',
+      VITE_IDP_ENABLED: 'false',
+      VITE_USER_POOL_CLIENT_ID: '1234567890123456789012',
+      VITE_USER_POOL_ID: 'us-east-1_123456789',
+    }),
+  }
+})
+
 const Content = () => (
   <AuthProvider>
     <div>Child component</div>

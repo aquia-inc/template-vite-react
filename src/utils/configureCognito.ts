@@ -3,10 +3,6 @@
  * @module utils/configureCognito
  * @see {@link dashboard/router/routes.tsx}
  */
-/**
- * Configures Amazon Cognito auth in the root loader of the router.
- * @see {@link dashboard/craco.config.js}.
- */
 import { Amplify } from 'aws-amplify'
 import CONFIG from '@/utils/config'
 

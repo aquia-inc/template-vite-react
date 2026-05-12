@@ -19,34 +19,6 @@ export type AppFeatureFlags = {
   IDP_ENABLED: boolean
 }
 
-export type CognitoUserInfo = {
-  attributes: {
-    email: string
-    sub?: string
-  }
-  id?: string
-  username: string
-}
-
-export type UserState = {
-  user: unknown
-  userInfo: CognitoUserInfo
-  userSession: unknown
-  idToken: unknown
-  jwtToken: string
-}
-
-export type UserDataType =
-  | (UserState &
-      CognitoUserInfo & {
-        role?: string
-        avatar?: string | null
-        email?: string
-        fullName?: string
-        password?: string
-      })
-  | null
-
 export type FormField = {
   name: string
   label?: string
