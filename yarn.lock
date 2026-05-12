@@ -5894,6 +5894,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"camelcase@npm:9.0.0":
+  version: 9.0.0
+  resolution: "camelcase@npm:9.0.0"
+  checksum: 10/3353142290814db68eaf2880bff094f25ee0d2ded4b99b20373e32758aa533abffe5da6aecba8627b3101ec1919c990c4ba41a981d8652d766273006360995fe
+  languageName: node
+  linkType: hard
+
 "camelcase@npm:^5.3.1":
   version: 5.3.1
   resolution: "camelcase@npm:5.3.1"
@@ -13949,7 +13956,7 @@ __metadata:
     "@unrs/resolver-binding-wasm32-wasi": "npm:1.11.1"
     "@vitejs/plugin-react": "npm:^6.0.1"
     aws-amplify: "npm:^6.17.0"
-    camelcase: "npm:^6.3.0"
+    camelcase: "npm:9.0.0"
     classnames: "npm:^2.5.1"
     clipboard-copy: "npm:^4.0.1"
     conventional-changelog-conventionalcommits: "npm:^8.0.0"
