@@ -17,6 +17,7 @@ import dashboardLoader from '@/views/Dashboard/Dashboard.loader'
 import Home from '@/views/Home/Home'
 import RootProvider from '@/Root'
 import NavigateToHome from '@/components/react-router/NavigateToHome'
+import { getRouterBasename } from '@/utils/publicBasePath'
 
 /**
  * The hash router for the application that defines routes
@@ -83,6 +84,8 @@ export const appRoutes: RouteObject[] = [
   },
 ]
 
-const router = createBrowserRouter(appRoutes)
+const router = createBrowserRouter(appRoutes, {
+  basename: getRouterBasename(import.meta.env.VITE_PUBLIC_BASE_PATH),
+})
 
 export default router

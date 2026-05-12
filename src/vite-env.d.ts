@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
   readonly VITE_APP_TITLE: string
+  readonly VITE_PUBLIC_BASE_PATH: string
   readonly VITE_CF_DOMAIN: string
   readonly VITE_USER_POOL_ID: string
   readonly VITE_USER_POOL_CLIENT_ID: string
