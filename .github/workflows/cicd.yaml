@@ -56,7 +56,7 @@ jobs:
           restore-keys: ${{ runner.os }}-yarn-
 
       - name: INSTALL - dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       - name: INSTALL - Playwright browser
         run: yarn test:e2e:install

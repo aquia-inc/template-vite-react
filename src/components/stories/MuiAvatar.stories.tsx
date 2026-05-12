@@ -1,4 +1,4 @@
-import { StoryObj } from '@storybook/react'
+import type { StoryObj } from '@storybook/react-vite'
 import Avatar from '@/components/mui/Avatar'
 
 type Story = StoryObj<typeof Avatar>

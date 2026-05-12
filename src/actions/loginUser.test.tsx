@@ -1,47 +1,36 @@
-// src/actions/loginUser.test.tsx
-import { Auth } from 'aws-amplify'
-import type {
-  CognitoUser,
-  CognitoUserSession,
-} from 'amazon-cognito-identity-js'
+import {
+  fetchAuthSession,
+  fetchUserAttributes,
+  getCurrentUser,
+  signIn,
+} from 'aws-amplify/auth'
 import { AuthActions } from '@/actions/actionTypes'
 import loginUser from '@/actions/loginUser'
 
-type SignInMock = jest.Mock
-type CurrentSessionMock = jest.Mock
-type User = CognitoUser & { attributes: { email: string } }
-
 const mockDispatch = jest.fn()
+
+const mockSession = (jwtToken: string | undefined = 'jwtToken') => ({
+  tokens: {
+    accessToken: {
+      toString: () => jwtToken,
+    },
+  },
+})
 
 describe('loginUser action', () => {
   const payload = { email: 'test@test.com', password: 'password' }
-  let session: jest.Mocked<CognitoUserSession>
-  let user: jest.Mocked<User>
-  let signInFn: jest.MockedFunction<SignInMock>
-  let sessionFn: jest.MockedFunction<CurrentSessionMock>
 
   beforeEach(() => {
     jest.resetAllMocks()
-
-    session = {
-      isValid: jest.fn().mockReturnValue(true),
-      getAccessToken: jest.fn().mockReturnValue({
-        getJwtToken: jest.fn().mockReturnValue('jwtToken'),
-      }),
-      getIdToken: jest.fn(),
-      getRefreshToken: jest.fn(),
-    }
-    sessionFn = Auth.currentSession as jest.MockedFunction<CurrentSessionMock>
-    sessionFn.mockResolvedValue(session)
-
-    user = {
-      ...user,
-      attributes: { email: payload.email },
-      getUsername: jest.fn().mockReturnValue('username'),
-      getSignInUserSession: jest.fn().mockReturnValue(true),
-    }
-    signInFn = Auth.signIn as jest.MockedFunction<SignInMock>
-    signInFn.mockResolvedValue(user)
+    ;(signIn as jest.Mock).mockResolvedValue({
+      isSignedIn: true,
+      nextStep: { signInStep: 'DONE' },
+    })
+    ;(fetchAuthSession as jest.Mock).mockResolvedValue(mockSession())
+    ;(getCurrentUser as jest.Mock).mockResolvedValue({ username: 'username' })
+    ;(fetchUserAttributes as jest.Mock).mockResolvedValue({
+      email: payload.email,
+    })
   })
 
   test('dispatches LOGIN_REQUEST action', async () => {
@@ -51,10 +40,13 @@ describe('loginUser action', () => {
     })
   })
 
-  test('calls Auth.signIn and Auth.currentSession on successful login', async () => {
+  test('calls signIn and fetchAuthSession on successful login', async () => {
     await loginUser(mockDispatch, payload)
-    expect(Auth.signIn).toHaveBeenCalledWith(payload.email, payload.password)
-    expect(Auth.currentSession).toHaveBeenCalled()
+    expect(signIn).toHaveBeenCalledWith({
+      username: payload.email,
+      password: payload.password,
+    })
+    expect(fetchAuthSession).toHaveBeenCalled()
   })
 
   test('dispatches LOGIN_SUCCESS action on successful login with the correct payload', async () => {
@@ -63,14 +55,14 @@ describe('loginUser action', () => {
       type: AuthActions.LOGIN_SUCCESS,
       payload: {
         jwtToken: 'jwtToken',
-        email: user.attributes.email,
-        username: user.getUsername(),
+        email: payload.email,
+        username: 'username',
       },
     })
   })
 
   test('dispatches LOGIN_FAILURE action on failed login', async () => {
-    signInFn.mockRejectedValue(new Error('Login failed'))
+    ;(signIn as jest.Mock).mockRejectedValue(new Error('Login failed'))
     await loginUser(mockDispatch, payload)
     expect(mockDispatch).toHaveBeenCalledWith({
       type: AuthActions.LOGIN_FAILURE,
@@ -79,9 +71,7 @@ describe('loginUser action', () => {
   })
 
   test('dispatches LOGIN_FAILURE action if the session is not valid', async () => {
-    sessionFn.mockResolvedValue({
-      isValid: jest.fn().mockReturnValue(false),
-    })
+    ;(signIn as jest.Mock).mockResolvedValue({ isSignedIn: false })
     await loginUser(mockDispatch, payload)
     expect(mockDispatch).toHaveBeenCalledWith({
       type: AuthActions.LOGIN_FAILURE,
@@ -90,12 +80,7 @@ describe('loginUser action', () => {
   })
 
   test('dispatches LOGIN_FAILURE action if the jwtToken is not valid', async () => {
-    sessionFn.mockResolvedValue({
-      isValid: jest.fn().mockReturnValue(true),
-      getAccessToken: jest.fn().mockReturnValue({
-        getJwtToken: jest.fn().mockReturnValue(''),
-      }),
-    })
+    ;(fetchAuthSession as jest.Mock).mockResolvedValue(mockSession(''))
     await loginUser(mockDispatch, payload)
     expect(mockDispatch).toHaveBeenCalledWith({
       type: AuthActions.LOGIN_FAILURE,
@@ -104,9 +89,7 @@ describe('loginUser action', () => {
   })
 
   test('dispatches LOGIN_FAILURE action if the user object is not valid', async () => {
-    signInFn.mockResolvedValue({
-      getSignInUserSession: jest.fn().mockReturnValue(null),
-    })
+    ;(getCurrentUser as jest.Mock).mockResolvedValue({})
     await loginUser(mockDispatch, payload)
     expect(mockDispatch).toHaveBeenCalledWith({
       type: AuthActions.LOGIN_FAILURE,

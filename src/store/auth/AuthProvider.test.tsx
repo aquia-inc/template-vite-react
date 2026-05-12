@@ -1,6 +1,6 @@
 import { screen, render, act, waitFor } from '@testing-library/react'
 import { useLocation, useMatch, useNavigate } from 'react-router-dom'
-import { Auth as mockAuth } from 'aws-amplify'
+import { fetchAuthSession, getCurrentUser } from 'aws-amplify/auth'
 import { AuthActions } from '@/actions/actionTypes'
 import AuthProvider from '@/store/auth/AuthProvider'
 import AuthDispatchContext from '@/store/auth/AuthDispatchContext'
@@ -97,8 +97,8 @@ describe('AuthProvider', () => {
       expect(mockUseLocation).toHaveBeenCalled()
       expect(mockUseMatch).toHaveBeenCalled()
       expect(mockUseNavigate).toHaveBeenCalled()
-      expect(mockAuth.currentAuthenticatedUser).toHaveBeenCalled()
-      expect(mockAuth.currentSession).toHaveBeenCalled()
+      expect(getCurrentUser).toHaveBeenCalled()
+      expect(fetchAuthSession).toHaveBeenCalled()
       expect(mockDispatch).toHaveBeenCalledTimes(1)
       expect(mockDispatch).toHaveBeenCalledWith({
         type: AuthActions.LOGIN_FAILURE,
@@ -117,10 +117,10 @@ describe('AuthProvider', () => {
     mockUseMatch.mockReturnValue(mockMatch)
 
     // @ts-expect-error
-    mockAuth.currentAuthenticatedUser.mockResolvedValue({ username: 'test' })
+    getCurrentUser.mockResolvedValue({ username: 'test' })
     // @ts-expect-error
-    mockAuth.currentSession.mockResolvedValue({
-      getAccessToken: () => ({ getJwtToken: () => '123456' }),
+    fetchAuthSession.mockResolvedValue({
+      tokens: { accessToken: { toString: () => '123456' } },
     })
 
     await act(async () => {
@@ -146,9 +146,7 @@ describe('AuthProvider', () => {
     mockUseMatch.mockReturnValue(mockMatch)
 
     // @ts-expect-error
-    mockAuth.currentAuthenticatedUser.mockRejectedValue(
-      new Error('No user or session'),
-    )
+    getCurrentUser.mockRejectedValue(new Error('No user or session'))
 
     act(() => {
       render(
@@ -165,8 +163,8 @@ describe('AuthProvider', () => {
 
   test(`redirects to ${Routes.AUTH_LOGIN} if the current session does not get a valid jwtToken`, async () => {
     // @ts-expect-error
-    mockAuth.currentSession.mockResolvedValue({
-      getAccessToken: () => ({ getJwtToken: () => '' }),
+    fetchAuthSession.mockResolvedValue({
+      tokens: { accessToken: { toString: () => '' } },
     })
 
     mockUseLocation.mockReturnValue({ pathname: Routes.DASHBOARD })

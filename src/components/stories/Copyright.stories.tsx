@@ -1,4 +1,4 @@
-import type { StoryObj, Meta } from '@storybook/react'
+import type { StoryObj, Meta } from '@storybook/react-vite'
 import Copyright from '@/components/Copyright'
 
 type Story = StoryObj<typeof Copyright>

@@ -1,37 +1,32 @@
-import { Auth } from 'aws-amplify'
+import { fetchAuthSession, signInWithRedirect } from 'aws-amplify/auth'
 import { AuthActions } from '@/actions/actionTypes'
 import loginUserFederated from '@/actions/loginUserFederated'
+
+const mockSession = (jwtToken: string | undefined = 'testToken') => ({
+  credentials: {
+    accessKeyId: 'testAccessKeyId',
+    sessionToken: 'testSessionToken',
+    secretAccessKey: 'testSecretAccessKey',
+    expiration: new Date('2024-01-01T00:00:00.000Z'),
+  },
+  identityId: 'testIdentityId',
+  tokens: {
+    accessToken: {
+      toString: () => jwtToken,
+    },
+  },
+})
 
 describe('loginUserFederated', () => {
   let mockDispatch: jest.Mock
 
   beforeEach(() => {
     mockDispatch = jest.fn()
-  })
-
-  afterEach(() => {
     jest.clearAllMocks()
+    ;(fetchAuthSession as jest.Mock).mockResolvedValue(mockSession())
   })
 
   test('dispatches LOGIN_REQUEST action', async () => {
-    const mockUser = {
-      accessKeyId: 'testAccessKeyId',
-      sessionToken: 'testSessionToken',
-      secretAccessKey: 'testSecretAccessKey',
-      identityId: 'testIdentityId',
-      authenticated: true,
-      expiration: new Date(),
-    }
-
-    const mockToken = 'testToken'
-
-    ;(Auth.federatedSignIn as jest.Mock).mockResolvedValue(mockUser)
-    ;(Auth.currentSession as jest.Mock).mockResolvedValue({
-      getAccessToken: () => ({
-        getJwtToken: () => mockToken,
-      }),
-    })
-
     await loginUserFederated(mockDispatch)
 
     expect(mockDispatch).toHaveBeenCalledWith({
@@ -40,36 +35,23 @@ describe('loginUserFederated', () => {
   })
 
   test('dispatches LOGIN_SUCCESS action when login is successful', async () => {
-    const mockUser = {
-      accessKeyId: 'testAccessKeyId',
-      sessionToken: 'testSessionToken',
-      secretAccessKey: 'testSecretAccessKey',
-      identityId: 'testIdentityId',
-      authenticated: true,
-      expiration: new Date(),
-    }
-
-    const mockToken = 'testToken'
-
-    ;(Auth.federatedSignIn as jest.Mock).mockResolvedValue(mockUser)
-    ;(Auth.currentSession as jest.Mock).mockResolvedValue({
-      getAccessToken: () => ({
-        getJwtToken: () => mockToken,
-      }),
-    })
-
     await loginUserFederated(mockDispatch)
 
+    expect(signInWithRedirect).toHaveBeenCalled()
     expect(mockDispatch).toHaveBeenCalledWith({
       type: AuthActions.LOGIN_SUCCESS,
-      payload: mockUser,
+      payload: {
+        credentials: mockSession().credentials,
+        identityId: 'testIdentityId',
+        jwtToken: 'testToken',
+      },
     })
   })
 
   test('dispatches LOGIN_FAILURE action when login fails', async () => {
     const mockError = new Error('login failed')
 
-    ;(Auth.federatedSignIn as jest.Mock).mockRejectedValue(mockError)
+    ;(signInWithRedirect as jest.Mock).mockRejectedValue(mockError)
 
     await loginUserFederated(mockDispatch)
 
@@ -80,23 +62,7 @@ describe('loginUserFederated', () => {
   })
 
   test('dispatches LOGIN_FAILURE action when no JWT token is found', async () => {
-    const mockUser = {
-      accessKeyId: 'testAccessKeyId',
-      sessionToken: 'testSessionToken',
-      secretAccessKey: 'testSecretAccessKey',
-      identityId: 'testIdentityId',
-      authenticated: true,
-      expiration: new Date(),
-    }
-
-    const mockToken = ''
-
-    ;(Auth.federatedSignIn as jest.Mock).mockResolvedValue(mockUser)
-    ;(Auth.currentSession as jest.Mock).mockResolvedValue({
-      getAccessToken: () => ({
-        getJwtToken: () => mockToken,
-      }),
-    })
+    ;(fetchAuthSession as jest.Mock).mockResolvedValue(mockSession(''))
 
     await loginUserFederated(mockDispatch)
 

@@ -1,15 +1,12 @@
-import { withThemeFromJSXProvider } from '@storybook/addon-styling'
+import type { Decorator } from '@storybook/react'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import theme from '../src/theme/theme'
 
-export const decorators = [
-  withThemeFromJSXProvider({
-    themes: {
-      light: theme,
-      dark: theme,
-    },
-    defaultTheme: 'light',
-    Provider: ThemeProvider,
-    GlobalStyles: CssBaseline,
-  }),
+export const decorators: Decorator[] = [
+  (Story) => (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Story />
+    </ThemeProvider>
+  ),
 ]

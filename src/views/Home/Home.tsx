@@ -154,12 +154,14 @@ const Home: React.FC = (): JSX.Element => {
         <Container maxWidth="lg">
           <Stack
             direction="row"
-            alignItems="center"
-            justifyContent="space-between"
             spacing={2}
-            sx={{ minHeight: 76 }}
+            sx={{
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              minHeight: 76,
+            }}
           >
-            <Stack direction="row" spacing={1.5} alignItems="center">
+            <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
               <Box
                 sx={{
                   alignItems: 'center',
@@ -213,7 +215,7 @@ const Home: React.FC = (): JSX.Element => {
       </Box>
 
       <Container maxWidth="lg" sx={{ py: { xs: 8, md: 10 } }}>
-        <Grid container spacing={4} alignItems="stretch">
+        <Grid container spacing={4} sx={{ alignItems: 'stretch' }}>
           <Grid size={{ xs: 12, md: 7 }}>
             <Stack spacing={3}>
               <Chip
@@ -342,7 +344,12 @@ const Home: React.FC = (): JSX.Element => {
                 >
                   {codeSample.join('\n')}
                 </Box>
-                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  useFlexGap
+                  sx={{ flexWrap: 'wrap' }}
+                >
                   {workflowCommands.map((command) => (
                     <Chip
                       key={command}
@@ -454,7 +461,7 @@ const Home: React.FC = (): JSX.Element => {
                           <Stack
                             direction="row"
                             spacing={1.5}
-                            alignItems="center"
+                            sx={{ alignItems: 'center' }}
                           >
                             <Chip
                               label={step}
@@ -518,7 +525,7 @@ const Home: React.FC = (): JSX.Element => {
                       key={label}
                       direction={{ xs: 'column', sm: 'row' }}
                       spacing={2}
-                      justifyContent="space-between"
+                      sx={{ justifyContent: 'space-between' }}
                     >
                       <Typography
                         variant="subtitle1"

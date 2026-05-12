@@ -3,7 +3,7 @@
  * @module actions/loginUserFederated
  */
 import React from 'react'
-import { Auth } from 'aws-amplify'
+import { fetchAuthSession, signInWithRedirect } from 'aws-amplify/auth'
 import { AuthActions } from '@/actions/actionTypes'
 
 export default async function loginUserFederated(
@@ -15,31 +15,18 @@ export default async function loginUserFederated(
 ) {
   try {
     dispatch({ type: AuthActions.LOGIN_REQUEST })
-    const user = await Auth.federatedSignIn()
-    const jwtToken = await (await Auth.currentSession())
-      .getAccessToken()
-      .getJwtToken()
+    await signInWithRedirect()
+    const session = await fetchAuthSession()
+    const jwtToken = session.tokens?.accessToken?.toString()
 
     if (!jwtToken) {
       throw new Error('No JWT token found')
     }
 
-    const {
-      accessKeyId,
-      sessionToken,
-      secretAccessKey,
-      identityId,
-      authenticated,
-      expiration,
-    } = user
-
     const data = {
-      accessKeyId,
-      sessionToken,
-      secretAccessKey,
-      identityId,
-      authenticated,
-      expiration,
+      jwtToken,
+      identityId: session.identityId,
+      credentials: session.credentials,
     }
 
     dispatch({ type: AuthActions.LOGIN_SUCCESS, payload: data })

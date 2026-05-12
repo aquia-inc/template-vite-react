@@ -15,7 +15,7 @@ This project contains the application's UI built with React, Vite, TypeScript, a
 1. Clone the repository and `cd` into the root directory:
 
 ```shell
-git clone git@github.com:aquia/template-vite-react`
+git clone git@github.com:aquia/template-vite-react.git
 
 cd template-vite-react
 ```
