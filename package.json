@@ -42,7 +42,7 @@
     "fix:other": "prettier --write . --ignore-path .gitignore --ignore-path .prettierignore",
     "semantic-release": "semantic-release",
     "postinstall": "yarn run prepare",
-    "prepare": "husky install",
+    "prepare": "husky",
     "sb": "yarn run storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
