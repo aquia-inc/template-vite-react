@@ -2,21 +2,6 @@ import { fetchAuthSession } from 'aws-amplify/auth'
 import { AuthErrorStatus } from '@/errors/AuthError'
 import getJWT from '@/utils/getJWT'
 
-class TestResponse {
-  status: number
-
-  constructor(_body?: BodyInit | null, init?: ResponseInit) {
-    this.status = init?.status ?? 200
-  }
-}
-
-beforeAll(() => {
-  Object.defineProperty(globalThis, 'Response', {
-    configurable: true,
-    value: TestResponse,
-  })
-})
-
 beforeEach(() => {
   jest.clearAllMocks()
 })
