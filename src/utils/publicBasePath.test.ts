@@ -21,11 +21,11 @@ describe('normalizePublicBasePath', () => {
 describe('getRouterBasename', () => {
   test.each([
     [undefined, undefined],
-    ['', undefined],
-    ['/', undefined],
-    ['/template-vite-react/', '/template-vite-react'],
-    ['template-vite-react', '/template-vite-react'],
-  ])('derives %p from %p', (value, expected) => {
+    [undefined, ''],
+    [undefined, '/'],
+    ['/template-vite-react', '/template-vite-react/'],
+    ['/template-vite-react', 'template-vite-react'],
+  ])('derives basename %p from public base path %p', (expected, value) => {
     expect(getRouterBasename(value)).toBe(expected)
   })
 })

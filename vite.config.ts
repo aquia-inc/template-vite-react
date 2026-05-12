@@ -6,7 +6,7 @@ import { normalizePublicBasePath } from './src/utils/publicBasePath'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '')
+  const env = loadEnv(mode, process.cwd(), 'VITE_')
 
   return {
     base: normalizePublicBasePath(env.VITE_PUBLIC_BASE_PATH),
