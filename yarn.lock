@@ -7967,7 +7967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.15.11, @swc/core@npm:^1.15.18":
+"@swc/core@npm:^1.15.18":
   version: 1.15.18
   resolution: "@swc/core@npm:1.15.18"
   dependencies:
@@ -8861,18 +8861,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react-swc@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "@vitejs/plugin-react-swc@npm:4.3.0"
-  dependencies:
-    "@rolldown/pluginutils": "npm:1.0.0-rc.7"
-    "@swc/core": "npm:^1.15.11"
-  peerDependencies:
-    vite: ^4 || ^5 || ^6 || ^7 || ^8
-  checksum: 10/a4b010ec9f93fe8e3dd2172a8712812592c7ad271dcf9f5887685ac74673448ecd82772ba3f8595a0a09d358789b3425a509cf80c92454ba09d164c9472c5248
-  languageName: node
-  linkType: hard
-
 "@vitejs/plugin-react@npm:^3.0.1":
   version: 3.1.0
   resolution: "@vitejs/plugin-react@npm:3.1.0"
@@ -8885,6 +8873,24 @@ __metadata:
   peerDependencies:
     vite: ^4.1.0-beta.0
   checksum: 10/54baf15170faed08c5c050ed6ac3b071e743d703f2c26ae685bf362bbaa2d8a733a98af0639f0662d474d95a6d91d008da9de8f3a51cc3e6660c4e642399cf2c
+  languageName: node
+  linkType: hard
+
+"@vitejs/plugin-react@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "@vitejs/plugin-react@npm:6.0.1"
+  dependencies:
+    "@rolldown/pluginutils": "npm:1.0.0-rc.7"
+  peerDependencies:
+    "@rolldown/plugin-babel": ^0.1.7 || ^0.2.0
+    babel-plugin-react-compiler: ^1.0.0
+    vite: ^8.0.0
+  peerDependenciesMeta:
+    "@rolldown/plugin-babel":
+      optional: true
+    babel-plugin-react-compiler:
+      optional: true
+  checksum: 10/a525799252fa6c12bf9a0a367b17dfc3d5e8e02ec0b5b81554db9d97b764c554be6b0686e3dd385b0ac0350f0c023120ce712d79feedd99fa2cb854b7cd1e960
   languageName: node
   linkType: hard
 
@@ -20224,7 +20230,7 @@ __metadata:
     "@types/react-helmet": "npm:^6.1.11"
     "@types/testing-library__jest-dom": "npm:^6.0.0"
     "@types/uuid": "npm:^9.0.8"
-    "@vitejs/plugin-react-swc": "npm:^4.3.0"
+    "@vitejs/plugin-react": "npm:^6.0.1"
     aws-amplify: "npm:^5.3.29"
     camelcase: "npm:^6.3.0"
     classnames: "npm:^2.5.1"
