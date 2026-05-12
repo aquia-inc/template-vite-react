@@ -29,6 +29,10 @@ const AuthReducer = (
       return {
         ...state,
         jwtToken: payload.jwtToken,
+        username: payload.username,
+        email: payload.email,
+        identityId: payload.identityId,
+        credentials: payload.credentials,
         error: null,
       }
 

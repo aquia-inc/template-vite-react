@@ -2,11 +2,11 @@
 
 ## Overview
 
-This project contains the application's UI built with React, Vite, TypeScript, and SWC. It requires Node.js v20, [nvm](https://github.com/nvm-sh/nvm) (or [n](https://github.com/tj/n)), and Yarn v4.
+This project contains the application's UI built with React, Vite, TypeScript, and SWC. It requires Node.js v24, [nvm](https://github.com/nvm-sh/nvm) (or [n](https://github.com/tj/n)), and Yarn v4.
 
 ## System Requirements
 
-- [Node 20](https://nodejs.org/en/download)
+- [Node 24](https://nodejs.org/en/download)
 - [Yarn](https://yarnpkg.com/getting-started/install)
 - [GitLeaks](https://github.com/gitleaks/gitleaks/tree/master#installing)
 
@@ -15,7 +15,7 @@ This project contains the application's UI built with React, Vite, TypeScript, a
 1. Clone the repository and `cd` into the root directory:
 
 ```shell
-git clone git@github.com:aquia/template-vite-react`
+git clone git@github.com:aquia/template-vite-react.git
 
 cd template-vite-react
 ```
@@ -102,3 +102,27 @@ To start the local development server, run the following from the root directory
 ```shell
 yarn dev
 ```
+
+## GitHub Pages Demo
+
+The demo app deploys to GitHub Pages at:
+
+```text
+https://aquia-inc.github.io/template-vite-react/
+```
+
+GitHub Pages must be configured in the repository settings with **Build and deployment** source set to **GitHub Actions**.
+
+The CI/CD workflow deploys on every push to `main` after the existing lint, unit test, Playwright, build, and semantic-release steps complete. Pull requests keep the local `/` base path and do not deploy.
+
+The Pages build uses these public environment values:
+
+```shell
+VITE_PUBLIC_BASE_PATH=/template-vite-react/
+VITE_CF_DOMAIN=https://aquia-inc.github.io/template-vite-react/
+VITE_IDP_ENABLED=false
+```
+
+Leave the Cognito environment values blank or unset for the public demo. The app treats missing or invalid Cognito settings as auth disabled, so the Pages demo does not expose a real user pool.
+
+For project Pages, Vite builds assets under `/template-vite-react/` and React Router uses the matching basename. The workflow also copies `dist/index.html` to `dist/404.html` so direct visits to client-side routes can load the SPA fallback.

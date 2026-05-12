@@ -3,14 +3,10 @@
  * @module views/Dashboard/Dashboard.loader
  * @see {@link dashboard/Routes}
  */
-import { Auth } from 'aws-amplify'
-
-type DashboardUserInfo = {
-  username?: string | null
-}
+import { getCurrentUser } from 'aws-amplify/auth'
 
 const dashboardLoader = async (): Promise<{ username: string }> => {
-  const userInfo = (await Auth.currentUserInfo()) as DashboardUserInfo | null
+  const userInfo = await getCurrentUser()
 
   return {
     username: userInfo?.username ?? '',

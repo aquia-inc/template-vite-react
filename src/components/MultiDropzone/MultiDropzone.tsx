@@ -236,7 +236,7 @@ const MultiDropZone: React.FC<MultiDropzoneProps> = ({
       </StyledBox>
 
       {errors.length > 0 && (
-        <Box mt={2}>
+        <Box sx={{ mt: 2 }}>
           {errors.map(({ id, message }) => (
             <Typography key={id} variant="body2" color="error">
               {message}
@@ -246,7 +246,7 @@ const MultiDropZone: React.FC<MultiDropzoneProps> = ({
       )}
 
       {uploadedFiles.length > 0 && (
-        <Box mt={2}>
+        <Box sx={{ mt: 2 }}>
           {uploadedFiles.map((file) => (
             <UploadFileCell
               file={file}

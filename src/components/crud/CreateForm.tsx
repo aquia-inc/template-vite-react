@@ -114,13 +114,9 @@ const CreateForm: React.FC<CreateFormProps> = ({
                       label={field.label}
                       required={field.required}
                       error={!!error}
+                      fullWidth
                       helperText={error ? error?.message : ' '}
-                      InputProps={{
-                        error: !!error,
-                        fullWidth: true,
-                        multiline: field.multiline,
-                        required: field.required,
-                      }}
+                      multiline={field.multiline}
                     />
                   )}
                 />

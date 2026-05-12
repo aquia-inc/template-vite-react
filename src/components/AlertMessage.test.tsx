@@ -32,7 +32,8 @@ test('renders the alert with the given message and severity', () => {
   const alertElement = screen.getByText(/Test Alert/i)
   expect(alertElement).toBeInTheDocument()
   const parentElement = alertElement.parentElement
-  expect(parentElement).toHaveClass('MuiAlert-standardError')
+  expect(parentElement).toHaveClass('MuiAlert-standard')
+  expect(parentElement).toHaveClass('MuiAlert-colorError')
 })
 
 test('calls clearAlert when the close button is clicked', () => {

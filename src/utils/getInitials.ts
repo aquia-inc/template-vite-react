@@ -40,7 +40,7 @@ const getInitialsCaseInsensitive = ({
     if (id.indexOf('.') !== -1) {
       return id
         .split('.')
-        .reduce((response, word) => (response += word.slice(0, 1)), '')
+        .reduce((response, word) => response + word.slice(0, 1), '')
     }
     // otherwise just return the first two letters
     return `${id[0]}${id.length > 1 ? id[1] : ''}`

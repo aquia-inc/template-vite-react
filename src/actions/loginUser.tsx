@@ -3,7 +3,12 @@
  * @module actions/loginUser
  */
 import React from 'react'
-import { Auth } from 'aws-amplify'
+import {
+  fetchAuthSession,
+  fetchUserAttributes,
+  getCurrentUser,
+  signIn,
+} from 'aws-amplify/auth'
 import { AuthActions } from '@/actions/actionTypes'
 import { LoginParams } from '@/hooks/types'
 import { AuthActionParams } from '@/store/auth/types'
@@ -20,28 +25,35 @@ export default async function loginUser(
 ): Promise<UserData | undefined> {
   try {
     dispatch({ type: AuthActions.LOGIN_REQUEST })
-    const user = await Auth.signIn(payload.email, payload.password)
-    const session = await Auth.currentSession()
+    const signInResult = await signIn({
+      username: payload.email,
+      password: payload.password,
+    })
 
-    if (!session || !session.isValid()) {
+    if (!signInResult.isSignedIn) {
       throw new Error('Invalid user session')
     }
 
-    const jwtToken = await session?.getAccessToken()?.getJwtToken()
+    const [session, user, attributes] = await Promise.all([
+      fetchAuthSession(),
+      getCurrentUser(),
+      fetchUserAttributes(),
+    ])
+    const jwtToken = session.tokens?.accessToken?.toString()
 
     // If we don't have a jwtToken, throw an error
     if (!jwtToken) {
       throw new Error('No JWT token')
     }
 
-    if (!user?.getSignInUserSession()) {
+    if (!user?.username) {
       throw new Error('Invalid user')
     }
 
     const data: UserData = {
       jwtToken,
-      email: user.attributes.email,
-      username: user.getUsername(),
+      email: attributes.email ?? payload.email,
+      username: user.username,
     }
     dispatch({ type: AuthActions.LOGIN_SUCCESS, payload: data })
     return data

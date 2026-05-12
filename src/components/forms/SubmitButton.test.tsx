@@ -12,7 +12,7 @@ test('applies default props correctly', () => {
   const buttonElement = screen.getByRole('button')
   expect(buttonElement).toHaveAttribute('type', 'submit')
   expect(buttonElement).toHaveClass('MuiButton-contained')
-  expect(buttonElement).toHaveClass('MuiButton-containedPrimary')
+  expect(buttonElement).toHaveClass('MuiButton-colorPrimary')
   expect(buttonElement.textContent).toBe('Submit')
 })
 
@@ -24,7 +24,7 @@ test('applies passed props correctly', () => {
   )
   const buttonElement = screen.getByRole('button')
   expect(buttonElement).toHaveClass('MuiButton-outlined')
-  expect(buttonElement).toHaveClass('MuiButton-outlinedSecondary')
+  expect(buttonElement).toHaveClass('MuiButton-colorSecondary')
   expect(buttonElement.textContent).toBe('Save')
 })
 

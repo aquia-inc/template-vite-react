@@ -7,6 +7,15 @@ import { AuthActions } from '@/actions/actionTypes'
  */
 export type AuthState = {
   jwtToken?: string
+  username?: string
+  email?: string
+  identityId?: string
+  credentials?: {
+    accessKeyId: string
+    secretAccessKey: string
+    sessionToken?: string
+    expiration?: Date
+  }
   error?: Error | null
 }
 

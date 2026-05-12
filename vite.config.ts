@@ -1,23 +1,29 @@
 import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, type PluginOption } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig, loadEnv, type PluginOption } from 'vite'
+import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
+import { normalizePublicBasePath } from './src/utils/publicBasePath'
 
 // https://vite.dev/config/
-export default defineConfig({
-  define: {
-    global: 'globalThis',
-  },
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), 'VITE_')
+
+  return {
+    base: normalizePublicBasePath(env.VITE_PUBLIC_BASE_PATH),
+    define: {
+      global: 'globalThis',
     },
-  },
-  plugins: [react(), visualizer() as PluginOption],
-  server: {
-    watch: {
-      ignored: ['**/coverage/**'],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+      },
     },
-  },
-  appType: 'spa',
+    plugins: [react(), visualizer() as PluginOption],
+    server: {
+      watch: {
+        ignored: ['**/coverage/**'],
+      },
+    },
+    appType: 'spa',
+  }
 })

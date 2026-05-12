@@ -1,4 +1,4 @@
-import { Auth } from 'aws-amplify'
+import { signInWithRedirect } from 'aws-amplify/auth'
 import { useNavigate } from 'react-router-dom'
 import { renderHook, act, waitFor } from '@testing-library/react'
 import loginUser from '@/actions/loginUser'
@@ -6,6 +6,23 @@ import useAlert from '@/hooks/useAlert'
 import useAuthDispatch from '@/store/auth/useAuthDispatch'
 import useSignIn from '@/views/SignIn/useSignIn'
 import AuthError from '@/errors/AuthError'
+
+jest.mock('@/utils/config', () => {
+  const { createAppConfig } = jest.requireActual('@/utils/appConfig')
+
+  return {
+    __esModule: true,
+    default: createAppConfig({
+      VITE_AWS_REGION: 'us-east-1',
+      VITE_COGNITO_DOMAIN: 'https://example.auth.us-east-1.amazoncognito.com',
+      VITE_COGNITO_REDIRECT_SIGN_IN: 'https://localhost:3000/auth/login',
+      VITE_COGNITO_REDIRECT_SIGN_OUT: 'https://localhost:3000/auth/logout',
+      VITE_IDP_ENABLED: 'false',
+      VITE_USER_POOL_CLIENT_ID: '1234567890123456789012',
+      VITE_USER_POOL_ID: 'us-east-1_123456789',
+    }),
+  }
+})
 
 jest.mock('@/actions/loginUser')
 jest.mock('react-router-dom', () => ({
@@ -46,13 +63,12 @@ test('handles form submission', async () => {
 })
 
 test('handles federated sign in', async () => {
-  ;(Auth.federatedSignIn as jest.Mock).mockResolvedValueOnce({})
   const { result } = renderHook(useSignIn)
   await act(async () => {
     await result.current.handleFederatedSignIn()
   })
   await waitFor(() => {
-    expect(Auth.federatedSignIn).toHaveBeenCalledWith({ provider: 'COGNITO' })
+    expect(signInWithRedirect).toHaveBeenCalled()
   })
 })
 
@@ -88,7 +104,7 @@ test('handles form submission error', async () => {
 })
 
 test('handles federated sign in error', async () => {
-  ;(Auth.federatedSignIn as jest.Mock).mockRejectedValueOnce(
+  ;(signInWithRedirect as jest.Mock).mockRejectedValueOnce(
     new AuthError({ status: 401, message: 'Unauthorized federated sign in' }),
   )
   const { result } = renderHook(useSignIn)

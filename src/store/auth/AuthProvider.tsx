@@ -1,7 +1,11 @@
 /**
  * @module store/auth/AuthProvider
  */
-import { Auth } from 'aws-amplify'
+import {
+  fetchAuthSession,
+  fetchUserAttributes,
+  getCurrentUser,
+} from 'aws-amplify/auth'
 import { useEffect, useReducer } from 'react'
 import { useLocation, useMatch, useNavigate } from 'react-router-dom'
 import { AuthActions } from '@/actions/actionTypes'
@@ -44,34 +48,31 @@ const AuthProvider: React.FC<AuthProviderProps> = ({
      */
     const init = async () => {
       try {
-        const [user, session] = await Promise.all([
-          Auth.currentAuthenticatedUser(),
-          Auth.currentSession(),
+        const [user, session, attributes] = await Promise.all([
+          getCurrentUser(),
+          fetchAuthSession(),
+          fetchUserAttributes(),
         ])
 
         if (!user || !session) {
           throw new Error('No user or session')
         }
 
-        const jwtToken = session?.getAccessToken()?.getJwtToken()
+        const jwtToken = session.tokens?.accessToken?.toString()
 
         if (!jwtToken) {
           throw new Error('No jwtToken')
         }
 
-        // TODO: implement refresh sessions
-        // user.refreshSession(
-        //   session.getRefreshToken(),
-        //   async (err: any, session: CognitoUserSession) => {
-        //     if (err) {
-        //       throw err
-        //     }
-        //   }
-        // )
-
         dispatch({
           type: AuthActions.LOGIN_SUCCESS,
-          payload: { jwtToken },
+          payload: {
+            jwtToken,
+            username: user.username,
+            email: attributes.email,
+            identityId: session.identityId,
+            credentials: session.credentials,
+          },
         })
 
         // if the unauthenticated user is trying to navigate to a

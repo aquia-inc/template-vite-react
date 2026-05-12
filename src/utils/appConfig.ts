@@ -8,6 +8,7 @@ type AppConfigEnv = {
   VITE_COGNITO_REDIRECT_SIGN_IN?: string
   VITE_COGNITO_REDIRECT_SIGN_OUT?: string
   VITE_IDP_ENABLED?: string
+  VITE_PUBLIC_BASE_PATH?: string
   VITE_USER_POOL_CLIENT_ID?: string
   VITE_USER_POOL_ID?: string
 }
@@ -42,6 +43,7 @@ export const createAppConfig = (env: AppConfigEnv): AppConfig => {
     AWS_REGION: authConfig.AWS_REGION,
     CF_DOMAIN: cfDomain,
     API_URL: buildApiUrl(cfDomain),
+    PUBLIC_BASE_PATH: env.VITE_PUBLIC_BASE_PATH ?? '/',
     COGNITO_DOMAIN: authConfig.COGNITO_DOMAIN,
     COGNITO_REDIRECT_SIGN_IN: authConfig.COGNITO_REDIRECT_SIGN_IN,
     COGNITO_REDIRECT_SIGN_OUT: authConfig.COGNITO_REDIRECT_SIGN_OUT,

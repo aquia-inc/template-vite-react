@@ -1,5 +1,5 @@
-import { Story, Meta } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
+import type { StoryFn, Meta } from '@storybook/react-vite'
+import { fn } from 'storybook/test'
 import TextField from '@mui/material/TextField'
 import CreateForm, { CreateFormProps } from './CreateForm'
 
@@ -9,15 +9,15 @@ export default {
 } as Meta
 
 const defaultArgs = {
-  onClose: action('closed'),
-  onSubmit: action('submitted'),
+  onClose: fn(),
+  onSubmit: fn(),
   open: true,
   title: 'Add a new vendor',
   submitLabel: 'Save',
   cancelLabel: 'Cancel',
 }
 
-const Template: Story<CreateFormProps> = (args) => <CreateForm {...args} />
+const Template: StoryFn<CreateFormProps> = (args) => <CreateForm {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
