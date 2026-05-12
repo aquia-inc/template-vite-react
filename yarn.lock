@@ -4566,7 +4566,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/hoist-non-react-statics@npm:^3.3.6":
+"@types/hoist-non-react-statics@npm:^3.3.7":
   version: 3.3.7
   resolution: "@types/hoist-non-react-statics@npm:3.3.7"
   dependencies:
@@ -12216,16 +12216,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-cookie@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "react-cookie@npm:8.0.1"
+"react-cookie@npm:^8.1.2":
+  version: 8.1.2
+  resolution: "react-cookie@npm:8.1.2"
   dependencies:
-    "@types/hoist-non-react-statics": "npm:^3.3.6"
+    "@types/hoist-non-react-statics": "npm:^3.3.7"
     hoist-non-react-statics: "npm:^3.3.2"
     universal-cookie: "npm:^8.0.0"
   peerDependencies:
     react: ">= 16.3.0"
-  checksum: 10/8b68cfa9697b28807790d9f8e96ea755ca339caba6a0ae6794f371f8c484717c5c496c8cdb4d2e826d21e3963fb3ceaf5143ef1774528ac4a8ab405a37d1915d
+  checksum: 10/0432e6fdc3706f21be5c78e37626fe0a92048efc651aae71a4ca1fedc7f04a6f877ef580f5950ab6c60b8d6130ff030838e3a6f2ef23b3bdb6814ecc912078dc
   languageName: node
   linkType: hard
 
@@ -13969,7 +13969,7 @@ __metadata:
     prop-types: "npm:^15.8.1"
     react: "npm:^19.2.6"
     react-animate-height: "npm:^3.2.3"
-    react-cookie: "npm:^8.0.1"
+    react-cookie: "npm:^8.1.2"
     react-docgen-typescript: "npm:^2.4.0"
     react-dom: "npm:^19.2.6"
     react-dropzone: "npm:^15.0.0"
