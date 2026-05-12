@@ -6258,16 +6258,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"conventional-changelog-conventionalcommits@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "conventional-changelog-conventionalcommits@npm:8.0.0"
-  dependencies:
-    compare-func: "npm:^2.0.0"
-  checksum: 10/23122a76c69ebe7490968f7c0779b0a6b73011eebbad0563ac5571c6015319acf13bb8dca178d7a5484f10b64744ae7ba35d40f71a8bdc5430e73dd7e032f45d
-  languageName: node
-  linkType: hard
-
-"conventional-changelog-conventionalcommits@npm:^9.2.0":
+"conventional-changelog-conventionalcommits@npm:9.3.1, conventional-changelog-conventionalcommits@npm:^9.2.0":
   version: 9.3.1
   resolution: "conventional-changelog-conventionalcommits@npm:9.3.1"
   dependencies:
@@ -13959,7 +13950,7 @@ __metadata:
     camelcase: "npm:9.0.0"
     classnames: "npm:^2.5.1"
     clipboard-copy: "npm:^4.0.1"
-    conventional-changelog-conventionalcommits: "npm:^8.0.0"
+    conventional-changelog-conventionalcommits: "npm:9.3.1"
     dotenv: "npm:^17.4.2"
     eslint: "npm:^10.3.0"
     eslint-config-prettier: "npm:^10.1.8"
