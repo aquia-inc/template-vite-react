@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv, type PluginOption } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { normalizePublicBasePath } from './src/utils/publicBasePath'
 

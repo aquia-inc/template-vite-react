@@ -109,7 +109,7 @@
     "@types/react-helmet": "^6.1.11",
     "@types/testing-library__jest-dom": "^6.0.0",
     "@types/uuid": "^9.0.8",
-    "@vitejs/plugin-react-swc": "^4.3.0",
+    "@vitejs/plugin-react": "^6.0.1",
     "camelcase": "^6.3.0",
     "conventional-changelog-conventionalcommits": "^8.0.0",
     "dotenv": "^16.6.1",
