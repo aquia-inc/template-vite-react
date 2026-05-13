@@ -9,7 +9,7 @@ const getStorage = (): Storage | undefined => {
     return undefined
   }
 
-  return window.localStorage
+  return window.sessionStorage
 }
 
 const isDemoAuthState = (value: unknown): value is AuthState =>

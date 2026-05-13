@@ -22,7 +22,7 @@ jest.mock('@/utils/config', () => {
 
 beforeEach(() => {
   jest.clearAllMocks()
-  window.localStorage.clear()
+  window.sessionStorage.clear()
 })
 
 test('signs in a demo user without calling Amplify signIn', async () => {

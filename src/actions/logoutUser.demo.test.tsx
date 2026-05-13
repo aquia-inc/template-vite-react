@@ -26,7 +26,7 @@ jest.mock('@/utils/config', () => {
 
 beforeEach(() => {
   jest.clearAllMocks()
-  window.localStorage.clear()
+  window.sessionStorage.clear()
 })
 
 test('clears demo auth state without calling Amplify signOut', async () => {

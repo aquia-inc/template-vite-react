@@ -19,7 +19,7 @@ jest.mock('@/utils/config', () => {
 })
 
 beforeEach(() => {
-  window.localStorage.clear()
+  window.sessionStorage.clear()
 })
 
 test('allows a demo auth session to access protected routes', async () => {

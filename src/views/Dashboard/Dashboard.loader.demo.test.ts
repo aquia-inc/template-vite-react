@@ -21,7 +21,7 @@ jest.mock('@/utils/config', () => {
 
 beforeEach(() => {
   jest.clearAllMocks()
-  window.localStorage.clear()
+  window.sessionStorage.clear()
 })
 
 test('returns the demo username without calling Amplify', async () => {

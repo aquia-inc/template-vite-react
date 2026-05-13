@@ -6,7 +6,7 @@ import {
 } from '@/utils/demoAuth'
 
 beforeEach(() => {
-  window.localStorage.clear()
+  window.sessionStorage.clear()
 })
 
 test('creates a deterministic demo auth state from an email address', () => {

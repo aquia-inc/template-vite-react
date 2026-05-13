@@ -39,7 +39,7 @@ const StateSnapshot = () => (
 
 beforeEach(() => {
   jest.clearAllMocks()
-  window.localStorage.clear()
+  window.sessionStorage.clear()
   ;(useLocation as jest.Mock).mockReturnValue({ pathname: '/app' })
   ;(useMatch as jest.Mock).mockReturnValue({ path: '/app' })
   ;(useNavigate as jest.Mock).mockReturnValue(jest.fn())
