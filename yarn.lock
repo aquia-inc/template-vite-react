@@ -1252,13 +1252,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/config-conventional@npm:^21.0.0":
-  version: 21.0.0
-  resolution: "@commitlint/config-conventional@npm:21.0.0"
+"@commitlint/config-conventional@npm:^21.0.1":
+  version: 21.0.1
+  resolution: "@commitlint/config-conventional@npm:21.0.1"
   dependencies:
-    "@commitlint/types": "npm:^21.0.0"
+    "@commitlint/types": "npm:^21.0.1"
     conventional-changelog-conventionalcommits: "npm:^9.2.0"
-  checksum: 10/f8d879228d46dd68135293851b76bd4419345829a4a7d8c3f6297d009a06af02079f4ab204958b5d3e8b94f6d440968a0e14075dca5ec6b3cf74272ba327cfbe
+  checksum: 10/aaf9c1cb1b625efd9ea37036121681fd6f70dd2b7d9e48b90236d6364dc23d21f3d14749ef6d5622d795369e5f571bfa05df4c10b8ab3b5221da1a89a315c871
   languageName: node
   linkType: hard
 
@@ -1416,6 +1416,16 @@ __metadata:
     conventional-commits-parser: "npm:^6.3.0"
     picocolors: "npm:^1.1.1"
   checksum: 10/7464bd3113fb2933a4e1df02c8594970a15206a00a0746a3b3253bd9225b5615fdf9d8c776e2e2c9919435495bd07bb11b415a3cb88eb04533f386182414dbdb
+  languageName: node
+  linkType: hard
+
+"@commitlint/types@npm:^21.0.1":
+  version: 21.0.1
+  resolution: "@commitlint/types@npm:21.0.1"
+  dependencies:
+    conventional-commits-parser: "npm:^6.3.0"
+    picocolors: "npm:^1.1.1"
+  checksum: 10/b82574ce2bf6455f8857e5df412170c9abd9bea4d0980f939ea5b762901fbb888fb51486a897e16f210d39edaa51c5b581dafd179f4519bc95178603bf4401d8
   languageName: node
   linkType: hard
 
@@ -13906,7 +13916,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.29.0"
     "@commitlint/cli": "npm:^21.0.0"
-    "@commitlint/config-conventional": "npm:^21.0.0"
+    "@commitlint/config-conventional": "npm:^21.0.1"
     "@emotion/react": "npm:^11.14.0"
     "@emotion/styled": "npm:^11.14.1"
     "@eslint/js": "npm:^10.0.1"

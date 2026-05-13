@@ -76,7 +76,7 @@
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@commitlint/cli": "^21.0.0",
-    "@commitlint/config-conventional": "^21.0.0",
+    "@commitlint/config-conventional": "^21.0.1",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.60.0",
     "@rolldown/binding-wasm32-wasi": "1.0.0",
