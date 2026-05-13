@@ -5,12 +5,20 @@ const path = require('path')
 // This is a custom Jest transformer turning file imports into filenames.
 // http://facebook.github.io/jest/docs/en/webpack.html
 
-const toPascalCase = (value) =>
-  value
-    .split(/[^a-zA-Z0-9]+/)
-    .filter(Boolean)
-    .map((segment) => `${segment[0].toUpperCase()}${segment.slice(1)}`)
+const toPascalCase = (value) => {
+  const words =
+    value
+      .replace(/([\p{Ll}\p{N}])(\p{Lu})/gu, '$1 $2')
+      .replace(/(\p{Lu}+)(\p{Lu}\p{Ll})/gu, '$1 $2')
+      .match(/[\p{L}\p{N}]+/gu) ?? []
+
+  return words
+    .map((word) => {
+      const [first = '', ...rest] = Array.from(word.toLocaleLowerCase())
+      return `${first.toLocaleUpperCase()}${rest.join('')}`
+    })
     .join('')
+}
 
 module.exports = {
   process(src, filename) {
