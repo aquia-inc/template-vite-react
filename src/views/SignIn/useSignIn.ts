@@ -103,15 +103,20 @@ const useSignIn = (): useSignInReturnType => {
       const { email, password } = data
       setLoading(true)
       try {
-        await loginUser(dispatch, { email, password })
-        setLoading(false)
+        const userData = await loginUser(dispatch, { email, password })
+
+        if (!userData) {
+          throw new Error('Login failed')
+        }
+
         navigate(Routes.DASHBOARD)
       } catch {
-        setLoading(false)
         setAlert({
           message: 'There was an error logging in. Please try again.',
           severity: 'error',
         })
+      } finally {
+        setLoading(false)
       }
     },
     [authEnabled, dispatch, navigate, setAlert],
