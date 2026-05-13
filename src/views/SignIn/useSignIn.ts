@@ -28,6 +28,7 @@ const useSignIn = (): useSignInReturnType => {
   const dispatch = useAuthDispatch()
   const navigate = useNavigate()
   const authEnabled = CONFIG.AUTH_ENABLED
+  const cognitoAuthEnabled = CONFIG.COGNITO_AUTH_ENABLED
 
   const [loading, setLoading] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -72,7 +73,7 @@ const useSignIn = (): useSignInReturnType => {
   })
 
   const handleFederatedSignIn = useCallback(async () => {
-    if (!authEnabled) {
+    if (!cognitoAuthEnabled) {
       setAlert({
         message: AUTH_DISABLED_HELP_TEXT,
         severity: 'warning',
@@ -88,7 +89,7 @@ const useSignIn = (): useSignInReturnType => {
         severity: 'error',
       })
     }
-  }, [authEnabled, setAlert])
+  }, [cognitoAuthEnabled, setAlert])
 
   const onSubmit = useCallback(
     async (data: TFieldValues) => {

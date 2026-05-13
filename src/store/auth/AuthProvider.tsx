@@ -16,6 +16,7 @@ import AuthDispatchContext from '@/store/auth/AuthDispatchContext'
 import AuthStateContext from '@/store/auth/AuthStateContext'
 import { Routes } from '@/router/constants'
 import CONFIG from '@/utils/config'
+import { getDemoAuthSession } from '@/utils/demoAuth'
 
 /**
  * The AuthContextProvider is used to provide user data to components.
@@ -38,6 +39,19 @@ const AuthProvider: React.FC<AuthProviderProps> = ({
    */
   useEffect(() => {
     if (!CONFIG.AUTH_ENABLED) {
+      return
+    }
+
+    if (CONFIG.DEMO_AUTH_ENABLED) {
+      const demoSession = getDemoAuthSession()
+
+      if (demoSession) {
+        dispatch({
+          type: AuthActions.LOGIN_SUCCESS,
+          payload: demoSession,
+        })
+      }
+
       return
     }
 

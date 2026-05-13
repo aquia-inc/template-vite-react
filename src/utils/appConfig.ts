@@ -7,6 +7,7 @@ type AppConfigEnv = {
   VITE_COGNITO_DOMAIN?: string
   VITE_COGNITO_REDIRECT_SIGN_IN?: string
   VITE_COGNITO_REDIRECT_SIGN_OUT?: string
+  VITE_DEMO_AUTH_ENABLED?: string
   VITE_IDP_ENABLED?: string
   VITE_PUBLIC_BASE_PATH?: string
   VITE_USER_POOL_CLIENT_ID?: string
@@ -27,6 +28,15 @@ export const buildApiUrl = (cfDomain: string) => {
   }
 }
 
+const areCognitoConfigValuesBlank = (authConfig: {
+  AWS_REGION: string
+  COGNITO_DOMAIN: string
+  COGNITO_REDIRECT_SIGN_IN: string
+  COGNITO_REDIRECT_SIGN_OUT: string
+  USER_POOL_CLIENT_ID: string
+  USER_POOL_ID: string
+}) => Object.values(authConfig).every((value) => value.trim() === '')
+
 export const createAppConfig = (env: AppConfigEnv): AppConfig => {
   const cfDomain = env.VITE_CF_DOMAIN ?? ''
   const authConfig = {
@@ -37,6 +47,11 @@ export const createAppConfig = (env: AppConfigEnv): AppConfig => {
     USER_POOL_CLIENT_ID: env.VITE_USER_POOL_CLIENT_ID ?? '',
     USER_POOL_ID: env.VITE_USER_POOL_ID ?? '',
   }
+  const cognitoAuthEnabled = isCognitoConfigValid(authConfig)
+  const demoAuthEnabled =
+    !cognitoAuthEnabled &&
+    areCognitoConfigValuesBlank(authConfig) &&
+    readBooleanEnv(env.VITE_DEMO_AUTH_ENABLED)
 
   return {
     //* AWS configuration
@@ -51,7 +66,9 @@ export const createAppConfig = (env: AppConfigEnv): AppConfig => {
     USER_POOL_ID: authConfig.USER_POOL_ID,
 
     //* Feature flags
-    AUTH_ENABLED: isCognitoConfigValid(authConfig),
+    AUTH_ENABLED: cognitoAuthEnabled || demoAuthEnabled,
+    COGNITO_AUTH_ENABLED: cognitoAuthEnabled,
+    DEMO_AUTH_ENABLED: demoAuthEnabled,
     IDP_ENABLED: readBooleanEnv(env.VITE_IDP_ENABLED),
   }
 }
