@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { renderHook, act, waitFor } from '@testing-library/react'
 import loginUser from '@/actions/loginUser'
 import useAlert from '@/hooks/useAlert'
+import { Routes } from '@/router/constants'
 import useAuthDispatch from '@/store/auth/useAuthDispatch'
 import useSignIn from '@/views/SignIn/useSignIn'
 import AuthError from '@/errors/AuthError'
@@ -43,7 +44,11 @@ beforeEach(() => {
 })
 
 test('handles form submission', async () => {
-  ;(loginUser as jest.Mock).mockResolvedValueOnce({})
+  ;(loginUser as jest.Mock).mockResolvedValueOnce({
+    jwtToken: 'jwtToken',
+    email: 'test@test.com',
+    username: 'username',
+  })
   const { result } = renderHook(useSignIn)
   await act(async () => {
     result.current.setValue('email', 'test@test.com')
@@ -58,7 +63,7 @@ test('handles form submission', async () => {
       email: 'test@test.com',
       password: 'password',
     })
-    expect(navigateMock).toHaveBeenCalled()
+    expect(navigateMock).toHaveBeenCalledWith(Routes.DASHBOARD)
   })
 })
 
@@ -96,6 +101,27 @@ test('handles form submission error', async () => {
   })
   await waitFor(() => {
     expect(result.current.loading).toBe(false)
+    expect(navigateMock).not.toHaveBeenCalled()
+    expect(setAlertMock).toHaveBeenCalledWith({
+      message: 'There was an error logging in. Please try again.',
+      severity: 'error',
+    })
+  })
+})
+
+test('does not navigate when login dispatches failure and returns no user data', async () => {
+  ;(loginUser as jest.Mock).mockResolvedValueOnce(undefined)
+  const { result } = renderHook(useSignIn)
+  await act(async () => {
+    result.current.setValue('email', 'test@test.com')
+    result.current.setValue('password', 'password')
+  })
+  await act(async () => {
+    await result.current.handleSubmit()
+  })
+  await waitFor(() => {
+    expect(result.current.loading).toBe(false)
+    expect(navigateMock).not.toHaveBeenCalled()
     expect(setAlertMock).toHaveBeenCalledWith({
       message: 'There was an error logging in. Please try again.',
       severity: 'error',
