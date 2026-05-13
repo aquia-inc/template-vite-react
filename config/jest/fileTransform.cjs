@@ -1,10 +1,24 @@
 'use strict'
 
 const path = require('path')
-const camelcase = require('camelcase')
 
 // This is a custom Jest transformer turning file imports into filenames.
 // http://facebook.github.io/jest/docs/en/webpack.html
+
+const toPascalCase = (value) => {
+  const words =
+    value
+      .replace(/([\p{Ll}\p{N}])(\p{Lu})/gu, '$1 $2')
+      .replace(/(\p{Lu}+)(\p{Lu}\p{Ll})/gu, '$1 $2')
+      .match(/[\p{L}\p{N}]+/gu) ?? []
+
+  return words
+    .map((word) => {
+      const [first = '', ...rest] = Array.from(word.toLocaleLowerCase())
+      return `${first.toLocaleUpperCase()}${rest.join('')}`
+    })
+    .join('')
+}
 
 module.exports = {
   process(src, filename) {
@@ -13,9 +27,7 @@ module.exports = {
     if (filename.match(/\.svg$/)) {
       // Based on how SVGR generates a component name:
       // https://github.com/smooth-code/svgr/blob/01b194cf967347d43d4cbe6b434404731b87cf27/packages/core/src/state.js#L6
-      const pascalCaseFilename = camelcase(path.parse(filename).name, {
-        pascalCase: true,
-      })
+      const pascalCaseFilename = toPascalCase(path.parse(filename).name)
       const componentName = `Svg${pascalCaseFilename}`
       return `const React = require('react');
       module.exports = {

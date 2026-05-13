@@ -10,6 +10,7 @@ import storybook from 'eslint-plugin-storybook'
 import eslintConfigPrettier from 'eslint-config-prettier'
 
 const sourceFiles = ['**/*.{js,mjs,cjs,jsx,ts,tsx}']
+const reactFiles = ['**/*.{jsx,tsx}']
 const testFiles = ['**/*.{test,spec}.{js,jsx,ts,tsx}']
 
 export default defineConfig([
@@ -55,8 +56,14 @@ export default defineConfig([
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
-  react.configs.flat.recommended,
-  react.configs.flat['jsx-runtime'],
+  {
+    ...react.configs.flat.recommended,
+    files: reactFiles,
+  },
+  {
+    ...react.configs.flat['jsx-runtime'],
+    files: reactFiles,
+  },
   reactHooks.configs.flat.recommended,
   reactRefresh.configs.vite,
   {
