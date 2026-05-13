@@ -120,8 +120,7 @@ const uploadedFiles: UploadedFile[] = [
   {
     id: 'sample-data-csv',
     name: 'sample-data.csv',
-    progress: 62,
-    showProgressBar: true,
+    progress: 100,
   },
 ]
 

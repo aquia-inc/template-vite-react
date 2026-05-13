@@ -16,7 +16,7 @@ export default {
 
 export const Default: Story = {}
 
-export const EmptyUsername: Story = {
+export const UsernameFallback: Story = {
   args: {
     username: '',
   },
