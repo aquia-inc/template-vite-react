@@ -63,6 +63,9 @@ jobs:
       - name: RELEASE - dry-run validation
         if: github.event_name == 'pull_request'
         run: yarn semantic-release --dry-run --no-ci --branches main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: INSTALL - Playwright browser
         run: yarn test:e2e:install
