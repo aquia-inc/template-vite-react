@@ -14,6 +14,12 @@ export const AUTH_DISABLED_MESSAGE = 'Authentication is currently disabled.'
 export const AUTH_DISABLED_HELP =
   'Provide valid Cognito environment variables to enable the sign-in experience.'
 
+export const DEMO_AUTH_MESSAGE =
+  'Demo auth mode is enabled for local and public review.'
+
+export const DEMO_AUTH_HELP =
+  'Demo auth mode is enabled. Any valid email and password will open the demo app.'
+
 export const SIGN_IN_CTA = 'Sign In'
 
 export const SIGN_IN_CTA_IDP = 'Login with IDP'

@@ -29,6 +29,8 @@ import { TContext, TFieldValues } from '@/views/SignIn/SignIn.interfaces'
 import {
   AUTH_DISABLED_HELP,
   AUTH_DISABLED_MESSAGE,
+  DEMO_AUTH_HELP,
+  DEMO_AUTH_MESSAGE,
   PUBLIC_APP_NAME,
   SIGN_IN_CTA,
   SIGN_IN_CTA_IDP,
@@ -80,6 +82,9 @@ const SignInForm: React.FC = () => {
       spacing={3}
     >
       {!authEnabled && <Alert severity="warning">{AUTH_DISABLED_HELP}</Alert>}
+      {CONFIG.DEMO_AUTH_ENABLED && (
+        <Alert severity="info">{DEMO_AUTH_HELP}</Alert>
+      )}
       <InputFormControl<TFieldValues, TContext>
         control={control}
         name="email"
@@ -142,7 +147,9 @@ const SignIn = (): JSX.Element => {
   const { breakpoints } = useTheme()
   const hidden = useMediaQuery(breakpoints.down('md'))
   const directions = CONFIG.AUTH_ENABLED
-    ? SIGN_IN_DIRECTIONS
+    ? CONFIG.DEMO_AUTH_ENABLED
+      ? DEMO_AUTH_MESSAGE
+      : SIGN_IN_DIRECTIONS
     : AUTH_DISABLED_MESSAGE
 
   return (

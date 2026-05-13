@@ -16,6 +16,8 @@ export type AppConfig = {
 
 export type AppFeatureFlags = {
   AUTH_ENABLED: boolean
+  COGNITO_AUTH_ENABLED: boolean
+  DEMO_AUTH_ENABLED: boolean
   IDP_ENABLED: boolean
 }
 

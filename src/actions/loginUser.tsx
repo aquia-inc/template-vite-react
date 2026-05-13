@@ -12,6 +12,8 @@ import {
 import { AuthActions } from '@/actions/actionTypes'
 import { LoginParams } from '@/hooks/types'
 import { AuthActionParams } from '@/store/auth/types'
+import CONFIG from '@/utils/config'
+import { createDemoAuthState, saveDemoAuthSession } from '@/utils/demoAuth'
 
 type UserData = {
   jwtToken: string
@@ -25,6 +27,15 @@ export default async function loginUser(
 ): Promise<UserData | undefined> {
   try {
     dispatch({ type: AuthActions.LOGIN_REQUEST })
+
+    if (CONFIG.DEMO_AUTH_ENABLED) {
+      const data = createDemoAuthState(payload.email) as UserData
+      saveDemoAuthSession(data)
+      dispatch({ type: AuthActions.LOGIN_SUCCESS, payload: data })
+
+      return data
+    }
+
     const signInResult = await signIn({
       username: payload.email,
       password: payload.password,

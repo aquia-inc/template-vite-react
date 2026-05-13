@@ -7,7 +7,7 @@ import { Amplify } from 'aws-amplify'
 import CONFIG from '@/utils/config'
 
 function configureCognito(): null {
-  if (!CONFIG.AUTH_ENABLED) {
+  if (!CONFIG.COGNITO_AUTH_ENABLED) {
     return null
   }
 
