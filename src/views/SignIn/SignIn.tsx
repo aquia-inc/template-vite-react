@@ -119,7 +119,7 @@ const SignInForm: React.FC = () => {
         {SIGN_IN_CTA}
       </SubmitButton>
       <LoadingIcon />
-      {CONFIG.IDP_ENABLED && (
+      {CONFIG.COGNITO_AUTH_ENABLED && CONFIG.IDP_ENABLED && (
         <>
           <Typography align="center" variant="subtitle2">
             or...

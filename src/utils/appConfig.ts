@@ -28,6 +28,15 @@ export const buildApiUrl = (cfDomain: string) => {
   }
 }
 
+const areCognitoConfigValuesBlank = (authConfig: {
+  AWS_REGION: string
+  COGNITO_DOMAIN: string
+  COGNITO_REDIRECT_SIGN_IN: string
+  COGNITO_REDIRECT_SIGN_OUT: string
+  USER_POOL_CLIENT_ID: string
+  USER_POOL_ID: string
+}) => Object.values(authConfig).every((value) => value.trim() === '')
+
 export const createAppConfig = (env: AppConfigEnv): AppConfig => {
   const cfDomain = env.VITE_CF_DOMAIN ?? ''
   const authConfig = {
@@ -40,7 +49,9 @@ export const createAppConfig = (env: AppConfigEnv): AppConfig => {
   }
   const cognitoAuthEnabled = isCognitoConfigValid(authConfig)
   const demoAuthEnabled =
-    !cognitoAuthEnabled && readBooleanEnv(env.VITE_DEMO_AUTH_ENABLED)
+    !cognitoAuthEnabled &&
+    areCognitoConfigValuesBlank(authConfig) &&
+    readBooleanEnv(env.VITE_DEMO_AUTH_ENABLED)
 
   return {
     //* AWS configuration

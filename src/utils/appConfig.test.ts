@@ -59,3 +59,19 @@ test('prefers real Cognito auth when both Cognito and demo auth are configured',
   expect(config.DEMO_AUTH_ENABLED).toBe(false)
   expect(config.AUTH_ENABLED).toBe(true)
 })
+
+test('keeps demo auth disabled when Cognito config is partially set and invalid', () => {
+  const config = createAppConfig({
+    VITE_DEMO_AUTH_ENABLED: 'true',
+    VITE_AWS_REGION: 'us-east-1',
+    VITE_COGNITO_DOMAIN: '',
+    VITE_COGNITO_REDIRECT_SIGN_IN: '',
+    VITE_COGNITO_REDIRECT_SIGN_OUT: '',
+    VITE_USER_POOL_CLIENT_ID: '',
+    VITE_USER_POOL_ID: '',
+  })
+
+  expect(config.COGNITO_AUTH_ENABLED).toBe(false)
+  expect(config.DEMO_AUTH_ENABLED).toBe(false)
+  expect(config.AUTH_ENABLED).toBe(false)
+})

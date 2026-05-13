@@ -41,10 +41,15 @@ export const getDemoAuthSession = (): AuthState | null => {
   try {
     const parsedSession = JSON.parse(rawSession)
 
-    return isDemoAuthState(parsedSession) ? parsedSession : null
+    if (isDemoAuthState(parsedSession)) {
+      return parsedSession
+    }
   } catch {
-    return null
+    // Fall through to clear corrupted demo session data.
   }
+
+  storage?.removeItem(DEMO_AUTH_STORAGE_KEY)
+  return null
 }
 
 export const saveDemoAuthSession = (state: AuthState) => {
