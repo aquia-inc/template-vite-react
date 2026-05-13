@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { renderHook, act, waitFor } from '@testing-library/react'
 import loginUser from '@/actions/loginUser'
 import useAlert from '@/hooks/useAlert'
+import { Routes } from '@/router/constants'
 import useAuthDispatch from '@/store/auth/useAuthDispatch'
 import useSignIn from '@/views/SignIn/useSignIn'
 import AuthError from '@/errors/AuthError'
@@ -62,7 +63,7 @@ test('handles form submission', async () => {
       email: 'test@test.com',
       password: 'password',
     })
-    expect(navigateMock).toHaveBeenCalledWith('/app')
+    expect(navigateMock).toHaveBeenCalledWith(Routes.DASHBOARD)
   })
 })
 
