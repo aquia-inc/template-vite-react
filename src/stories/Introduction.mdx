@@ -1,221 +1,132 @@
 import { Meta } from '@storybook/addon-docs/blocks'
-import Code from './assets/code-brackets.svg'
-import Colors from './assets/colors.svg'
-import Comments from './assets/comments.svg'
-import Direction from './assets/direction.svg'
-import Flow from './assets/flow.svg'
-import Plugin from './assets/plugin.svg'
-import Repo from './assets/repo.svg'
-import StackAlt from './assets/stackalt.svg'
 
-<Meta title="Home/Introduction" />
+<Meta title="Template/Introduction" />
 
 <style>
   {`
-    .subheading {
-      --mediumdark: '#999999';
-      font-weight: 700;
-      font-size: 13px;
-      color: #999;
-      letter-spacing: 6px;
-      line-height: 24px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      margin-top: 40px;
+    .template-intro {
+      max-width: 980px;
+      padding: 24px 8px 48px;
     }
 
-    .link-list {
+    .template-intro h1 {
+      color: #051094;
+      font-size: 44px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .template-intro p {
+      color: rgba(76, 78, 100, 0.78);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .template-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: 1fr 1fr;
-      row-gap: 10px;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin: 28px 0;
     }
 
-    @media (min-width: 620px) {
-      .link-list {
-        row-gap: 20px;
-        column-gap: 20px;
-        grid-template-columns: 1fr 1fr;
-      }
+    .template-card {
+      border: 1px solid rgba(76, 78, 100, 0.14);
+      border-radius: 8px;
+      padding: 18px;
     }
 
-    @media all and (-ms-high-contrast:none) {
-    .link-list {
-        display: -ms-grid;
-        -ms-grid-columns: 1fr 1fr;
-        -ms-grid-rows: 1fr 1fr;
-      }
-    }
-
-    .link-item {
+    .template-card strong {
+      color: rgba(0, 0, 0, 0.9);
       display: block;
-      padding: 20px;
-      border: 1px solid #00000010;
-      border-radius: 5px;
-      transition: background 150ms ease-out, border 150ms ease-out, transform 150ms ease-out;
-      color: #333333;
-      display: flex;
-      align-items: flex-start;
+      margin-bottom: 6px;
     }
 
-    .link-item:hover {
-      border-color: #1EA7FD50;
-      transform: translate3d(0, -3px, 0);
-      box-shadow: rgba(0, 0, 0, 0.08) 0 3px 10px 0;
-    }
-
-    .link-item:active {
-      border-color: #1EA7FD;
-      transform: translate3d(0, 0, 0);
-    }
-
-    .link-item strong {
-      font-weight: 700;
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .link-item img {
-      height: 40px;
-      width: 40px;
-      margin-right: 15px;
-      flex: none;
-    }
-
-    .link-item span,
-    .link-item p {
-      margin: 0;
+    .template-card span,
+    .template-list li {
+      color: rgba(76, 78, 100, 0.78);
       font-size: 14px;
-      line-height: 20px;
+      line-height: 1.6;
     }
 
-    .tip {
-      display: inline-block;
-      border-radius: 1em;
-      font-size: 11px;
-      line-height: 12px;
-      font-weight: 700;
-      background: #E7FDD8;
-      color: #66BF3C;
-      padding: 4px 12px;
-      margin-right: 10px;
-      vertical-align: top;
+    .template-list {
+      margin: 18px 0 0;
+      padding-left: 20px;
     }
 
-    .tip-wrapper {
-      font-size: 13px;
-      line-height: 20px;
-      margin-top: 40px;
-      margin-bottom: 40px;
-    }
-
-    .tip-wrapper code {
-      font-size: 12px;
-      display: inline-block;
+    .template-code {
+      background: #f7f7f9;
+      border: 1px solid rgba(76, 78, 100, 0.12);
+      border-radius: 8px;
+      color: #212121;
+      display: block;
+      font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+      margin-top: 18px;
+      padding: 16px;
+      white-space: pre-wrap;
     }
   `}
 </style>
 
-# Welcome to Storybook
+<div className="template-intro">
 
-Storybook helps you build UI components in isolation from your app's business logic, data, and context.
-That makes it easy to develop hard-to-reach states. Save these UI states as **stories** to revisit during development, testing, or QA.
+# template-vite-react
 
-Browse example stories now by navigating to them in the sidebar.
-View their code in the `stories` directory to learn how they work.
-We recommend building UIs with a [**component-driven**](https://componentdriven.org) process starting with atomic components and ending with pages.
+This Storybook documents the reusable UI foundation included with the Vite React template. It is focused on states that are useful before an application has real product data: authenticated app shell patterns, Material UI primitives, CRUD scaffolding, upload intake, and shared feedback components.
 
-<div className="subheading">Configure</div>
-
-<div className="link-list">
-  <a
-    className="link-item"
-    href="https://storybook.js.org/docs/react/addons/addon-types"
-    target="_blank"
-  >
-    <img src={Plugin} alt="plugin" />
+<div className="template-grid">
+  <div className="template-card">
+    <strong>Protected app shell</strong>
     <span>
-      <strong>Presets for popular tools</strong>
-      Easy setup for TypeScript, SCSS and more.
+      Use the Dashboard stories to review the authenticated layout without
+      changing auth loaders or provider behavior.
     </span>
-  </a>
-  <a
-    className="link-item"
-    href="https://storybook.js.org/docs/react/configure/webpack"
-    target="_blank"
-  >
-    <img src={StackAlt} alt="Build" />
+  </div>
+  <div className="template-card">
+    <strong>CRUD workflow pieces</strong>
     <span>
-      <strong>Build configuration</strong>
-      How to customize webpack and Babel
+      DataGrid list and create-form stories show how schema-driven UI can be
+      extended for product records.
     </span>
-  </a>
-  <a
-    className="link-item"
-    href="https://storybook.js.org/docs/react/configure/styling-and-css"
-    target="_blank"
-  >
-    <img src={Colors} alt="colors" />
+  </div>
+  <div className="template-card">
+    <strong>Upload and feedback states</strong>
     <span>
-      <strong>Styling</strong>
-      How to load and configure CSS libraries
+      Dropzone, alert, loading, avatar, and MUI wrapper examples give teams
+      realistic component states to copy from.
     </span>
-  </a>
-  <a
-    className="link-item"
-    href="https://storybook.js.org/docs/react/get-started/setup#configure-storybook-for-your-stack"
-    target="_blank"
-  >
-    <img src={Flow} alt="flow" />
+  </div>
+  <div className="template-card">
+    <strong>Quality workflow</strong>
     <span>
-      <strong>Data</strong>
-      Providers and mocking for data libraries
+      Storybook sits alongside the existing lint, test, app build, and Storybook
+      build checks used by CI.
     </span>
-  </a>
+  </div>
 </div>
 
-<div className="subheading">Learn</div>
+## Where To Start
 
-<div className="link-list">
-  <a className="link-item" href="https://storybook.js.org/docs" target="_blank">
-    <img src={Repo} alt="repo" />
-    <span>
-      <strong>Storybook documentation</strong>
-      Configure, customize, and extend
-    </span>
-  </a>
-  <a
-    className="link-item"
-    href="https://storybook.js.org/tutorials/"
-    target="_blank"
-  >
-    <img src={Direction} alt="direction" />
-    <span>
-      <strong>In-depth guides</strong>
-      Best practices from leading teams
-    </span>
-  </a>
-  <a
-    className="link-item"
-    href="https://github.com/storybookjs/storybook"
-    target="_blank"
-  >
-    <img src={Code} alt="code" />
-    <span>
-      <strong>GitHub project</strong>
-      View the source and add issues
-    </span>
-  </a>
-  <a className="link-item" href="https://discord.gg/storybook" target="_blank">
-    <img src={Comments} alt="comments" />
-    <span>
-      <strong>Discord chat</strong>
-      Chat with maintainers and the community
-    </span>
-  </a>
-</div>
+<ul className="template-list">
+  <li>
+    Open <strong>Pages/Dashboard</strong> to see the protected app shell and
+    demo dashboard composition.
+  </li>
+  <li>
+    Open <strong>Components/CRUD</strong> for schema-driven list and form
+    examples.
+  </li>
+  <li>
+    Open <strong>Upload-UI/Components/MultiDropzone</strong> for upload intake
+    states.
+  </li>
+  <li>
+    Open <strong>Hooks/Alerts</strong> for global feedback behavior.
+  </li>
+</ul>
 
-<div className="tip-wrapper">
-  <span className="tip">Tip</span>Edit the Markdown in{' '}
-  <code>stories/Introduction.stories.mdx</code>
+<code className="template-code">{`yarn sb
+yarn build-storybook
+yarn lint
+yarn test`}</code>
+
 </div>
