@@ -59,27 +59,38 @@ sh ./scripts/post-install.sh
 ```
 
 The post-install script copies `.env.example` to `.env.development.local`.
-Update the copied file for real Cognito values only when testing auth locally.
+The default copied file uses the `local-disabled` profile. Update it for demo
+auth or real Cognito only when needed.
 
 ## Environment And Auth
 
 The app reads public Vite environment variables from `.env*` files. Local
-development starts from `.env.example`, which includes dummy values that keep the
-app bootable.
+development starts from `.env.example`, which keeps Cognito blank by default.
+
+Profiles:
+
+| Profile          | Use when                                 | Required settings                                                                       |
+| ---------------- | ---------------------------------------- | --------------------------------------------------------------------------------------- |
+| `local-disabled` | Local dev without auth                   | Keep Cognito blank and `VITE_DEMO_AUTH_ENABLED=false`.                                  |
+| `local-demo`     | Local dev with demo auth                 | Keep Cognito blank and set `VITE_DEMO_AUTH_ENABLED=true`.                               |
+| `cognito`        | Local or deployed testing with real auth | Provide every Cognito variable. This overrides demo auth.                               |
+| `pages-demo`     | GitHub Pages public demo                 | Use `/template-vite-react/`, keep Cognito blank, and set `VITE_DEMO_AUTH_ENABLED=true`. |
 
 Important variables:
 
 - `VITE_PUBLIC_BASE_PATH`: router and asset base path. Use `/` for local dev.
 - `VITE_CF_DOMAIN`: public app origin used by auth redirects.
+- `VITE_DEMO_AUTH_ENABLED`: set to `true` only for demo auth. Demo auth works
+  only when all Cognito values are blank.
 - `VITE_IDP_ENABLED`: set to `true` only when the external identity provider
   button should be shown.
 - `VITE_AWS_REGION`, `VITE_COGNITO_DOMAIN`, `VITE_USER_POOL_ID`,
   `VITE_USER_POOL_CLIENT_ID`, `VITE_COGNITO_REDIRECT_SIGN_IN`, and
   `VITE_COGNITO_REDIRECT_SIGN_OUT`: Cognito configuration for Amplify auth.
 
-Leave Cognito values blank or unset when auth should be disabled. Missing or
-invalid Cognito settings are treated as auth disabled so the public demo does not
-expose a real user pool.
+Leave Cognito values blank or unset when auth should be disabled or demo auth
+should be used. Partial Cognito settings are treated as `unknown` profile
+configuration and keep auth disabled until the values are completed or removed.
 
 ## Local Development
 
@@ -169,13 +180,15 @@ The Pages build uses these public environment values:
 ```shell
 VITE_PUBLIC_BASE_PATH=/template-vite-react/
 VITE_CF_DOMAIN=https://aquia-inc.github.io/template-vite-react/
+VITE_DEMO_AUTH_ENABLED=true
 VITE_IDP_ENABLED=false
 ```
 
-Leave the Cognito environment values blank or unset for the public demo. For
-project Pages, Vite builds assets under `/template-vite-react/` and React Router
-uses the matching basename. The workflow also copies `dist/index.html` to
-`dist/404.html` so direct visits to client-side routes can load the SPA fallback.
+Leave the Cognito environment values blank or unset for the public demo. That
+selects the `pages-demo` profile. For project Pages, Vite builds assets under
+`/template-vite-react/` and React Router uses the matching basename. The workflow
+also copies `dist/index.html` to `dist/404.html` so direct visits to client-side
+routes can load the SPA fallback.
 
 ## Dependency And Security Triage
 
