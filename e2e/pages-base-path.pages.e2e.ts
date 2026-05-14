@@ -1,10 +1,18 @@
 import { expect, test, type Page } from '@playwright/test'
 
-const basePath = '/template-vite-react'
 const demoEmail = 'pages@example.com'
 const demoPassword = 'password123'
 
-const pagesUrl = (path = '/') => `${basePath}${path}`
+const getBasePath = (baseURL: string | undefined) => {
+  const pathname = new URL(baseURL ?? 'http://127.0.0.1/').pathname
+  return pathname.endsWith('/') ? pathname.slice(0, -1) : pathname
+}
+
+const escapeRegExp = (value: string) =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+const pagesUrl = (baseURL: string | undefined, path = '/') =>
+  `${getBasePath(baseURL)}${path}`
 
 const signInWithDemoAuth = async (page: Page) => {
   await page.locator('#email-input').fill(demoEmail)
@@ -13,9 +21,12 @@ const signInWithDemoAuth = async (page: Page) => {
 }
 
 test('pages build serves the public entry from the configured base path', async ({
+  baseURL,
   page,
 }) => {
-  await page.goto(pagesUrl('/'))
+  const basePath = getBasePath(baseURL)
+
+  await page.goto(pagesUrl(baseURL, '/'))
 
   await expect(
     page.getByRole('heading', {
@@ -24,12 +35,10 @@ test('pages build serves the public entry from the configured base path', async 
   ).toBeVisible()
   await expect(page.locator('#root')).not.toBeEmpty()
 
-  const assetScript = page
-    .locator('script[src^="/template-vite-react/assets/"]')
-    .first()
+  const assetScript = page.locator(`script[src^="${basePath}/assets/"]`).first()
   await expect(assetScript).toHaveAttribute(
     'src',
-    /^\/template-vite-react\/assets\//,
+    new RegExp(`^${escapeRegExp(basePath)}/assets/`),
   )
 
   const assetPath = await assetScript.getAttribute('src')
@@ -40,16 +49,21 @@ test('pages build serves the public entry from the configured base path', async 
 })
 
 test('pages build falls back to the SPA for a protected base-path route', async ({
+  baseURL,
   page,
 }) => {
-  await page.goto(pagesUrl('/app'))
+  const basePath = getBasePath(baseURL)
 
-  await expect(page).toHaveURL(new RegExp(`${basePath}/auth/login$`))
+  await page.goto(pagesUrl(baseURL, '/app'))
+
+  await expect(page).toHaveURL(
+    new RegExp(`${escapeRegExp(basePath)}/auth/login$`),
+  )
   await expect(page.locator('#login-form')).toBeVisible()
 
   await signInWithDemoAuth(page)
 
-  await expect(page).toHaveURL(new RegExp(`${basePath}/app$`))
+  await expect(page).toHaveURL(new RegExp(`${escapeRegExp(basePath)}/app$`))
   await expect(page.getByTestId('appbar-title')).toHaveText('Dashboard')
   await expect(
     page.getByRole('heading', { name: /Welcome User\s+pages/i }),

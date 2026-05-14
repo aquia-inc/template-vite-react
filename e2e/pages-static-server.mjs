@@ -1,11 +1,18 @@
 import { createReadStream, existsSync, statSync } from 'node:fs'
 import { createServer } from 'node:http'
-import { extname, join, normalize, resolve } from 'node:path'
+import { extname, isAbsolute, join, relative, resolve } from 'node:path'
 
 const distDir = resolve('dist')
 const hostname = '127.0.0.1'
 const port = Number(process.env.PAGES_E2E_PORT ?? 4174)
-const basePath = '/template-vite-react/'
+const normalizeBasePath = (value = '/template-vite-react/') => {
+  const withLeadingSlash = value.startsWith('/') ? value : `/${value}`
+
+  return withLeadingSlash.endsWith('/')
+    ? withLeadingSlash
+    : `${withLeadingSlash}/`
+}
+const basePath = normalizeBasePath(process.env.PAGES_E2E_BASE_PATH)
 
 const contentTypes = new Map([
   ['.css', 'text/css; charset=utf-8'],
@@ -24,10 +31,18 @@ const sendFile = (response, filePath) => {
 }
 
 const resolveStaticPath = (requestPath) => {
-  const relativePath = decodeURIComponent(requestPath.slice(basePath.length))
-  const staticPath = normalize(join(distDir, relativePath))
+  let relativePath
 
-  if (!staticPath.startsWith(distDir)) {
+  try {
+    relativePath = decodeURIComponent(requestPath.slice(basePath.length))
+  } catch {
+    return null
+  }
+
+  const staticPath = resolve(distDir, relativePath)
+  const pathFromDist = relative(distDir, staticPath)
+
+  if (pathFromDist.startsWith('..') || isAbsolute(pathFromDist)) {
     return null
   }
 
