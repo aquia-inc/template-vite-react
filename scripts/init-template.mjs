@@ -14,7 +14,7 @@ const CURRENT = {
   packageName: 'template-vite-react',
   pagesBasePath: '/template-vite-react/',
   pagesUrl: 'https://aquia-inc.github.io/template-vite-react/',
-  publicAppName: 'Vite-React App',
+  publicAppName: 'Aquia Vite-React Template',
   storybookTitle: 'Template/Introduction',
   storageKey: 'template-vite-react:demo-auth-session',
 }

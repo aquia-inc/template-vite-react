@@ -1,8 +1,9 @@
 import { JSXElementConstructor, ReactElement } from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { useNavigate } from 'react-router-dom'
+import { MemoryRouter, useNavigate } from 'react-router-dom'
 import loginUser from '@/actions/loginUser'
+import { PUBLIC_APP_NAME } from '@/locales/en'
 import SignIn from '@/views/SignIn/SignIn'
 import { Routes } from '@/router/constants'
 
@@ -14,11 +15,12 @@ function setup(
 ) {
   return {
     user: userEvent.setup(),
-    ...render(jsx),
+    ...render(<MemoryRouter>{jsx}</MemoryRouter>),
   }
 }
 
 jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
   useNavigate: jest.fn(),
 }))
 jest.mock('@/utils/config', () => {
@@ -70,4 +72,13 @@ test('submits correct form data in the SignIn page', async () => {
     })
     expect(navigateMock).toHaveBeenCalledWith(Routes.DASHBOARD)
   })
+})
+
+test('renders the app title as a home link', () => {
+  setup(<SignIn />)
+
+  expect(screen.getByRole('link', { name: PUBLIC_APP_NAME })).toHaveAttribute(
+    'href',
+    Routes.HOME,
+  )
 })

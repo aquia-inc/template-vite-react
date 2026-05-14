@@ -3,7 +3,7 @@
  * @module locales/en.ts
  */
 
-export const PUBLIC_APP_NAME = 'Vite-React App'
+export const PUBLIC_APP_NAME = 'Aquia Vite-React Template'
 
 export const SIGN_IN_GREETING = 'Welcome to the app!'
 

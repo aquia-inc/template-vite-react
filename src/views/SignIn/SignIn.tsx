@@ -3,6 +3,7 @@
  * @module views/SignIn/SignIn
  */
 import React, { ReactNode } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import Alert from '@mui/material/Alert'
 import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -38,6 +39,7 @@ import {
   SIGN_IN_EMAIL_PLACEHOLDER,
   SIGN_IN_GREETING,
 } from '@/locales/en'
+import { Routes } from '@/router/constants'
 import CONFIG from '@/utils/config'
 
 const LoadingIcon: React.FC = () => {
@@ -184,11 +186,15 @@ const SignIn = (): JSX.Element => {
             >
               <SignInGraphic />
               <Typography
+                component={RouterLink}
+                to={Routes.HOME}
                 variant="h6"
                 sx={{
+                  color: 'inherit',
                   fontSize: '1.5rem !important',
                   lineHeight: 1,
                   ml: 2,
+                  textDecoration: 'none',
                 }}
               >
                 {PUBLIC_APP_NAME}

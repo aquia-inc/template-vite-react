@@ -80,7 +80,7 @@ const writeFixture = async () => {
   )
   await writeFile(
     join(root, 'src/locales/en.ts'),
-    "export const PUBLIC_APP_NAME = 'Vite-React App'\n",
+    "export const PUBLIC_APP_NAME = 'Aquia Vite-React Template'\n",
   )
   await writeFile(
     join(root, 'src/views/Home/Home.tsx'),
