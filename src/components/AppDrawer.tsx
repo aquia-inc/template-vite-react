@@ -1,56 +1,46 @@
 /**
  * @module components/AppDrawer
  */
-import { styled } from '@mui/material/styles'
+import { CSSObject, Theme, styled } from '@mui/material/styles'
 import MuiDrawer, { DrawerProps } from '@mui/material/Drawer'
-import { MuiDrawerWidth } from '@/theme/theme'
+import { MuiDrawerCollapsedWidth, MuiDrawerWidth } from '@/theme/theme'
+
+const openedMixin = (theme: Theme): CSSObject => ({
+  width: MuiDrawerWidth,
+  overflowX: 'hidden',
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+})
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  width: MuiDrawerCollapsedWidth,
+  overflowX: 'hidden',
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+})
 
 const StyledDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-  '& .MuiPaper-root': {
+  width: open ? MuiDrawerWidth : MuiDrawerCollapsedWidth,
+  flexShrink: 0,
+  height: '100vh',
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  ...(open ? openedMixin(theme) : closedMixin(theme)),
+  '& .MuiDrawer-paper': {
     backgroundColor:
       theme.palette.mode === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[900],
-  },
-  '& .MuiDrawer-root': {
-    overflow: 'auto',
     height: '100vh',
-    position: 'fixed',
-    width: MuiDrawerWidth,
-  },
-  '& .MuiDrawer-paper': {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: MuiDrawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
     boxSizing: 'border-box',
-    ...(!open && {
-      overflowX: 'hidden',
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      width: theme.spacing(7),
-      [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9),
-      },
-    }),
-  },
-  '& .MuiLink-root': {
-    textDecoration: 'none',
-  },
-  '& .MuiListItemButton-root': {},
-  '& .MuiListItemIcon-root': {
-    minWidth: 'auto',
-    marginLeft: '9px',
-  },
-  '& .MuiListItemText-root': {
-    marginLeft: '-9px',
+    borderRight: `1px solid ${theme.palette.divider}`,
+    ...(!open ? closedMixin(theme) : openedMixin(theme)),
   },
 }))
 

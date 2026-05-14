@@ -8,6 +8,7 @@ import { createTheme } from '@mui/material/styles'
 import type { CSSProperties } from 'react'
 
 export const MuiDrawerWidth = 200
+export const MuiDrawerCollapsedWidth = 72
 
 declare module '@mui/material/styles' {
   interface Palette {

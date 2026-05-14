@@ -27,11 +27,11 @@ import { DASHBOARD_TITLE } from '@/locales/en'
  * @returns {JSX.Element} The main application layout component.
  */
 const AppLayout: React.FC = (): JSX.Element => {
-  const [drawerOpen, setDrawerOpen] = useState(true)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   const toggleDrawer = useCallback(() => {
-    setDrawerOpen(!drawerOpen)
-  }, [drawerOpen])
+    setDrawerOpen((previousState) => !previousState)
+  }, [])
 
   return (
     <>
@@ -41,30 +41,28 @@ const AppLayout: React.FC = (): JSX.Element => {
         sx={{
           display: 'flex',
           flexGrow: 1,
-          height: '100vh',
-          overflow: 'scroll',
+          minHeight: '100vh',
+          overflow: 'hidden',
         }}
       >
         <AlertMessage />
 
         {/* top nav bar */}
-        <AppBar position="absolute" open={drawerOpen} color="secondary">
+        <AppBar position="fixed" open={drawerOpen} color="secondary">
           <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(drawerOpen && { display: 'none' }),
-              }}
-              aria-label="open drawer"
-              data-testid="open-drawer-button"
-              name="open drawer"
-              aria-hidden={drawerOpen}
-            >
-              <MenuIcon />
-            </IconButton>
+            {!drawerOpen && (
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={toggleDrawer}
+                sx={{ marginRight: '36px' }}
+                aria-label="open drawer"
+                data-testid="open-drawer-button"
+                name="open drawer"
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
             <Typography
               color="inherit"
               component="span"
@@ -93,31 +91,44 @@ const AppLayout: React.FC = (): JSX.Element => {
               filter: `brightness(80%)`,
             }}
           >
-            <IconButton
-              onClick={toggleDrawer}
-              aria-label="close drawer"
-              data-testid="close-drawer-button"
-              name="close drawer"
-              aria-hidden={!drawerOpen}
-            >
-              <ChevronLeftIcon />
-            </IconButton>
+            {drawerOpen && (
+              <IconButton
+                onClick={toggleDrawer}
+                aria-label="close drawer"
+                data-testid="close-drawer-button"
+                name="close drawer"
+              >
+                <ChevronLeftIcon />
+              </IconButton>
+            )}
           </Toolbar>
           <Divider />
 
           <List component="nav">
-            <MenuListItems />
+            <MenuListItems open={drawerOpen} />
           </List>
         </AppDrawer>
-        <Container
+        <Box
           component="main"
           sx={{
-            mt: (theme) => `${theme.mixins.toolbar.minHeight}px`,
-            pt: (theme) => theme.spacing(4),
+            display: 'flex',
+            flexDirection: 'column',
+            flexGrow: 1,
+            minWidth: 0,
+            height: '100vh',
+            overflowY: 'auto',
           }}
         >
-          <Outlet />
-        </Container>
+          <Toolbar />
+          <Container
+            sx={{
+              flexGrow: 1,
+              py: (theme) => theme.spacing(4),
+            }}
+          >
+            <Outlet />
+          </Container>
+        </Box>
       </Box>
     </>
   )

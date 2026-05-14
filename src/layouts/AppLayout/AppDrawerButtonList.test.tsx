@@ -4,7 +4,7 @@ import { RouteNames, Routes } from '@/router/constants'
 import AppDrawerButtonList from '@/layouts/AppLayout/AppDrawerButtonList'
 
 test('renders the list of AppDrawerButton components', () => {
-  render(<AppDrawerButtonList />, {
+  render(<AppDrawerButtonList open={false} />, {
     wrapper: (props) => <BrowserRouter {...props} />,
   })
 

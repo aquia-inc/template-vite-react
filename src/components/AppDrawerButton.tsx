@@ -2,8 +2,6 @@
  * @module components/AppDrawerButton
  */
 import { Link as RouterLink } from 'react-router-dom'
-import Box from '@mui/material/Box'
-import Link from '@mui/material/Link'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
@@ -11,6 +9,7 @@ import ListItemText from '@mui/material/ListItemText'
 type AppDrawerButtonProps = {
   icon?: React.ReactNode
   label: string
+  open: boolean
   to: string
 }
 
@@ -25,15 +24,33 @@ type AppDrawerButtonProps = {
 const AppDrawerButton: React.FC<AppDrawerButtonProps> = ({
   icon,
   label,
+  open,
   to,
 }): JSX.Element => (
-  <Link to={to} component={RouterLink}>
-    <ListItemButton sx={{ margin: 'auto', border: '0' }}>
-      {icon && <ListItemIcon>{icon}</ListItemIcon>}
-      <Box component="span" sx={{ display: 'inline-block', width: 12 }} />
-      <ListItemText primary={label} />
-    </ListItemButton>
-  </Link>
+  <ListItemButton
+    aria-label={label}
+    component={RouterLink}
+    sx={{
+      minHeight: 48,
+      justifyContent: open ? 'initial' : 'center',
+      px: 2.5,
+    }}
+    title={!open ? label : undefined}
+    to={to}
+  >
+    {icon && (
+      <ListItemIcon
+        sx={{
+          minWidth: 0,
+          mr: open ? 3 : 0,
+          justifyContent: 'center',
+        }}
+      >
+        {icon}
+      </ListItemIcon>
+    )}
+    {open && <ListItemText primary={label} />}
+  </ListItemButton>
 )
 
 export default AppDrawerButton

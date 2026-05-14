@@ -1,7 +1,11 @@
-import theme, { MuiDrawerWidth } from '@/theme/theme'
+import theme, { MuiDrawerCollapsedWidth, MuiDrawerWidth } from '@/theme/theme'
 
 test('exports MuiDrawerWidth', () => {
   expect(MuiDrawerWidth).toBeCloseTo(200)
+})
+
+test('exports MuiDrawerCollapsedWidth', () => {
+  expect(MuiDrawerCollapsedWidth).toBeCloseTo(72)
 })
 
 test('has the expected palette', () => {

@@ -6,7 +6,13 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import AppDrawerButton from '@/components/AppDrawerButton'
 import { RouteIds, RouteNames, Routes } from '@/router/constants'
 
-const AppDrawerButtonList: React.FC = (): JSX.Element => {
+type AppDrawerButtonListProps = {
+  open: boolean
+}
+
+const AppDrawerButtonList: React.FC<AppDrawerButtonListProps> = ({
+  open,
+}): JSX.Element => {
   const items = useMemo(
     () => [
       {
@@ -22,7 +28,13 @@ const AppDrawerButtonList: React.FC = (): JSX.Element => {
   return (
     <>
       {items.map(({ icon, id, label, to }) => (
-        <AppDrawerButton icon={icon} key={id} label={label} to={to} />
+        <AppDrawerButton
+          icon={icon}
+          key={id}
+          label={label}
+          open={open}
+          to={to}
+        />
       ))}
     </>
   )
