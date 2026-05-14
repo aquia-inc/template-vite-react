@@ -6,6 +6,12 @@ export const REQUIRED_NODE_MAJOR = 24
 export const REQUIRED_YARN_VERSION = '4.14.1'
 export const ENV_EXAMPLE_FILE = '.env.example'
 export const ENV_LOCAL_FILE = '.env.development.local'
+export const VITE_ENV_FILES = [
+  '.env',
+  '.env.local',
+  '.env.development',
+  ENV_LOCAL_FILE,
+]
 
 export const commandRunner = (command, args, options = {}) =>
   spawnSync(command, args, {
@@ -101,8 +107,15 @@ export const parseEnvFile = (content) => {
       continue
     }
 
-    const key = line.slice(0, delimiterIndex).trim()
+    const key = line
+      .slice(0, delimiterIndex)
+      .trim()
+      .replace(/^export\s+/, '')
     let value = line.slice(delimiterIndex + 1).trim()
+
+    if (!key) {
+      continue
+    }
 
     if (
       (value.startsWith("'") && value.endsWith("'")) ||
@@ -116,6 +129,13 @@ export const parseEnvFile = (content) => {
 
   return values
 }
+
+const getProcessViteEnv = (env = {}) =>
+  Object.fromEntries(
+    Object.entries(env).filter(
+      ([key, value]) => key.startsWith('VITE_') && value !== undefined,
+    ),
+  )
 
 const isUrl = (value = '') => {
   try {
@@ -186,6 +206,33 @@ export const readLocalEnv = async (cwd) => {
   }
 
   return parseEnvFile(await readFile(envPath, 'utf8'))
+}
+
+export const readViteEnv = async ({ cwd, env = process.env } = {}) => {
+  const values = {}
+  const envFiles = []
+
+  for (const envFile of VITE_ENV_FILES) {
+    const envPath = path.join(cwd, envFile)
+
+    if (!(await fileExists(envPath))) {
+      continue
+    }
+
+    Object.assign(values, parseEnvFile(await readFile(envPath, 'utf8')))
+    envFiles.push(envFile)
+  }
+
+  const processEnv = getProcessViteEnv(env)
+
+  return {
+    envFiles,
+    hasProcessEnv: Object.keys(processEnv).length > 0,
+    values: {
+      ...values,
+      ...processEnv,
+    },
+  }
 }
 
 export const ensureLocalEnv = async (cwd) => {

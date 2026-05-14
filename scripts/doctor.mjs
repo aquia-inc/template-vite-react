@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 import process from 'node:process'
+import { pathToFileURL } from 'node:url'
 
 import {
   checkRuntime,
   detectAuthProfile,
-  ENV_LOCAL_FILE,
   printRuntimeErrors,
-  readLocalEnv,
+  readViteEnv,
   REQUIRED_NODE_MAJOR,
   REQUIRED_YARN_VERSION,
   writer,
@@ -23,9 +23,13 @@ export const runDoctor = async ({
   runCommand,
 } = {}) => {
   const runtime = checkRuntime({ cwd, env, nodeVersion, runCommand })
-  const localEnv = await readLocalEnv(cwd)
-  const envPresent = localEnv !== null
-  const authProfile = envPresent ? detectAuthProfile(localEnv) : 'unavailable'
+  const viteEnv = await readViteEnv({ cwd, env })
+  const envPresent = viteEnv.envFiles.length > 0 || viteEnv.hasProcessEnv
+  const envSources = [
+    ...viteEnv.envFiles,
+    ...(viteEnv.hasProcessEnv ? ['process env'] : []),
+  ]
+  const authProfile = detectAuthProfile(viteEnv.values)
 
   stdout.write(
     `Node: ${runtime.nodeVersion} (${
@@ -38,7 +42,7 @@ export const runDoctor = async ({
     })`,
   )
   stdout.write(
-    `env file: ${envPresent ? `present (${ENV_LOCAL_FILE})` : 'missing (warning)'}`,
+    `env sources: ${envPresent ? envSources.join(', ') : 'missing (warning)'}`,
   )
   stdout.write(`auth profile: ${authProfile}`)
 
@@ -48,13 +52,16 @@ export const runDoctor = async ({
 
   if (!envPresent) {
     stderr.write(
-      `Warning: ${ENV_LOCAL_FILE} is missing. Run \`yarn setup\` to create it from .env.example.`,
+      'Warning: no Vite env sources found. Run `yarn setup` to create .env.development.local from .env.example.',
     )
   }
 
   return runtime.ok ? 0 : 1
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
   process.exitCode = await runDoctor()
 }

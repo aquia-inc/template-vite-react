@@ -26,6 +26,28 @@ const makeRecorder = () => {
   }
 }
 
+const validRuntimeEnv = {
+  npm_config_user_agent: 'yarn/4.14.1 npm/? node/v24.15.0 darwin arm64',
+}
+
+const blankCognitoEnv = {
+  VITE_AWS_REGION: 'us-east-1',
+  VITE_COGNITO_DOMAIN: '',
+  VITE_COGNITO_REDIRECT_SIGN_IN: '',
+  VITE_COGNITO_REDIRECT_SIGN_OUT: '',
+  VITE_USER_POOL_CLIENT_ID: '',
+  VITE_USER_POOL_ID: '',
+}
+
+const validCognitoEnv = {
+  VITE_AWS_REGION: 'us-east-1',
+  VITE_COGNITO_DOMAIN: 'https://example.auth.us-east-1.amazoncognito.com',
+  VITE_COGNITO_REDIRECT_SIGN_IN: 'http://localhost:3000/signin',
+  VITE_COGNITO_REDIRECT_SIGN_OUT: 'http://localhost:3000/signout',
+  VITE_USER_POOL_CLIENT_ID: 'client-id',
+  VITE_USER_POOL_ID: 'us-east-1_abcd1234',
+}
+
 test('runSetup creates the development env file when it is missing', async () => {
   const cwd = await makeFixture()
   const out = makeRecorder()
@@ -34,9 +56,7 @@ test('runSetup creates the development env file when it is missing', async () =>
   try {
     const exitCode = await runSetup({
       cwd,
-      env: {
-        npm_config_user_agent: 'yarn/4.14.1 npm/? node/v24.15.0 darwin arm64',
-      },
+      env: validRuntimeEnv,
       nodeVersion: '24.15.0',
       runCommand: (command, args) => {
         commands.push([command, args])
@@ -66,9 +86,7 @@ test('runSetup preserves an existing development env file', async () => {
   try {
     const exitCode = await runSetup({
       cwd,
-      env: {
-        npm_config_user_agent: 'yarn/4.14.1 npm/? node/v24.15.0 darwin arm64',
-      },
+      env: validRuntimeEnv,
       nodeVersion: '24.15.0',
       runCommand: () => ({ status: 0 }),
       stdout: out,
@@ -119,9 +137,7 @@ test('runDoctor warns for a missing env file but succeeds with valid runtime', a
   try {
     const exitCode = await runDoctor({
       cwd,
-      env: {
-        npm_config_user_agent: 'yarn/4.14.1 npm/? node/v24.15.0 darwin arm64',
-      },
+      env: validRuntimeEnv,
       nodeVersion: '24.15.0',
       stdout: out,
       stderr: makeRecorder(),
@@ -130,8 +146,105 @@ test('runDoctor warns for a missing env file but succeeds with valid runtime', a
     assert.equal(exitCode, 0)
     assert.match(out.messages.join('\n'), /Node: 24\.15\.0/)
     assert.match(out.messages.join('\n'), /Yarn: 4\.14\.1/)
-    assert.match(out.messages.join('\n'), /env file: missing/)
-    assert.match(out.messages.join('\n'), /auth profile: unavailable/)
+    assert.match(out.messages.join('\n'), /env sources: missing/)
+    assert.match(out.messages.join('\n'), /auth profile: local-disabled/)
+  } finally {
+    await rm(cwd, { recursive: true, force: true })
+  }
+})
+
+test('runDoctor merges Vite env files in development priority order', async () => {
+  const cwd = await makeFixture()
+  const out = makeRecorder()
+
+  await writeFile(path.join(cwd, '.env'), "VITE_DEMO_AUTH_ENABLED='false'\n")
+  await writeFile(
+    path.join(cwd, '.env.local'),
+    "VITE_DEMO_AUTH_ENABLED='true'\nVITE_PUBLIC_BASE_PATH='/template-vite-react/'\n",
+  )
+  await writeFile(
+    path.join(cwd, '.env.development'),
+    "VITE_PUBLIC_BASE_PATH='/'\n",
+  )
+  await writeFile(
+    path.join(cwd, '.env.development.local'),
+    "VITE_DEMO_AUTH_ENABLED='true'\n",
+  )
+
+  try {
+    const exitCode = await runDoctor({
+      cwd,
+      env: validRuntimeEnv,
+      nodeVersion: '24.15.0',
+      stdout: out,
+      stderr: makeRecorder(),
+    })
+
+    assert.equal(exitCode, 0)
+    assert.match(
+      out.messages.join('\n'),
+      /env sources: \.env, \.env\.local, \.env\.development, \.env\.development\.local/,
+    )
+    assert.match(out.messages.join('\n'), /auth profile: local-demo/)
+  } finally {
+    await rm(cwd, { recursive: true, force: true })
+  }
+})
+
+test('runDoctor lets .env.development alone affect auth profile detection', async () => {
+  const cwd = await makeFixture()
+  const out = makeRecorder()
+
+  await writeFile(
+    path.join(cwd, '.env.development'),
+    "VITE_DEMO_AUTH_ENABLED='true'\nVITE_PUBLIC_BASE_PATH='/template-vite-react/'\n",
+  )
+
+  try {
+    const exitCode = await runDoctor({
+      cwd,
+      env: validRuntimeEnv,
+      nodeVersion: '24.15.0',
+      stdout: out,
+      stderr: makeRecorder(),
+    })
+
+    assert.equal(exitCode, 0)
+    assert.match(out.messages.join('\n'), /env sources: \.env\.development/)
+    assert.match(out.messages.join('\n'), /auth profile: pages-demo/)
+  } finally {
+    await rm(cwd, { recursive: true, force: true })
+  }
+})
+
+test('runDoctor lets process env override Vite env files', async () => {
+  const cwd = await makeFixture()
+  const out = makeRecorder()
+
+  await writeFile(
+    path.join(cwd, '.env.development.local'),
+    "VITE_DEMO_AUTH_ENABLED='false'\nVITE_PUBLIC_BASE_PATH='/template-vite-react/'\n",
+  )
+
+  try {
+    const exitCode = await runDoctor({
+      cwd,
+      env: {
+        ...validRuntimeEnv,
+        VITE_DEMO_AUTH_ENABLED: 'true',
+        VITE_PUBLIC_BASE_PATH: '/',
+      },
+      nodeVersion: '24.15.0',
+      stdout: out,
+      stderr: makeRecorder(),
+    })
+
+    assert.equal(exitCode, 0)
+    assert.match(
+      out.messages.join('\n'),
+      /env sources: \.env\.development\.local, process env/,
+    )
+    assert.match(out.messages.join('\n'), /auth profile: local-demo/)
   } finally {
     await rm(cwd, { recursive: true, force: true })
   }
@@ -157,69 +270,64 @@ test('runDoctor fails for a wrong Yarn version', async () => {
   }
 })
 
-test('detectAuthProfile uses the app environment profile names', () => {
-  assert.equal(
-    detectAuthProfile({
-      VITE_DEMO_AUTH_ENABLED: 'false',
-      VITE_PUBLIC_BASE_PATH: '/',
-      VITE_AWS_REGION: 'us-east-1',
-      VITE_COGNITO_DOMAIN: '',
-      VITE_COGNITO_REDIRECT_SIGN_IN: '',
-      VITE_COGNITO_REDIRECT_SIGN_OUT: '',
-      VITE_USER_POOL_CLIENT_ID: '',
-      VITE_USER_POOL_ID: '',
-    }),
-    'local-disabled',
-  )
-  assert.equal(
-    detectAuthProfile({
-      VITE_DEMO_AUTH_ENABLED: 'true',
-      VITE_PUBLIC_BASE_PATH: '/',
-      VITE_AWS_REGION: 'us-east-1',
-      VITE_COGNITO_DOMAIN: '',
-      VITE_COGNITO_REDIRECT_SIGN_IN: '',
-      VITE_COGNITO_REDIRECT_SIGN_OUT: '',
-      VITE_USER_POOL_CLIENT_ID: '',
-      VITE_USER_POOL_ID: '',
-    }),
-    'local-demo',
-  )
-  assert.equal(
-    detectAuthProfile({
-      VITE_DEMO_AUTH_ENABLED: 'true',
-      VITE_PUBLIC_BASE_PATH: '/template-vite-react/',
-      VITE_AWS_REGION: 'us-east-1',
-      VITE_COGNITO_DOMAIN: '',
-      VITE_COGNITO_REDIRECT_SIGN_IN: '',
-      VITE_COGNITO_REDIRECT_SIGN_OUT: '',
-      VITE_USER_POOL_CLIENT_ID: '',
-      VITE_USER_POOL_ID: '',
-    }),
-    'pages-demo',
-  )
-  assert.equal(
-    detectAuthProfile({
-      VITE_DEMO_AUTH_ENABLED: 'false',
-      VITE_AWS_REGION: 'us-east-1',
-      VITE_COGNITO_DOMAIN: 'https://example.auth.us-east-1.amazoncognito.com',
-      VITE_COGNITO_REDIRECT_SIGN_IN: 'http://localhost:3000/signin',
-      VITE_COGNITO_REDIRECT_SIGN_OUT: 'http://localhost:3000/signout',
-      VITE_USER_POOL_CLIENT_ID: 'client-id',
-      VITE_USER_POOL_ID: 'us-east-1_abcd1234',
-    }),
-    'cognito',
-  )
-  assert.equal(
-    detectAuthProfile({
-      VITE_DEMO_AUTH_ENABLED: 'true',
-      VITE_PUBLIC_BASE_PATH: '/',
-      VITE_AWS_REGION: 'us-east-1',
-      VITE_COGNITO_DOMAIN: 'https://example.auth.us-east-1.amazoncognito.com',
-      VITE_COGNITO_REDIRECT_SIGN_IN: '',
-      VITE_COGNITO_REDIRECT_SIGN_OUT: '',
-      VITE_USER_POOL_CLIENT_ID: '',
-      VITE_USER_POOL_ID: '',
-    }),
-    'unknown',
-  )
+test('detectAuthProfile matches representative appConfig runtime profiles', () => {
+  const profileCases = [
+    {
+      name: 'local-disabled',
+      env: {
+        ...blankCognitoEnv,
+        VITE_DEMO_AUTH_ENABLED: 'false',
+        VITE_PUBLIC_BASE_PATH: '/',
+      },
+      profile: 'local-disabled',
+    },
+    {
+      name: 'local-demo',
+      env: {
+        ...blankCognitoEnv,
+        VITE_DEMO_AUTH_ENABLED: 'true',
+        VITE_PUBLIC_BASE_PATH: '/',
+      },
+      profile: 'local-demo',
+    },
+    {
+      name: 'pages-demo',
+      env: {
+        ...blankCognitoEnv,
+        VITE_DEMO_AUTH_ENABLED: 'true',
+        VITE_PUBLIC_BASE_PATH: '/template-vite-react/',
+      },
+      profile: 'pages-demo',
+    },
+    {
+      name: 'cognito',
+      env: {
+        ...validCognitoEnv,
+        VITE_DEMO_AUTH_ENABLED: 'false',
+      },
+      profile: 'cognito',
+    },
+    {
+      name: 'cognito overrides requested demo auth',
+      env: {
+        ...validCognitoEnv,
+        VITE_DEMO_AUTH_ENABLED: 'true',
+      },
+      profile: 'cognito',
+    },
+    {
+      name: 'unknown',
+      env: {
+        ...blankCognitoEnv,
+        VITE_DEMO_AUTH_ENABLED: 'true',
+        VITE_PUBLIC_BASE_PATH: '/',
+        VITE_COGNITO_DOMAIN: 'https://example.auth.us-east-1.amazoncognito.com',
+      },
+      profile: 'unknown',
+    },
+  ]
+
+  for (const { name, env, profile } of profileCases) {
+    assert.equal(detectAuthProfile(env), profile, name)
+  }
 })
