@@ -1,4 +1,3 @@
-#!/bin/bash
-# FILEPATH: /Users/sinanbolel/code/@aquia/template-vite-react/scripts/post-install.sh
+#!/bin/sh
 
-cp .env.example .env.development.local
+node ./scripts/setup.mjs

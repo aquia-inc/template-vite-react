@@ -21,6 +21,8 @@
   },
   "scripts": {
     "start": "yarn run dev",
+    "setup": "node ./scripts/setup.mjs",
+    "doctor": "node ./scripts/doctor.mjs",
     "dev": "vite",
     "dev:e2e": "vite --mode test --host 127.0.0.1 --port 4173 --strictPort",
     "build": "tsc -p tsconfig.prod.json && vite build --mode production",
