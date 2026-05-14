@@ -1,40 +1,17 @@
 /**
+ * Compatibility wrapper for API-backed fetches.
  * @module hooks/useFetch
  */
-import { useEffect, useState } from 'react'
+import useApiQuery, {
+  UseApiQueryOptions,
+  UseApiQueryResult,
+} from '@/hooks/useApiQuery'
 
-/**
- * Custom hook to fetch data from an API.
- * @param {string} url - URL to fetch
- * @returns {object} - An object containing the data, error, and loading state
- */
-const useFetch = (
-  url: string,
-): {
-  loading: boolean
-  error: Error | null
-  data: unknown
-} => {
-  const [data, setData] = useState(null)
-  const [error, setError] = useState<Error | null>(null)
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    ;(async function () {
-      try {
-        setLoading(true)
-        const response = await fetch(url)
-        const data = await response.json()
-        setData(data)
-      } catch (error) {
-        setError(error as Error)
-      } finally {
-        setLoading(false)
-      }
-    })()
-  }, [url])
-
-  return { data, error, loading }
+const useFetch = <TData = unknown>(
+  path: string | null,
+  options?: UseApiQueryOptions<TData>,
+): UseApiQueryResult<TData> => {
+  return useApiQuery<TData>(path, options)
 }
 
 export default useFetch

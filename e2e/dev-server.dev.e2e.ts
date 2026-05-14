@@ -59,6 +59,31 @@ test('dev server exposes demo auth mode and reaches the dashboard', async ({
   await expectDashboard(page)
 })
 
+test('dev server supports the local CRUD starter records flow', async ({
+  page,
+}) => {
+  await signInWithDemoAuth(page)
+  await expectDashboard(page)
+
+  await expect(page.getByText('Route map')).toBeVisible()
+  await page.getByRole('button', { name: 'New record' }).click()
+
+  const dialog = page.getByRole('dialog', { name: 'Create record' })
+  await dialog.getByRole('textbox', { name: 'Record' }).fill('Policy checklist')
+  await dialog.getByRole('textbox', { name: 'Owner' }).fill('Operations')
+  await dialog.getByRole('textbox', { name: 'Status' }).fill('Draft')
+  await dialog.getByRole('button', { name: 'Create record' }).click()
+
+  await expect(dialog).toBeHidden()
+  await expect(page.getByText('Policy checklist')).toBeVisible()
+  await expect(page.getByText('Operations')).toBeVisible()
+  await expect(page.getByText('Draft')).toBeVisible()
+
+  await page.getByRole('button', { name: 'Delete Policy checklist' }).click()
+
+  await expect(page.getByText('Policy checklist')).toBeHidden()
+})
+
 test('dev server renders the authenticated dashboard on mobile', async ({
   page,
 }) => {

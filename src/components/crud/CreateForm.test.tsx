@@ -1,11 +1,4 @@
-import { useState } from 'react'
-import {
-  act,
-  fireEvent,
-  render,
-  renderHook,
-  waitFor,
-} from '@testing-library/react'
+import { act, fireEvent, render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import TextField from '@mui/material/TextField'
 import CreateForm from '@/components/crud/CreateForm'
@@ -59,7 +52,8 @@ test('renders the form when open is true', async () => {
 })
 
 test('calls onSubmit with form data when form is submitted', async () => {
-  const { getByLabelText, getByText } = render(
+  const user = userEvent.setup()
+  const { getByLabelText, getByRole } = render(
     <CreateForm
       open={true}
       onClose={onCloseMock}
@@ -71,15 +65,19 @@ test('calls onSubmit with form data when form is submitted', async () => {
 
   const nameField = getByLabelText(/Name/)
   const addressField = getByLabelText(/Address/)
-  const submit = getByText('Submit')
+  const form = getByRole('form')
+  const submit = getByRole('button', { name: 'Submit' })
 
-  await act(async () => {
-    fireEvent.input(nameField, { target: { value: 'Vendor 1' } })
-    fireEvent.input(addressField, { target: { value: 'Address 1' } })
-    fireEvent.click(submit)
+  await user.type(nameField, defaultValues.name)
+  await user.type(addressField, defaultValues.address)
+  await waitFor(() => {
+    expect(submit).toBeEnabled()
+  })
+  act(() => {
+    fireEvent.submit(form)
   })
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(onSubmitMock).toHaveBeenCalledWith(defaultValues)
   })
 })
@@ -98,19 +96,13 @@ test('calls onClose when Cancel button is clicked', async () => {
     fireEvent.click(getByText('Cancel'))
   })
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(onCloseMock).toHaveBeenCalledTimes(1)
   })
 })
 
 test('submits form data only when all required fields are filled and form is not disabled', async () => {
-  const {
-    result: {
-      current: [values],
-    },
-  } = renderHook(() => useState(defaultValues))
-
-  const { getByText, getByLabelText, getByRole } = render(
+  const { getByRole } = render(
     <CreateForm
       open={true}
       schema={schema}
@@ -118,7 +110,6 @@ test('submits form data only when all required fields are filled and form is not
       onSubmit={onSubmitMock}
       FormProps={{
         defaultValues,
-        values,
         mode: 'onChange',
       }}
       submitLabel="Submit"
@@ -126,16 +117,9 @@ test('submits form data only when all required fields are filled and form is not
   )
 
   const form = getByRole('form')
-  const nameField = getByLabelText(/Name/)
-  const addressField = getByLabelText(/Address/)
-  const submitButton = getByText('Submit')
+  const submitButton = getByRole('button', { name: 'Submit' })
 
-  act(() => {
-    userEvent.type(nameField, 'Test Name')
-    userEvent.type(addressField, 'Test Address')
-  })
-
-  waitFor(() => {
+  await waitFor(() => {
     expect(submitButton).toBeEnabled()
   })
 
@@ -143,7 +127,7 @@ test('submits form data only when all required fields are filled and form is not
     fireEvent.submit(form)
   })
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(onSubmitMock).toHaveBeenCalledTimes(1)
     expect(onSubmitMock).toHaveBeenCalledWith(defaultValues)
   })

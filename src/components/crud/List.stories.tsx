@@ -57,7 +57,14 @@ export default {
 } as Meta
 
 export const EmptyList = () => {
-  return <List items={[]} schema={schema} deleteItem={() => {}} />
+  return (
+    <List
+      items={[]}
+      schema={schema}
+      deleteItem={() => {}}
+      emptyLabel="No vendors yet"
+    />
+  )
 }
 
 export const PopulatedList = () => {
