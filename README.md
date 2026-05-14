@@ -76,6 +76,18 @@ clear.
 The default copied file uses the `local-disabled` profile. Update it for demo
 auth or real Cognito only when needed.
 
+## Template Rebranding
+
+After copying this template, preview the identity changes before writing them:
+
+```shell
+yarn init:template --app-name "Example Portal" --package-name example-portal --github-org example-org --repo-name example-portal --org-name "Example Org" --org-url https://example.com/
+```
+
+Add `--write` to update package metadata, README URLs, Pages defaults, app-visible
+names, Storybook intro text, and the demo auth storage key. The command is
+deterministic and only replaces known template identity values.
+
 ## Environment And Auth
 
 The app reads public Vite environment variables from `.env*` files. Local
