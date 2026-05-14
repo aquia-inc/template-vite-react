@@ -186,13 +186,13 @@ theme = createTheme(theme, {
       letterSpacing: '-1.5px',
       color: theme.palette.text.primary,
       [theme.breakpoints.up('sm')]: {
-        fontSize: '4.7129rem',
+        fontSize: '5.2129rem',
       },
       [theme.breakpoints.up('md')]: {
-        fontSize: '5.3556rem',
+        fontSize: '5.8556rem',
       },
       [theme.breakpoints.up('lg')]: {
-        fontSize: '5.9983rem',
+        fontSize: '6.4983rem',
       },
     },
     h2: {
@@ -203,13 +203,13 @@ theme = createTheme(theme, {
       letterSpacing: '-0.5px',
       color: theme.palette.text.primary,
       [theme.breakpoints.up('sm')]: {
-        fontSize: '3.125rem',
+        fontSize: '3.625rem',
       },
       [theme.breakpoints.up('md')]: {
-        fontSize: '3.3333rem',
+        fontSize: '3.8333rem',
       },
       [theme.breakpoints.up('lg')]: {
-        fontSize: '3.75rem',
+        fontSize: '4.25rem',
       },
     },
     h3: {
@@ -220,13 +220,13 @@ theme = createTheme(theme, {
       letterSpacing: 0,
       color: theme.palette.text.primary,
       [theme.breakpoints.up('sm')]: {
-        fontSize: '2.5707rem',
+        fontSize: '3.0707rem',
       },
       [theme.breakpoints.up('md')]: {
-        fontSize: '2.7849rem',
+        fontSize: '3.2849rem',
       },
       [theme.breakpoints.up('lg')]: {
-        fontSize: '2.9991rem',
+        fontSize: '3.4991rem',
       },
     },
     h4: {
@@ -234,13 +234,13 @@ theme = createTheme(theme, {
       fontWeight: theme.typography.fontWeightMedium,
       color: theme.palette.primary.main,
       [theme.breakpoints.up('sm')]: {
-        fontSize: '1.8219rem',
+        fontSize: '2.3219rem',
       },
       [theme.breakpoints.up('md')]: {
-        fontSize: '2.0243rem',
+        fontSize: '2.5243rem',
       },
       [theme.breakpoints.up('lg')]: {
-        fontSize: '2.0243rem',
+        fontSize: '2.5243rem',
       },
     },
     h5: {
@@ -251,13 +251,13 @@ theme = createTheme(theme, {
       letterSpacing: 0,
       color: theme.palette.text.primary,
       [theme.breakpoints.up('sm')]: {
-        fontSize: '1.3118rem',
+        fontSize: '1.8118rem',
       },
       [theme.breakpoints.up('md')]: {
-        fontSize: '1.4993rem',
+        fontSize: '1.9993rem',
       },
       [theme.breakpoints.up('lg')]: {
-        fontSize: '1.4993rem',
+        fontSize: '1.9993rem',
       },
     },
     h6: {
@@ -268,13 +268,13 @@ theme = createTheme(theme, {
       letterSpacing: '0.15px',
       color: theme.palette.text.primary,
       [theme.breakpoints.up('sm')]: {
-        fontSize: '1.25rem',
+        fontSize: '1.75rem',
       },
       [theme.breakpoints.up('md')]: {
-        fontSize: '1.25rem',
+        fontSize: '1.75rem',
       },
       [theme.breakpoints.up('lg')]: {
-        fontSize: '1.25rem',
+        fontSize: '1.75rem',
       },
     },
     subtitle1: {
