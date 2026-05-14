@@ -162,7 +162,7 @@ test('detectAuthProfile uses the app environment profile names', () => {
     detectAuthProfile({
       VITE_DEMO_AUTH_ENABLED: 'false',
       VITE_PUBLIC_BASE_PATH: '/',
-      VITE_AWS_REGION: '',
+      VITE_AWS_REGION: 'us-east-1',
       VITE_COGNITO_DOMAIN: '',
       VITE_COGNITO_REDIRECT_SIGN_IN: '',
       VITE_COGNITO_REDIRECT_SIGN_OUT: '',
@@ -175,7 +175,7 @@ test('detectAuthProfile uses the app environment profile names', () => {
     detectAuthProfile({
       VITE_DEMO_AUTH_ENABLED: 'true',
       VITE_PUBLIC_BASE_PATH: '/',
-      VITE_AWS_REGION: '',
+      VITE_AWS_REGION: 'us-east-1',
       VITE_COGNITO_DOMAIN: '',
       VITE_COGNITO_REDIRECT_SIGN_IN: '',
       VITE_COGNITO_REDIRECT_SIGN_OUT: '',
@@ -188,7 +188,7 @@ test('detectAuthProfile uses the app environment profile names', () => {
     detectAuthProfile({
       VITE_DEMO_AUTH_ENABLED: 'true',
       VITE_PUBLIC_BASE_PATH: '/template-vite-react/',
-      VITE_AWS_REGION: '',
+      VITE_AWS_REGION: 'us-east-1',
       VITE_COGNITO_DOMAIN: '',
       VITE_COGNITO_REDIRECT_SIGN_IN: '',
       VITE_COGNITO_REDIRECT_SIGN_OUT: '',
@@ -214,7 +214,7 @@ test('detectAuthProfile uses the app environment profile names', () => {
       VITE_DEMO_AUTH_ENABLED: 'true',
       VITE_PUBLIC_BASE_PATH: '/',
       VITE_AWS_REGION: 'us-east-1',
-      VITE_COGNITO_DOMAIN: '',
+      VITE_COGNITO_DOMAIN: 'https://example.auth.us-east-1.amazoncognito.com',
       VITE_COGNITO_REDIRECT_SIGN_IN: '',
       VITE_COGNITO_REDIRECT_SIGN_OUT: '',
       VITE_USER_POOL_CLIENT_ID: '',

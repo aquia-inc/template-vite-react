@@ -270,14 +270,14 @@ const getTextReplacementSpecs = (target) => [
     path: '.github/workflows/cicd.yaml',
     replacements: [
       {
-        label: 'workflow Pages base path',
-        search: CURRENT.pagesBasePath,
-        replacement: target.pagesBasePath,
-      },
-      {
         label: 'workflow Pages URL',
         search: CURRENT.pagesUrl,
         replacement: target.pagesUrl,
+      },
+      {
+        label: 'workflow Pages base path',
+        search: CURRENT.pagesBasePath,
+        replacement: target.pagesBasePath,
       },
     ],
   },

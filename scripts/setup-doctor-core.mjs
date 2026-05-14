@@ -131,6 +131,14 @@ const hasValue = (value = '') => value.trim().length > 0
 const isValidUserPoolId = (value = '') =>
   /^[a-z0-9-]+_[A-Za-z0-9]+$/.test(value)
 
+const getCognitoSpecificValues = (authConfig) => [
+  authConfig.COGNITO_DOMAIN,
+  authConfig.COGNITO_REDIRECT_SIGN_IN,
+  authConfig.COGNITO_REDIRECT_SIGN_OUT,
+  authConfig.USER_POOL_CLIENT_ID,
+  authConfig.USER_POOL_ID,
+]
+
 export const detectAuthProfile = (env) => {
   const authConfig = {
     AWS_REGION: env.VITE_AWS_REGION ?? '',
@@ -140,9 +148,11 @@ export const detectAuthProfile = (env) => {
     USER_POOL_CLIENT_ID: env.VITE_USER_POOL_CLIENT_ID ?? '',
     USER_POOL_ID: env.VITE_USER_POOL_ID ?? '',
   }
-  const values = Object.values(authConfig)
-  const allBlank = values.every((value) => value.trim() === '')
-  const anyPresent = values.some(hasValue)
+  const cognitoSpecificValues = getCognitoSpecificValues(authConfig)
+  const cognitoSpecificValuesBlank = cognitoSpecificValues.every(
+    (value) => value.trim() === '',
+  )
+  const anyCognitoSpecificValuePresent = cognitoSpecificValues.some(hasValue)
   const cognitoValid =
     hasValue(authConfig.AWS_REGION) &&
     isValidUserPoolId(authConfig.USER_POOL_ID) &&
@@ -155,13 +165,13 @@ export const detectAuthProfile = (env) => {
     return 'cognito'
   }
 
-  if (allBlank && env.VITE_DEMO_AUTH_ENABLED === 'true') {
+  if (cognitoSpecificValuesBlank && env.VITE_DEMO_AUTH_ENABLED === 'true') {
     return env.VITE_PUBLIC_BASE_PATH && env.VITE_PUBLIC_BASE_PATH !== '/'
       ? 'pages-demo'
       : 'local-demo'
   }
 
-  if (anyPresent) {
+  if (anyCognitoSpecificValuePresent) {
     return 'unknown'
   }
 

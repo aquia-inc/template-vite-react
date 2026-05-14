@@ -81,6 +81,7 @@ jobs:
         env:
           VITE_PUBLIC_BASE_PATH: ${{ github.ref == 'refs/heads/main' && '/template-vite-react/' || '/' }}
           VITE_CF_DOMAIN: ${{ github.ref == 'refs/heads/main' && 'https://aquia-inc.github.io/template-vite-react/' || '' }}
+          VITE_DEMO_AUTH_ENABLED: ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}
           VITE_IDP_ENABLED: 'false'
 
       - name: BUILD - Storybook
@@ -88,6 +89,7 @@ jobs:
         env:
           VITE_PUBLIC_BASE_PATH: ${{ github.ref == 'refs/heads/main' && '/template-vite-react/' || '/' }}
           VITE_CF_DOMAIN: ${{ github.ref == 'refs/heads/main' && 'https://aquia-inc.github.io/template-vite-react/' || '' }}
+          VITE_DEMO_AUTH_ENABLED: ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}
           VITE_IDP_ENABLED: 'false'
 
       - name: UPLOAD - build artifact

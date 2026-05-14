@@ -227,6 +227,10 @@ test('write mode updates deterministic template identity values', async () => {
     /\/example-portal\//,
   )
   assert.match(
+    await readFile(join(root, '.github/workflows/cicd.yaml'), 'utf8'),
+    /https:\/\/example-org\.github\.io\/example-portal\//,
+  )
+  assert.match(
     await readFile(join(root, 'playwright.config.ts'), 'utf8'),
     /\/example-portal\//,
   )

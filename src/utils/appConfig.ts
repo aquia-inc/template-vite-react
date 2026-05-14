@@ -40,11 +40,20 @@ export const buildApiUrl = (cfDomain: string) => {
   }
 }
 
-const areCognitoConfigValuesBlank = (authConfig: AuthConfig) =>
-  Object.values(authConfig).every((value) => value.trim() === '')
+const getCognitoSpecificValues = (authConfig: AuthConfig) => [
+  authConfig.COGNITO_DOMAIN,
+  authConfig.COGNITO_REDIRECT_SIGN_IN,
+  authConfig.COGNITO_REDIRECT_SIGN_OUT,
+  authConfig.USER_POOL_CLIENT_ID,
+  authConfig.USER_POOL_ID,
+]
+
+const areCognitoSpecificValuesBlank = (authConfig: AuthConfig) =>
+  getCognitoSpecificValues(authConfig).every((value) => value.trim() === '')
 
 const areCognitoConfigValuesPartiallySet = (authConfig: AuthConfig) =>
-  !areCognitoConfigValuesBlank(authConfig) && !isCognitoConfigValid(authConfig)
+  !areCognitoSpecificValuesBlank(authConfig) &&
+  !isCognitoConfigValid(authConfig)
 
 const isAppConfig = (
   configOrEnv: AppConfigEnv | AppConfig,
@@ -88,7 +97,7 @@ export const getAppConfigProfile = (
   const publicBasePath = getPublicBasePath(configOrEnv)
   const demoAuthRequested = readBooleanEnv(getDemoAuthEnv(configOrEnv))
   const cognitoAuthEnabled = isCognitoConfigValid(authConfig)
-  const cognitoValuesBlank = areCognitoConfigValuesBlank(authConfig)
+  const cognitoValuesBlank = areCognitoSpecificValuesBlank(authConfig)
   const demoAuthEnabled =
     !cognitoAuthEnabled && cognitoValuesBlank && demoAuthRequested
   const warnings: string[] = []

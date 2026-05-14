@@ -33,7 +33,7 @@ test('returns the local demo profile when demo auth is requested and Cognito con
   const result = getAppConfigProfile({
     VITE_DEMO_AUTH_ENABLED: 'true',
     VITE_PUBLIC_BASE_PATH: '/',
-    VITE_AWS_REGION: '',
+    VITE_AWS_REGION: 'us-east-1',
     VITE_COGNITO_DOMAIN: '',
     VITE_COGNITO_REDIRECT_SIGN_IN: '',
     VITE_COGNITO_REDIRECT_SIGN_OUT: '',
@@ -52,7 +52,7 @@ test('returns the pages demo profile for non-root demo builds with blank Cognito
   const result = getAppConfigProfile({
     VITE_DEMO_AUTH_ENABLED: 'true',
     VITE_PUBLIC_BASE_PATH: '/template-vite-react/',
-    VITE_AWS_REGION: '',
+    VITE_AWS_REGION: 'us-east-1',
     VITE_COGNITO_DOMAIN: '',
     VITE_COGNITO_REDIRECT_SIGN_IN: '',
     VITE_COGNITO_REDIRECT_SIGN_OUT: '',
@@ -71,7 +71,8 @@ test('returns the local disabled profile when Cognito config is blank and demo a
   const result = getAppConfigProfile({
     VITE_DEMO_AUTH_ENABLED: 'false',
     VITE_PUBLIC_BASE_PATH: '/',
-    VITE_AWS_REGION: '',
+    VITE_AWS_REGION: 'us-east-1',
+    VITE_CF_DOMAIN: 'https://localhost:3000',
     VITE_COGNITO_DOMAIN: '',
     VITE_COGNITO_REDIRECT_SIGN_IN: '',
     VITE_COGNITO_REDIRECT_SIGN_OUT: '',
@@ -92,7 +93,7 @@ test('returns warnings without enabling demo auth when demo auth conflicts with 
   const result = getAppConfigProfile({
     VITE_DEMO_AUTH_ENABLED: 'true',
     VITE_AWS_REGION: 'us-east-1',
-    VITE_COGNITO_DOMAIN: '',
+    VITE_COGNITO_DOMAIN: 'https://example.auth.us-east-1.amazoncognito.com',
     VITE_COGNITO_REDIRECT_SIGN_IN: '',
     VITE_COGNITO_REDIRECT_SIGN_OUT: '',
     VITE_USER_POOL_CLIENT_ID: '',
@@ -127,7 +128,7 @@ test('returns Cognito profile with a warning when valid Cognito config overrides
 test('enables demo auth when requested and Cognito config is blank', () => {
   const config = createAppConfig({
     VITE_DEMO_AUTH_ENABLED: 'true',
-    VITE_AWS_REGION: '',
+    VITE_AWS_REGION: 'us-east-1',
     VITE_COGNITO_DOMAIN: '',
     VITE_COGNITO_REDIRECT_SIGN_IN: '',
     VITE_COGNITO_REDIRECT_SIGN_OUT: '',
@@ -143,7 +144,7 @@ test('enables demo auth when requested and Cognito config is blank', () => {
 test('keeps auth disabled when Cognito and demo auth are both unavailable', () => {
   const config = createAppConfig({
     VITE_DEMO_AUTH_ENABLED: 'false',
-    VITE_AWS_REGION: '',
+    VITE_AWS_REGION: 'us-east-1',
     VITE_COGNITO_DOMAIN: '',
     VITE_COGNITO_REDIRECT_SIGN_IN: '',
     VITE_COGNITO_REDIRECT_SIGN_OUT: '',
@@ -182,7 +183,7 @@ test('keeps demo auth disabled when Cognito config is partially set and invalid'
   const config = createAppConfig({
     VITE_DEMO_AUTH_ENABLED: 'true',
     VITE_AWS_REGION: 'us-east-1',
-    VITE_COGNITO_DOMAIN: '',
+    VITE_COGNITO_DOMAIN: 'https://example.auth.us-east-1.amazoncognito.com',
     VITE_COGNITO_REDIRECT_SIGN_IN: '',
     VITE_COGNITO_REDIRECT_SIGN_OUT: '',
     VITE_USER_POOL_CLIENT_ID: '',
