@@ -60,6 +60,43 @@ test('has the expected typography', () => {
   })
 })
 
+test('increases heading sizes at sm and md breakpoints', () => {
+  const sm = theme.breakpoints.up('sm')
+  const md = theme.breakpoints.up('md')
+  const lg = theme.breakpoints.up('lg')
+
+  expect(theme.typography.h1).toMatchObject({
+    [sm]: { fontSize: '5.2129rem' },
+    [md]: { fontSize: '5.8556rem' },
+    [lg]: { fontSize: '6.4983rem' },
+  })
+  expect(theme.typography.h2).toMatchObject({
+    [sm]: { fontSize: '3.625rem' },
+    [md]: { fontSize: '3.8333rem' },
+    [lg]: { fontSize: '4.25rem' },
+  })
+  expect(theme.typography.h3).toMatchObject({
+    [sm]: { fontSize: '3.0707rem' },
+    [md]: { fontSize: '3.2849rem' },
+    [lg]: { fontSize: '3.4991rem' },
+  })
+  expect(theme.typography.h4).toMatchObject({
+    [sm]: { fontSize: '2.3219rem' },
+    [md]: { fontSize: '2.5243rem' },
+    [lg]: { fontSize: '2.5243rem' },
+  })
+  expect(theme.typography.h5).toMatchObject({
+    [sm]: { fontSize: '1.8118rem' },
+    [md]: { fontSize: '1.9993rem' },
+    [lg]: { fontSize: '1.9993rem' },
+  })
+  expect(theme.typography.h6).toMatchObject({
+    [sm]: { fontSize: '1.75rem' },
+    [md]: { fontSize: '1.75rem' },
+    [lg]: { fontSize: '1.75rem' },
+  })
+})
+
 test('has the expected zIndex', () => {
   expect(theme.zIndex).toMatchObject({
     mobileStepper: expect.any(Number),
