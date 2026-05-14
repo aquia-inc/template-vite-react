@@ -1,47 +1,45 @@
 import { renderHook, waitFor } from '@testing-library/react'
 import fetchMock from 'jest-fetch-mock'
 import useFetch from '@/hooks/useFetch'
+import { ApiRequestError } from '@/utils/apiRequest'
+
+const jwtToken = 'test-token'
 
 describe('useFetch', () => {
   beforeEach(() => {
     fetchMock.resetMocks()
   })
 
-  test('fetches data successfully', () => {
+  test('fetches API data successfully through the compatibility wrapper', async () => {
     const data = { message: 'Test data' }
     fetchMock.mockResponseOnce(JSON.stringify(data))
 
-    const { result, rerender } = renderHook(() => useFetch('https://test.com'))
+    const { result } = renderHook(() =>
+      useFetch<typeof data>('test-endpoint', { jwtToken }),
+    )
 
-    waitFor(() => {
-      expect(result.current.loading).toBe(true)
-    })
-
-    rerender()
-
-    waitFor(() => {
-      expect(result.current.loading).toBe(false)
+    await waitFor(() => {
       expect(result.current.data).toEqual(data)
-      expect(result.current.error).toBeNull()
     })
+
+    expect(result.current.loading).toBe(false)
+    expect(result.current.error).toBeNull()
   })
 
-  test('handles fetch error', () => {
-    const errorMessage = 'Fetch error'
-    fetchMock.mockRejectOnce(new Error(errorMessage))
+  test('handles fetch errors through the compatibility wrapper', async () => {
+    fetchMock.mockRejectOnce(new Error('Fetch error'))
 
-    const { result, rerender } = renderHook(() => useFetch('https://test.com'))
+    const { result } = renderHook(() => useFetch('test-endpoint', { jwtToken }))
 
-    waitFor(() => {
-      expect(result.current.loading).toBe(true)
+    await waitFor(() => {
+      expect(result.current.error).toBeInstanceOf(ApiRequestError)
     })
 
-    rerender()
-
-    waitFor(() => {
-      expect(result.current.loading).toBe(false)
-      expect(result.current.data).toBeNull()
-      expect(result.current.error).toEqual(new Error(errorMessage))
+    expect(result.current.data).toBeNull()
+    expect(result.current.loading).toBe(false)
+    expect(result.current.error).toMatchObject({
+      message: 'Request failed before receiving a response',
+      statusText: 'Network Error',
     })
   })
 })

@@ -56,7 +56,6 @@ const CreateForm: React.FC<CreateFormProps> = ({
 }): JSX.Element => {
   const {
     control,
-    register,
     handleSubmit,
     formState: { errors = {}, isSubmitting, isValid, isValidating },
   } = useForm<FieldValues>({
@@ -69,10 +68,9 @@ const CreateForm: React.FC<CreateFormProps> = ({
 
   const onSubmit = useCallback(
     (data: unknown) => {
-      if (disabled) return
       onSubmitProp(data)
     },
-    [onSubmitProp, disabled],
+    [onSubmitProp],
   )
 
   const onClose = useCallback(() => {
@@ -93,35 +91,29 @@ const CreateForm: React.FC<CreateFormProps> = ({
       <DialogContent>
         <Box component="form" onSubmit={handleSubmit(onSubmit)} role="form">
           <Stack spacing={4} sx={{ pt: 1 }}>
-            {schema.map(({ component: Component, ...field }) => {
-              // dynamically register the fields
-              const { ref: inputRef, ...inputProps } = register(field.name, {
-                required: 'This field is required',
-              })
-
-              return (
-                <Controller
-                  key={field.name}
-                  name={field.name}
-                  control={control}
-                  rules={{ required: field.required }}
-                  defaultValue={field.value}
-                  render={({ field: _f, fieldState: { error } }) => (
-                    <Component
-                      {...field}
-                      {...inputProps}
-                      inputRef={inputRef}
-                      label={field.label}
-                      required={field.required}
-                      error={!!error}
-                      fullWidth
-                      helperText={error ? error?.message : ' '}
-                      multiline={field.multiline}
-                    />
-                  )}
-                />
-              )
-            })}
+            {schema.map(({ component: Component, ...field }) => (
+              <Controller
+                key={field.name}
+                name={field.name}
+                control={control}
+                rules={{
+                  required: field.required ? 'This field is required' : false,
+                }}
+                defaultValue={field.value ?? ''}
+                render={({ field: controllerField, fieldState: { error } }) => (
+                  <Component
+                    {...field}
+                    {...controllerField}
+                    label={field.label}
+                    required={field.required}
+                    error={!!error}
+                    fullWidth
+                    helperText={error ? error?.message : ' '}
+                    multiline={field.multiline}
+                  />
+                )}
+              />
+            ))}
           </Stack>
           <DialogActions>
             <Button onClick={onClose}>{cancelLabel || 'Cancel'}</Button>
@@ -129,9 +121,6 @@ const CreateForm: React.FC<CreateFormProps> = ({
               disabled={disabled ? true : false}
               variant="contained"
               type="submit"
-              onClick={onSubmit}
-              role="button"
-              aria-label="submit"
             >
               {submitLabel || 'Submit'}
             </Button>
