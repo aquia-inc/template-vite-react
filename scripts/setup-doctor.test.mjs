@@ -157,10 +157,11 @@ test('runDoctor fails for a wrong Yarn version', async () => {
   }
 })
 
-test('detectAuthProfile distinguishes disabled, demo, and Cognito profiles', () => {
+test('detectAuthProfile uses the app environment profile names', () => {
   assert.equal(
     detectAuthProfile({
       VITE_DEMO_AUTH_ENABLED: 'false',
+      VITE_PUBLIC_BASE_PATH: '/',
       VITE_AWS_REGION: '',
       VITE_COGNITO_DOMAIN: '',
       VITE_COGNITO_REDIRECT_SIGN_IN: '',
@@ -168,11 +169,12 @@ test('detectAuthProfile distinguishes disabled, demo, and Cognito profiles', () 
       VITE_USER_POOL_CLIENT_ID: '',
       VITE_USER_POOL_ID: '',
     }),
-    'disabled',
+    'local-disabled',
   )
   assert.equal(
     detectAuthProfile({
       VITE_DEMO_AUTH_ENABLED: 'true',
+      VITE_PUBLIC_BASE_PATH: '/',
       VITE_AWS_REGION: '',
       VITE_COGNITO_DOMAIN: '',
       VITE_COGNITO_REDIRECT_SIGN_IN: '',
@@ -180,7 +182,20 @@ test('detectAuthProfile distinguishes disabled, demo, and Cognito profiles', () 
       VITE_USER_POOL_CLIENT_ID: '',
       VITE_USER_POOL_ID: '',
     }),
-    'demo',
+    'local-demo',
+  )
+  assert.equal(
+    detectAuthProfile({
+      VITE_DEMO_AUTH_ENABLED: 'true',
+      VITE_PUBLIC_BASE_PATH: '/template-vite-react/',
+      VITE_AWS_REGION: '',
+      VITE_COGNITO_DOMAIN: '',
+      VITE_COGNITO_REDIRECT_SIGN_IN: '',
+      VITE_COGNITO_REDIRECT_SIGN_OUT: '',
+      VITE_USER_POOL_CLIENT_ID: '',
+      VITE_USER_POOL_ID: '',
+    }),
+    'pages-demo',
   )
   assert.equal(
     detectAuthProfile({
@@ -193,5 +208,18 @@ test('detectAuthProfile distinguishes disabled, demo, and Cognito profiles', () 
       VITE_USER_POOL_ID: 'us-east-1_abcd1234',
     }),
     'cognito',
+  )
+  assert.equal(
+    detectAuthProfile({
+      VITE_DEMO_AUTH_ENABLED: 'true',
+      VITE_PUBLIC_BASE_PATH: '/',
+      VITE_AWS_REGION: 'us-east-1',
+      VITE_COGNITO_DOMAIN: '',
+      VITE_COGNITO_REDIRECT_SIGN_IN: '',
+      VITE_COGNITO_REDIRECT_SIGN_OUT: '',
+      VITE_USER_POOL_CLIENT_ID: '',
+      VITE_USER_POOL_ID: '',
+    }),
+    'unknown',
   )
 })

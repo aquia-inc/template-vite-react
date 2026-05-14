@@ -156,14 +156,16 @@ export const detectAuthProfile = (env) => {
   }
 
   if (allBlank && env.VITE_DEMO_AUTH_ENABLED === 'true') {
-    return 'demo'
+    return env.VITE_PUBLIC_BASE_PATH && env.VITE_PUBLIC_BASE_PATH !== '/'
+      ? 'pages-demo'
+      : 'local-demo'
   }
 
   if (anyPresent) {
-    return 'invalid-cognito'
+    return 'unknown'
   }
 
-  return 'disabled'
+  return 'local-disabled'
 }
 
 export const readLocalEnv = async (cwd) => {
