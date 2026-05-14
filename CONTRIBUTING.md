@@ -11,10 +11,23 @@ Use the pinned runtime and package manager:
 nvm use
 corepack enable
 yarn install --immutable
+yarn setup
+yarn doctor
+```
+
+`yarn setup` verifies Node 24 and Yarn 4.14.1, creates
+`.env.development.local` from `.env.example` only when the local file is missing,
+and runs `yarn prepare` for Husky hooks. It never overwrites an existing local
+env file.
+
+`yarn doctor` reports runtime versions, local env-file presence, and the detected
+auth profile. Missing `.env.development.local` is a warning; wrong Node or Yarn
+versions fail the check. The compatibility wrapper still works when needed:
+
+```shell
 sh ./scripts/post-install.sh
 ```
 
-The post-install script creates `.env.development.local` from `.env.example`.
 Dummy Cognito values are safe for booting the app, but use real values only when
 testing auth against an owned user pool.
 
@@ -32,6 +45,7 @@ testing auth against an owned user pool.
 Run the checks that match your change. For most code changes, run:
 
 ```shell
+yarn doctor
 yarn lint
 yarn test
 yarn build
@@ -84,6 +98,7 @@ Update docs in the same PR as the behavior they describe. For docs-only changes,
 run at least:
 
 ```shell
+yarn doctor
 yarn lint
 ```
 

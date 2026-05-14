@@ -21,6 +21,21 @@ export type AppFeatureFlags = {
   IDP_ENABLED: boolean
 }
 
+export type AppEnvironmentProfile =
+  | 'local-disabled'
+  | 'local-demo'
+  | 'cognito'
+  | 'pages-demo'
+  | 'unknown'
+
+export type AppConfigProfileResult = {
+  profile: AppEnvironmentProfile
+  authEnabled: boolean
+  cognitoAuthEnabled: boolean
+  demoAuthEnabled: boolean
+  warnings: string[]
+}
+
 export type FormField = {
   name: string
   label?: string
