@@ -89,7 +89,7 @@
     "@semantic-release/npm": "^13.1.5",
     "@semantic-release/release-notes-generator": "^14.1.1",
     "@storybook/addon-docs": "^10.4.0",
-    "@storybook/addon-links": "^10.3.6",
+    "@storybook/addon-links": "^10.4.0",
     "@storybook/react": "^10.3.6",
     "@storybook/react-vite": "^10.3.6",
     "@swc/core": "^1.15.33",
