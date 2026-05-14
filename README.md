@@ -46,20 +46,35 @@ corepack enable
 yarn install --immutable
 ```
 
-4. Install or refresh local hooks:
+4. Create the local development env file and install local hooks:
 
 ```shell
-yarn prepare
+yarn setup
 ```
 
-5. Create the local development env file:
+`yarn setup` verifies Node 24 and Yarn 4.14.1, copies `.env.example` to
+`.env.development.local` only when that file is missing, and runs
+`yarn prepare` for Husky hooks. Existing local env files are left unchanged.
+
+The legacy wrapper remains available when a shell script entrypoint is needed:
 
 ```shell
 sh ./scripts/post-install.sh
 ```
 
-The post-install script copies `.env.example` to `.env.development.local`.
-Update the copied file for real Cognito values only when testing auth locally.
+Update the copied env file for real Cognito values only when testing auth
+locally.
+
+5. Check the local setup:
+
+```shell
+yarn doctor
+```
+
+`yarn doctor` reports the detected Node version, Yarn version, local env-file
+presence, and auth profile. Wrong Node or Yarn versions fail the check. A missing
+`.env.development.local` is reported as a warning so first-time setup remains
+clear.
 
 ## Environment And Auth
 
@@ -106,6 +121,7 @@ yarn sb
 Run the same categories of checks used by CI:
 
 ```shell
+yarn doctor
 yarn lint
 yarn test
 yarn build
