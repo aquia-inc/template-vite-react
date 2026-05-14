@@ -3306,7 +3306,18 @@ __metadata:
     "@emnapi/core": "npm:1.10.0"
     "@emnapi/runtime": "npm:1.10.0"
     "@napi-rs/wasm-runtime": "npm:^1.1.4"
-  checksum: 10/6a550da8f441abe5268f6a967f686e9f85e55281c240817a0363f4d53552e42b861e2df7fcfab643dc690de20e71170990cdd5fc46b5c75cbec9db6b52c23403
+  conditions: cpu=wasm32
+  languageName: node
+  linkType: hard
+
+"@rolldown/binding-wasm32-wasi@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@rolldown/binding-wasm32-wasi@npm:1.0.1"
+  dependencies:
+    "@emnapi/core": "npm:1.10.0"
+    "@emnapi/runtime": "npm:1.10.0"
+    "@napi-rs/wasm-runtime": "npm:^1.1.4"
+  checksum: 10/d32326ab5af82ce28e537fbef88cd992e84c8a730f0cb03e4f9188bd354d12498f407c3e20ae4703e325ce88fcd345e9a6b441076ba5d34fe808f549f7c09e36
   conditions: cpu=wasm32
   languageName: node
   linkType: hard
@@ -13918,7 +13929,7 @@ __metadata:
     "@mui/x-data-grid": "npm:^9.1.0"
     "@playwright/test": "npm:^1.60.0"
     "@popperjs/core": "npm:^2.11.8"
-    "@rolldown/binding-wasm32-wasi": "npm:1.0.0"
+    "@rolldown/binding-wasm32-wasi": "npm:1.0.1"
     "@semantic-release/changelog": "npm:^6.0.3"
     "@semantic-release/commit-analyzer": "npm:^13.0.1"
     "@semantic-release/github": "npm:^12.0.8"
