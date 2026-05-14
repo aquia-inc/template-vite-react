@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import process from 'node:process'
+import { pathToFileURL } from 'node:url'
 
 import {
   commandRunner,
@@ -60,6 +61,6 @@ export const runSetup = async ({
   return 0
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   process.exitCode = await runSetup()
 }
