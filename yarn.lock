@@ -2600,7 +2600,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^9.0.1":
+"@mui/utils@npm:9.0.1, @mui/utils@npm:^9.0.1":
   version: 9.0.1
   resolution: "@mui/utils@npm:9.0.1"
   dependencies:
@@ -2620,12 +2620,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-data-grid@npm:^9.1.0":
-  version: 9.1.0
-  resolution: "@mui/x-data-grid@npm:9.1.0"
+"@mui/x-data-grid@npm:^9.2.0":
+  version: 9.2.0
+  resolution: "@mui/x-data-grid@npm:9.2.0"
   dependencies:
     "@babel/runtime": "npm:^7.29.2"
-    "@mui/utils": "npm:9.0.0"
+    "@mui/utils": "npm:9.0.1"
     "@mui/x-internals": "npm:^9.1.0"
     "@mui/x-virtualizer": "npm:9.0.0-alpha.5"
     clsx: "npm:^2.1.1"
@@ -2643,7 +2643,7 @@ __metadata:
       optional: true
     "@emotion/styled":
       optional: true
-  checksum: 10/f6d8f65bbaf75960315d9e1a8aadb3def11e09665676e5a494cf7b039ea456526235ed7145d7dcd714d2462fd835d6514c0bba472df37779c0b799e445f15053
+  checksum: 10/2eb629a204802bf72741a93c12c8f681d145010fbd04ed349eab0423dd1602844ebf5c3ef8cfcf3d620100280374c47b58deb0f2caf1c2fa2d2afe35e0783ff2
   languageName: node
   linkType: hard
 
@@ -14391,7 +14391,7 @@ __metadata:
     "@mui/icons-material": "npm:^9.0.1"
     "@mui/lab": "npm:^9.0.0-beta.3"
     "@mui/material": "npm:^9.0.1"
-    "@mui/x-data-grid": "npm:^9.1.0"
+    "@mui/x-data-grid": "npm:^9.2.0"
     "@playwright/test": "npm:^1.60.0"
     "@popperjs/core": "npm:^2.11.8"
     "@rolldown/binding-wasm32-wasi": "npm:1.0.1"
