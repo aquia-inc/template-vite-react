@@ -30,7 +30,7 @@ export interface CreateFormProps {
  * @param {boolean} props.open - Whether the form is open or not
  * @param {FormField[]} props.schema - The schema for the form
  * @param {() => void} props.onClose - The function to call when the form is closed
- * @param {(data: unknown) => void} props.onSubmit - The function to call when the form is submitted
+ * @param {(data: unknown) => Promise<void> | void} props.onSubmit - The function to call when the form is submitted
  * @returns {JSX.Element}
  * @example
  * <CreateForm
@@ -102,18 +102,24 @@ const CreateForm: React.FC<CreateFormProps> = ({
                   required: field.required ? 'This field is required' : false,
                 }}
                 defaultValue={field.value ?? ''}
-                render={({ field: controllerField, fieldState: { error } }) => (
-                  <Component
-                    {...field}
-                    {...controllerField}
-                    label={field.label}
-                    required={field.required}
-                    error={!!error}
-                    fullWidth
-                    helperText={error ? error?.message : ' '}
-                    multiline={field.multiline}
-                  />
-                )}
+                render={({
+                  field: { ref, ...controllerField },
+                  fieldState: { error },
+                }) => {
+                  return (
+                    <Component
+                      {...field}
+                      {...controllerField}
+                      inputRef={ref}
+                      label={field.label}
+                      required={field.required}
+                      error={!!error}
+                      fullWidth
+                      helperText={error ? error?.message : ' '}
+                      multiline={field.multiline}
+                    />
+                  )
+                }}
               />
             ))}
           </Stack>

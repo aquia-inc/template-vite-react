@@ -132,7 +132,9 @@ const resolveToken = async <TBody>({
   path,
 }: Pick<ApiRequestOptions<TBody>, 'getToken' | 'jwtToken' | 'path'>) => {
   try {
-    const token = jwtToken ?? (await (getToken ?? getJWT)())
+    const explicitToken =
+      typeof jwtToken === 'string' && jwtToken.trim() ? jwtToken : undefined
+    const token = explicitToken ?? (await (getToken ?? getJWT)())
 
     if (!token) {
       throw new Error('No JWT token provided')

@@ -2,6 +2,7 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import TextField from '@mui/material/TextField'
 import CreateForm from '@/components/crud/CreateForm'
+import { FormField } from '@/types'
 
 const defaultValues = {
   name: 'Vendor 1',
@@ -80,6 +81,32 @@ test('calls onSubmit with form data when form is submitted', async () => {
   await waitFor(() => {
     expect(onSubmitMock).toHaveBeenCalledWith(defaultValues)
   })
+})
+
+test('passes react-hook-form refs to the input element', async () => {
+  const refMock = jest.fn()
+  const refSchema: FormField[] = [
+    {
+      ...schema[0],
+      component: ({ inputRef, ...props }) => {
+        refMock(inputRef)
+
+        return <TextField {...props} inputRef={inputRef} />
+      },
+    },
+  ]
+
+  const { getByLabelText } = render(
+    <CreateForm
+      open={true}
+      onClose={onCloseMock}
+      onSubmit={onSubmitMock}
+      schema={refSchema}
+    />,
+  )
+
+  expect(getByLabelText(/Name/)).toBeInTheDocument()
+  expect(refMock).toHaveBeenCalledWith(expect.any(Function))
 })
 
 test('calls onClose when Cancel button is clicked', async () => {

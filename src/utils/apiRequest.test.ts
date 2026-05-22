@@ -177,6 +177,49 @@ test('supports an injected token resolver', async () => {
   })
 })
 
+test('falls back to the JWT helper when the explicit token is empty', async () => {
+  fetchMock.mockResponseOnce(JSON.stringify({ ok: true }))
+
+  await apiRequest({ jwtToken: '', path })
+
+  expect(getJWT).toHaveBeenCalledTimes(1)
+  expect(fetchMock).toHaveBeenCalledWith(url, {
+    body: null,
+    headers: authHeaders,
+    method: 'GET',
+    signal: expect.any(AbortSignal),
+  })
+})
+
+test('falls back to the JWT helper when the explicit token is blank', async () => {
+  fetchMock.mockResponseOnce(JSON.stringify({ ok: true }))
+
+  await apiRequest({ jwtToken: '   ', path })
+
+  expect(getJWT).toHaveBeenCalledTimes(1)
+  expect(fetchMock).toHaveBeenCalledWith(url, {
+    body: null,
+    headers: authHeaders,
+    method: 'GET',
+    signal: expect.any(AbortSignal),
+  })
+})
+
+test('uses a non-empty explicit token before an injected resolver', async () => {
+  const getToken = jest.fn().mockResolvedValue('resolved-token')
+  fetchMock.mockResponseOnce(JSON.stringify({ ok: true }))
+
+  await apiRequest({ jwtToken, path, getToken })
+
+  expect(getToken).not.toHaveBeenCalled()
+  expect(fetchMock).toHaveBeenCalledWith(url, {
+    body: null,
+    headers: authHeaders,
+    method: 'GET',
+    signal: expect.any(AbortSignal),
+  })
+})
+
 test('normalizes token resolution errors', async () => {
   jest.mocked(getJWT).mockRejectedValueOnce(new Error('missing token'))
 
