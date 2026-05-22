@@ -63,14 +63,27 @@ test('deletes an item when delete button is clicked', async () => {
     <List items={items} schema={schema} deleteItem={deleteItemMock} />,
   )
 
-  const deleteButtons = getAllByLabelText('delete')
+  const deleteButtons = getAllByLabelText(/delete/i)
 
-  await act(() => {
+  act(() => {
     fireEvent.click(deleteButtons[0])
   })
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(deleteItemMock).toHaveBeenCalledTimes(1)
     expect(deleteItemMock).toHaveBeenCalledWith(items[0].id)
   })
+})
+
+test('renders a reusable empty state when there are no items', () => {
+  const { getByRole, getByText } = render(
+    <List
+      items={[]}
+      schema={schema}
+      deleteItem={deleteItemMock}
+      emptyLabel="Nothing to show"
+    />,
+  )
+
+  expect(getByRole('status')).toContainElement(getByText('Nothing to show'))
 })

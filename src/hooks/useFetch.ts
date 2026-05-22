@@ -1,40 +1,106 @@
 /**
+ * Compatibility wrapper for legacy URL fetches and API-backed queries.
  * @module hooks/useFetch
  */
-import { useEffect, useState } from 'react'
+import * as React from 'react'
+import useApiQuery, {
+  UseApiQueryOptions,
+  UseApiQueryResult,
+} from '@/hooks/useApiQuery'
 
-/**
- * Custom hook to fetch data from an API.
- * @param {string} url - URL to fetch
- * @returns {object} - An object containing the data, error, and loading state
- */
-const useFetch = (
-  url: string,
-): {
-  loading: boolean
-  error: Error | null
-  data: unknown
-} => {
-  const [data, setData] = useState(null)
-  const [error, setError] = useState<Error | null>(null)
-  const [loading, setLoading] = useState(false)
+type UseFetchResult<TData = unknown> = UseApiQueryResult<TData>
 
-  useEffect(() => {
-    ;(async function () {
-      try {
-        setLoading(true)
-        const response = await fetch(url)
-        const data = await response.json()
-        setData(data)
-      } catch (error) {
-        setError(error as Error)
-      } finally {
+const isAbsoluteHttpUrl = (url: string | null) => {
+  return url !== null && /^https?:\/\//i.test(url)
+}
+
+const useRawFetch = <TData = unknown>(
+  url: string | null,
+): UseFetchResult<TData> => {
+  const [data, setData] = React.useState<TData | null>(null)
+  const [error, setError] = React.useState<Error | null>(null)
+  const [loading, setLoading] = React.useState(false)
+  const controllerRef = React.useRef<AbortController | null>(null)
+  const mountedRef = React.useRef(false)
+
+  React.useEffect(() => {
+    mountedRef.current = true
+
+    return () => {
+      mountedRef.current = false
+      controllerRef.current?.abort()
+    }
+  }, [])
+
+  const refetch = React.useCallback(async () => {
+    if (!url) {
+      controllerRef.current?.abort()
+      setData(null)
+      setError(null)
+      setLoading(false)
+      return undefined
+    }
+
+    controllerRef.current?.abort()
+    const controller = new AbortController()
+    controllerRef.current = controller
+    setLoading(true)
+    setError(null)
+
+    try {
+      const response = await fetch(url, { signal: controller.signal })
+      const responseData = (await response.json()) as TData
+
+      if (mountedRef.current && !controller.signal.aborted) {
+        setData(responseData)
+      }
+
+      return responseData
+    } catch (caughtError) {
+      if (caughtError instanceof Error && caughtError.name === 'AbortError') {
+        return undefined
+      }
+
+      if (mountedRef.current) {
+        setError(caughtError as Error)
+      }
+
+      return undefined
+    } finally {
+      if (mountedRef.current && controllerRef.current === controller) {
         setLoading(false)
       }
-    })()
+    }
   }, [url])
 
-  return { data, error, loading }
+  React.useEffect(() => {
+    let active = true
+
+    void Promise.resolve().then(() => {
+      if (active) void refetch()
+    })
+
+    return () => {
+      active = false
+      controllerRef.current?.abort()
+    }
+  }, [refetch])
+
+  return { data, error, loading, refetch }
+}
+
+const useFetch = <TData = unknown>(
+  pathOrUrl: string | null,
+  options?: UseApiQueryOptions<TData>,
+): UseFetchResult<TData> => {
+  const shouldUseRawFetch = isAbsoluteHttpUrl(pathOrUrl)
+  const apiResult = useApiQuery<TData>(
+    shouldUseRawFetch ? null : pathOrUrl,
+    options,
+  )
+  const rawResult = useRawFetch<TData>(shouldUseRawFetch ? pathOrUrl : null)
+
+  return shouldUseRawFetch ? rawResult : apiResult
 }
 
 export default useFetch
