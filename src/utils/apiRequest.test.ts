@@ -11,8 +11,11 @@ jest.mock('@/utils/getJWT')
 const jwtToken = 'test-token'
 const path = 'test-endpoint'
 const url = new URL(`${CONFIG.API_URL}/v1/${path}`).toString()
-const headers = {
+const authHeaders = {
   authorization: jwtToken,
+}
+const jsonHeaders = {
+  ...authHeaders,
   'content-type': 'application/json',
 }
 
@@ -38,7 +41,7 @@ test('makes a GET request with the correct URL and headers', async () => {
 
   expect(fetchMock).toHaveBeenCalledWith(url, {
     body: null,
-    headers,
+    headers: authHeaders,
     method: 'GET',
     signal: expect.any(AbortSignal),
   })
@@ -57,7 +60,26 @@ test('serializes a typed request body', async () => {
 
   expect(fetchMock).toHaveBeenCalledWith(url, {
     body: JSON.stringify(body),
-    headers,
+    headers: jsonHeaders,
+    method: 'POST',
+    signal: expect.any(AbortSignal),
+  })
+})
+
+test('preserves non-JSON request bodies', async () => {
+  const body = new URLSearchParams({ key: 'value' })
+  fetchMock.mockResponseOnce(JSON.stringify({ ok: true }))
+
+  await apiRequest<{ ok: boolean }, URLSearchParams>({
+    jwtToken,
+    path,
+    method: 'POST',
+    body,
+  })
+
+  expect(fetchMock).toHaveBeenCalledWith(url, {
+    body,
+    headers: authHeaders,
     method: 'POST',
     signal: expect.any(AbortSignal),
   })
@@ -93,6 +115,22 @@ test('normalizes HTTP error responses', async () => {
   await expect(request).rejects.toBeInstanceOf(ApiRequestError)
 })
 
+test('uses the first non-empty string from common error response fields', async () => {
+  const body = { message: { text: 'ignored' }, error: '', detail: 'Details' }
+  fetchMock.mockResponseOnce(JSON.stringify(body), {
+    status: 400,
+    statusText: 'Bad Request',
+  })
+
+  await expect(apiRequest({ jwtToken, path })).rejects.toMatchObject({
+    status: 400,
+    statusText: 'Bad Request',
+    message: 'Details',
+    path,
+    body,
+  })
+})
+
 test('normalizes invalid JSON responses', async () => {
   fetchMock.mockResponseOnce('not-json', {
     status: 200,
@@ -116,7 +154,7 @@ test('uses the existing JWT helper when no explicit token is provided', async ()
   expect(getJWT).toHaveBeenCalledTimes(1)
   expect(fetchMock).toHaveBeenCalledWith(url, {
     body: null,
-    headers,
+    headers: authHeaders,
     method: 'GET',
     signal: expect.any(AbortSignal),
   })
@@ -133,7 +171,6 @@ test('supports an injected token resolver', async () => {
     body: null,
     headers: {
       authorization: 'resolved-token',
-      'content-type': 'application/json',
     },
     method: 'GET',
     signal: expect.any(AbortSignal),
@@ -159,7 +196,7 @@ test('passes the abort signal to fetch', async () => {
 
   expect(fetchMock).toHaveBeenCalledWith(url, {
     body: null,
-    headers,
+    headers: authHeaders,
     method: 'GET',
     signal: controller.signal,
   })
@@ -183,6 +220,7 @@ test('normalizes aborted requests', async () => {
 
   const error = await request.catch((caughtError) => caughtError)
   expect(isApiRequestAbortError(error)).toBe(true)
+  expect(error).toMatchObject({ aborted: true })
 })
 
 test('normalizes network failures', async () => {

@@ -21,6 +21,7 @@ export type ApiRequestOptions<TBody = unknown> = {
 }
 
 type ApiRequestErrorOptions = {
+  aborted?: boolean
   body?: unknown
   cause?: unknown
   message: string
@@ -30,12 +31,14 @@ type ApiRequestErrorOptions = {
 }
 
 export class ApiRequestError extends Error {
+  readonly aborted: boolean
   readonly body?: unknown
   readonly path: string
   readonly status: number
   readonly statusText: string
 
   constructor({
+    aborted = false,
     body,
     cause,
     message,
@@ -45,6 +48,7 @@ export class ApiRequestError extends Error {
   }: ApiRequestErrorOptions) {
     super(message)
     this.name = 'ApiRequestError'
+    this.aborted = aborted
     this.body = body
     this.path = path
     this.status = status
@@ -59,7 +63,7 @@ export class ApiRequestError extends Error {
 export const isApiRequestAbortError = (
   error: unknown,
 ): error is ApiRequestError => {
-  return error instanceof ApiRequestError && error.statusText === 'AbortError'
+  return error instanceof ApiRequestError && error.aborted
 }
 
 const isAbortError = (error: unknown) => {
@@ -72,14 +76,54 @@ const isAbortError = (error: unknown) => {
 const getResponseErrorMessage = (status: number, body: unknown) => {
   if (body && typeof body === 'object') {
     const { detail, error, message } = body as Record<string, unknown>
-    const bodyMessage = message ?? error ?? detail
 
-    if (typeof bodyMessage === 'string' && bodyMessage.trim()) {
-      return bodyMessage
+    for (const bodyMessage of [message, error, detail]) {
+      if (typeof bodyMessage === 'string' && bodyMessage.trim()) {
+        return bodyMessage
+      }
     }
   }
 
   return `Request failed with status ${status}`
+}
+
+const canUseInstanceof = (
+  value: unknown,
+  constructor: typeof Blob | typeof FormData | typeof URLSearchParams,
+) => {
+  return value instanceof constructor
+}
+
+const isBodyInit = (body: unknown): body is BodyInit => {
+  if (typeof body === 'string') return true
+  if (canUseInstanceof(body, Blob)) return true
+  if (canUseInstanceof(body, FormData)) return true
+  if (canUseInstanceof(body, URLSearchParams)) return true
+  if (body instanceof ArrayBuffer) return true
+  if (ArrayBuffer.isView(body)) return true
+
+  return typeof ReadableStream !== 'undefined' && body instanceof ReadableStream
+}
+
+const resolveRequestBody = (body: unknown) => {
+  if (body === undefined) {
+    return {
+      body: null,
+      isJson: false,
+    }
+  }
+
+  if (isBodyInit(body)) {
+    return {
+      body,
+      isJson: false,
+    }
+  }
+
+  return {
+    body: JSON.stringify(body),
+    isJson: true,
+  }
 }
 
 const resolveToken = async <TBody>({
@@ -149,6 +193,7 @@ const fetchResponse = async (
   } catch (cause) {
     if (isAbortError(cause)) {
       throw new ApiRequestError({
+        aborted: true,
         cause,
         message: 'Request aborted',
         path,
@@ -193,11 +238,11 @@ const apiRequest = async <TResponse, TBody = unknown>({
   const headers = new Headers(headersParam)
   headers.set('Authorization', `${token}`)
 
-  if (!headers.has('Content-Type')) {
+  const { body, isJson } = resolveRequestBody(bodyParam)
+
+  if (isJson && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json')
   }
-
-  const body = bodyParam === undefined ? null : JSON.stringify(bodyParam)
 
   const response = await fetchResponse(
     url,

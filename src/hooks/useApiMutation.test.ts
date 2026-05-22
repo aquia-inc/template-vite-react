@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { renderHook, waitFor, act } from '@testing-library/react'
 import fetchMock from 'jest-fetch-mock'
 import useApiMutation from '@/hooks/useApiMutation'
@@ -118,4 +119,98 @@ test('aborts an active mutation', async () => {
     await expect(mutation).resolves.toBeUndefined()
   })
   expect(aborted).toBe(true)
+})
+
+test('aborts a mutation started with a caller-provided signal', async () => {
+  let aborted = false
+  const callerController = new AbortController()
+  fetchMock.mockImplementationOnce((_input, init) => {
+    const signal = init?.signal as AbortSignal
+
+    return new Promise((_resolve, reject) => {
+      signal.addEventListener('abort', () => {
+        aborted = true
+        reject(Object.assign(new Error('Aborted'), { name: 'AbortError' }))
+      })
+    }) as Promise<Response>
+  })
+
+  const { result } = renderHook(() => useApiMutation('items', { jwtToken }))
+  let mutation: Promise<unknown> | undefined
+
+  act(() => {
+    mutation = result.current.mutate(
+      { name: 'Slow item' },
+      { signal: callerController.signal },
+    )
+  })
+
+  await waitFor(() => {
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+  })
+
+  act(() => {
+    result.current.abort()
+  })
+
+  await act(async () => {
+    await expect(mutation).resolves.toBeUndefined()
+  })
+  expect(aborted).toBe(true)
+})
+
+test('caller-provided signals can abort active mutations', async () => {
+  let aborted = false
+  const callerController = new AbortController()
+  fetchMock.mockImplementationOnce((_input, init) => {
+    const signal = init?.signal as AbortSignal
+
+    return new Promise((_resolve, reject) => {
+      signal.addEventListener('abort', () => {
+        aborted = true
+        reject(Object.assign(new Error('Aborted'), { name: 'AbortError' }))
+      })
+    }) as Promise<Response>
+  })
+
+  const { result } = renderHook(() => useApiMutation('items', { jwtToken }))
+  let mutation: Promise<unknown> | undefined
+
+  act(() => {
+    mutation = result.current.mutate(
+      { name: 'Slow item' },
+      { signal: callerController.signal },
+    )
+  })
+
+  await waitFor(() => {
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+  })
+
+  act(() => {
+    callerController.abort()
+  })
+
+  await act(async () => {
+    await expect(mutation).resolves.toBeUndefined()
+  })
+  expect(aborted).toBe(true)
+})
+
+test('updates state when rendered in Strict Mode', async () => {
+  const data = { id: '1' }
+  fetchMock.mockResponseOnce(JSON.stringify(data))
+
+  const wrapper = ({ children }: { children: React.ReactNode }) =>
+    React.createElement(React.StrictMode, null, children)
+  const { result } = renderHook(
+    () => useApiMutation<typeof data, { name: string }>('items', { jwtToken }),
+    { wrapper },
+  )
+
+  await act(async () => {
+    await expect(result.current.mutate({ name: 'Item' })).resolves.toEqual(data)
+  })
+
+  expect(result.current.data).toEqual(data)
 })

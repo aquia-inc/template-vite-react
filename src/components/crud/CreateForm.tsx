@@ -15,7 +15,7 @@ import { FormField } from '@/types'
 export interface CreateFormProps {
   open: boolean
   onClose: () => void
-  onSubmit: (data: unknown) => void
+  onSubmit: (data: unknown) => Promise<void> | void
   schema: FormField[]
   DialogProps?: React.ComponentProps<typeof Dialog>
   title?: string
@@ -68,9 +68,11 @@ const CreateForm: React.FC<CreateFormProps> = ({
 
   const onSubmit = useCallback(
     (data: unknown) => {
-      onSubmitProp(data)
+      if (disabled) return
+
+      return onSubmitProp(data)
     },
-    [onSubmitProp],
+    [disabled, onSubmitProp],
   )
 
   const onClose = useCallback(() => {

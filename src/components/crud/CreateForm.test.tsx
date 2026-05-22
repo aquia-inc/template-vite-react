@@ -132,3 +132,50 @@ test('submits form data only when all required fields are filled and form is not
     expect(onSubmitMock).toHaveBeenCalledWith(defaultValues)
   })
 })
+
+test('does not submit again while a submission is active', async () => {
+  const user = userEvent.setup()
+  let resolveSubmit: (() => void) | undefined
+  onSubmitMock.mockImplementation(
+    () =>
+      new Promise<void>((resolve) => {
+        resolveSubmit = resolve
+      }),
+  )
+
+  const { getByRole } = render(
+    <CreateForm
+      open={true}
+      schema={schema}
+      onClose={() => {}}
+      onSubmit={onSubmitMock}
+      FormProps={{
+        defaultValues,
+        mode: 'onChange',
+      }}
+      submitLabel="Submit"
+    />,
+  )
+
+  const form = getByRole('form')
+  const submitButton = getByRole('button', { name: 'Submit' })
+
+  await waitFor(() => {
+    expect(submitButton).toBeEnabled()
+  })
+
+  await user.click(submitButton)
+
+  await waitFor(() => {
+    expect(submitButton).toBeDisabled()
+  })
+
+  act(() => {
+    fireEvent.submit(form)
+  })
+  expect(onSubmitMock).toHaveBeenCalledTimes(1)
+
+  await act(async () => {
+    resolveSubmit?.()
+  })
+})

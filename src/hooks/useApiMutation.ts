@@ -33,6 +33,22 @@ export type UseApiMutationResult<TData = unknown, TBody = unknown> = {
   reset: () => void
 }
 
+const composeAbortSignals = (
+  controller: AbortController,
+  signal?: AbortSignal,
+) => {
+  if (!signal) return controller.signal
+
+  if (signal.aborted) {
+    controller.abort()
+    return controller.signal
+  }
+
+  signal.addEventListener('abort', () => controller.abort(), { once: true })
+
+  return controller.signal
+}
+
 const useApiMutation = <TData = unknown, TBody = unknown>(
   path: string,
   { getToken, headers, jwtToken, method = 'POST' }: UseApiMutationOptions = {},
@@ -41,9 +57,16 @@ const useApiMutation = <TData = unknown, TBody = unknown>(
   const [error, setError] = React.useState<ApiRequestError | Error | null>(null)
   const [loading, setLoading] = React.useState(false)
   const controllerRef = React.useRef<AbortController | null>(null)
-  const mountedRef = React.useRef(true)
+  const mountedRef = React.useRef(false)
+  const optionsRef = React.useRef({ getToken, headers, jwtToken, method, path })
 
   React.useEffect(() => {
+    optionsRef.current = { getToken, headers, jwtToken, method, path }
+  }, [getToken, headers, jwtToken, method, path])
+
+  React.useEffect(() => {
+    mountedRef.current = true
+
     return () => {
       mountedRef.current = false
       controllerRef.current?.abort()
@@ -73,6 +96,7 @@ const useApiMutation = <TData = unknown, TBody = unknown>(
       setError(null)
 
       try {
+        const { getToken, headers, jwtToken, method, path } = optionsRef.current
         const response = await apiRequest<TData, TBody>({
           body,
           getToken,
@@ -81,7 +105,7 @@ const useApiMutation = <TData = unknown, TBody = unknown>(
           method,
           path,
           ...overrides,
-          signal: overrides.signal ?? controller.signal,
+          signal: composeAbortSignals(controller, overrides.signal),
         })
 
         if (mountedRef.current && !controller.signal.aborted) {
@@ -105,7 +129,7 @@ const useApiMutation = <TData = unknown, TBody = unknown>(
         }
       }
     },
-    [abort, getToken, headers, jwtToken, method, path],
+    [abort],
   )
 
   return {

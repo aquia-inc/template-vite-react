@@ -38,9 +38,16 @@ const useApiQuery = <TData = unknown>(
   const [error, setError] = React.useState<ApiRequestError | Error | null>(null)
   const [loading, setLoading] = React.useState(false)
   const controllerRef = React.useRef<AbortController | null>(null)
-  const mountedRef = React.useRef(true)
+  const mountedRef = React.useRef(false)
+  const optionsRef = React.useRef({ getToken, headers, initialData, jwtToken })
 
   React.useEffect(() => {
+    optionsRef.current = { getToken, headers, initialData, jwtToken }
+  }, [getToken, headers, initialData, jwtToken])
+
+  React.useEffect(() => {
+    mountedRef.current = true
+
     return () => {
       mountedRef.current = false
       controllerRef.current?.abort()
@@ -50,6 +57,8 @@ const useApiQuery = <TData = unknown>(
   const runQuery = React.useCallback(async () => {
     if (!path || !enabled) {
       controllerRef.current?.abort()
+      setData(optionsRef.current.initialData)
+      setError(null)
       setLoading(false)
       return undefined
     }
@@ -61,6 +70,7 @@ const useApiQuery = <TData = unknown>(
     setError(null)
 
     try {
+      const { getToken, headers, jwtToken } = optionsRef.current
       const response = await apiRequest<TData>({
         getToken,
         headers,
@@ -89,7 +99,7 @@ const useApiQuery = <TData = unknown>(
         setLoading(false)
       }
     }
-  }, [enabled, getToken, headers, jwtToken, path])
+  }, [enabled, path])
 
   React.useEffect(() => {
     let active = true

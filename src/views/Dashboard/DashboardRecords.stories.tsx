@@ -9,6 +9,12 @@ export default {
   parameters: {
     layout: 'padded',
   },
+  render: (args) => (
+    <DashboardRecords
+      key={JSON.stringify(args.initialRecords ?? 'default')}
+      {...args}
+    />
+  ),
 } as Meta<typeof DashboardRecords>
 
 export const Populated: Story = {}

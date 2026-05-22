@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { renderHook, waitFor, act } from '@testing-library/react'
 import fetchMock from 'jest-fetch-mock'
 import useApiQuery from '@/hooks/useApiQuery'
@@ -72,6 +73,65 @@ test('refetches the query', async () => {
   })
 
   expect(result.current.data).toEqual({ value: 'second' })
+})
+
+test('does not refetch when inline option identities change', async () => {
+  const data = { value: 'stable' }
+  const getToken = jest.fn().mockReturnValue(jwtToken)
+  fetchMock.mockResponse(JSON.stringify(data))
+
+  const { rerender, result } = renderHook(() =>
+    useApiQuery<typeof data>('items', {
+      getToken,
+      headers: { 'X-Test': 'yes' },
+    }),
+  )
+
+  await waitFor(() => {
+    expect(result.current.data).toEqual(data)
+  })
+
+  rerender()
+
+  expect(fetchMock).toHaveBeenCalledTimes(1)
+})
+
+test('clears stale state when disabled after a successful query', async () => {
+  const data = { value: 'first' }
+  fetchMock.mockResponseOnce(JSON.stringify(data))
+
+  const { rerender, result } = renderHook(
+    ({ enabled }) => useApiQuery<typeof data>('items', { enabled, jwtToken }),
+    { initialProps: { enabled: true } },
+  )
+
+  await waitFor(() => {
+    expect(result.current.data).toEqual(data)
+  })
+
+  rerender({ enabled: false })
+
+  await waitFor(() => {
+    expect(result.current.data).toBeNull()
+    expect(result.current.error).toBeNull()
+    expect(result.current.loading).toBe(false)
+  })
+})
+
+test('updates state when rendered in Strict Mode', async () => {
+  const data = { value: 'strict' }
+  fetchMock.mockResponse(JSON.stringify(data))
+
+  const wrapper = ({ children }: { children: React.ReactNode }) =>
+    React.createElement(React.StrictMode, null, children)
+  const { result } = renderHook(
+    () => useApiQuery<typeof data>('items', { jwtToken }),
+    { wrapper },
+  )
+
+  await waitFor(() => {
+    expect(result.current.data).toEqual(data)
+  })
 })
 
 test('aborts an in-flight query on unmount', async () => {
