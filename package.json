@@ -108,7 +108,7 @@
     "@types/react-helmet": "^6.1.11",
     "@types/testing-library__jest-dom": "^6.0.0",
     "@types/uuid": "^11.0.0",
-    "@unrs/resolver-binding-wasm32-wasi": "1.11.1",
+    "@unrs/resolver-binding-wasm32-wasi": "1.12.2",
     "@vitejs/plugin-react": "^6.0.2",
     "camelcase": "9.0.0",
     "conventional-changelog-conventionalcommits": "9.3.1",
