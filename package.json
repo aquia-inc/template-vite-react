@@ -142,7 +142,7 @@
     "source-map-explorer": "^2.5.3",
     "storybook": "^10.4.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.3",
+    "typescript-eslint": "^8.59.4",
     "typescript-plugin-css-modules": "^5.2.0",
     "vite": "^8.0.13",
     "web-vitals": "^5.2.0"
