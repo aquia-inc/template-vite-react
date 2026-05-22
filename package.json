@@ -71,7 +71,7 @@
     "react-dropzone": "^15.0.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.75.0",
-    "react-router-dom": "^7.15.0",
+    "react-router-dom": "^7.15.1",
     "uswds": "^2.14.0",
     "uuid": "^14.0.0",
     "yup": "^1.7.1"
