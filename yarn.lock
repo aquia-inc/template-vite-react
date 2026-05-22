@@ -5473,7 +5473,18 @@ __metadata:
   resolution: "@unrs/resolver-binding-wasm32-wasi@npm:1.11.1"
   dependencies:
     "@napi-rs/wasm-runtime": "npm:^0.2.11"
-  checksum: 10/ca69e8caeed033c074d9413112264fe1c0bdaaedb4fa9e6f5bcbf3a64ee98fa8261a6b5e54c3d7b7144cf020217c9a89f308086ec64d11d78480bd5885dc2e1a
+  conditions: cpu=wasm32
+  languageName: node
+  linkType: hard
+
+"@unrs/resolver-binding-wasm32-wasi@npm:1.12.2":
+  version: 1.12.2
+  resolution: "@unrs/resolver-binding-wasm32-wasi@npm:1.12.2"
+  dependencies:
+    "@emnapi/core": "npm:1.10.0"
+    "@emnapi/runtime": "npm:1.10.0"
+    "@napi-rs/wasm-runtime": "npm:^1.1.4"
+  checksum: 10/323b8cdd6aac5653784292c3e3a016263e5080b5ccd9f48fd0131c0769f35ec67024485c4062abb26e450091db00afc95c82cd9ad58ab0b1c56f7be60d034266
   conditions: cpu=wasm32
   languageName: node
   linkType: hard
@@ -14503,7 +14514,7 @@ __metadata:
     "@types/react-helmet": "npm:^6.1.11"
     "@types/testing-library__jest-dom": "npm:^6.0.0"
     "@types/uuid": "npm:^11.0.0"
-    "@unrs/resolver-binding-wasm32-wasi": "npm:1.11.1"
+    "@unrs/resolver-binding-wasm32-wasi": "npm:1.12.2"
     "@vitejs/plugin-react": "npm:^6.0.2"
     aws-amplify: "npm:^6.17.0"
     camelcase: "npm:9.0.0"
