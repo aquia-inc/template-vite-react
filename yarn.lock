@@ -2124,14 +2124,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "@hookform/resolvers@npm:5.2.2"
+"@hookform/resolvers@npm:^5.4.0":
+  version: 5.4.0
+  resolution: "@hookform/resolvers@npm:5.4.0"
   dependencies:
     "@standard-schema/utils": "npm:^0.3.0"
   peerDependencies:
     react-hook-form: ^7.55.0
-  checksum: 10/93447287dc89827c517c72dc61e3be0217d3a5d9cbdb532317e5f5fd176c3eedb2ccd62d3c51fb403812939c9b7a4ebcaca35659a9bfb90e16ec38a2092d13a2
+  checksum: 10/c56e03d3707999bf0bebdcf1a8c5fc1cbbca527425d893e2402ead09e3644681581b8d2ad76eec62f72270534f5dc38159e2d6ee4001a0152363b8eddfedfcab
   languageName: node
   linkType: hard
 
@@ -2775,7 +2775,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^9.0.1":
+"@mui/utils@npm:9.0.1, @mui/utils@npm:^9.0.1":
   version: 9.0.1
   resolution: "@mui/utils@npm:9.0.1"
   dependencies:
@@ -2795,14 +2795,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-data-grid@npm:^9.1.0":
-  version: 9.1.0
-  resolution: "@mui/x-data-grid@npm:9.1.0"
+"@mui/x-data-grid@npm:^9.3.0":
+  version: 9.3.0
+  resolution: "@mui/x-data-grid@npm:9.3.0"
   dependencies:
     "@babel/runtime": "npm:^7.29.2"
-    "@mui/utils": "npm:9.0.0"
+    "@mui/utils": "npm:9.0.1"
     "@mui/x-internals": "npm:^9.1.0"
-    "@mui/x-virtualizer": "npm:9.0.0-alpha.5"
+    "@mui/x-virtualizer": "npm:9.0.0-alpha.7"
     clsx: "npm:^2.1.1"
     prop-types: "npm:^15.8.1"
     use-sync-external-store: "npm:^1.6.0"
@@ -2818,7 +2818,7 @@ __metadata:
       optional: true
     "@emotion/styled":
       optional: true
-  checksum: 10/f6d8f65bbaf75960315d9e1a8aadb3def11e09665676e5a494cf7b039ea456526235ed7145d7dcd714d2462fd835d6514c0bba472df37779c0b799e445f15053
+  checksum: 10/126be784af31fe043c06329a50ee3972248557644661b7d0d374b14b3cfc90908c8be6e144c0971da3300398be599e03255c2a8dbe07db9d0a12fd8582aa4f00
   languageName: node
   linkType: hard
 
@@ -2836,17 +2836,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-virtualizer@npm:9.0.0-alpha.5":
-  version: 9.0.0-alpha.5
-  resolution: "@mui/x-virtualizer@npm:9.0.0-alpha.5"
+"@mui/x-virtualizer@npm:9.0.0-alpha.7":
+  version: 9.0.0-alpha.7
+  resolution: "@mui/x-virtualizer@npm:9.0.0-alpha.7"
   dependencies:
     "@babel/runtime": "npm:^7.29.2"
-    "@mui/utils": "npm:9.0.0"
+    "@mui/utils": "npm:9.0.1"
     "@mui/x-internals": "npm:^9.1.0"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10/e77ebd664d4999d10f7dece00c26aa60090b72cb8febaa7a8f068d035a7911d12d9864276636e97fc4722cdee184d890d1a61e50803d9075990d240653e62154
+  checksum: 10/32a6ebf2eebd12149b61708a97143e37f376cc55c26ccc88623cc9abba4ae139044639f15f698a6606b3acd410df9191028c8d399d11726f1f8ae7eab70e698c
   languageName: node
   linkType: hard
 
@@ -13041,7 +13041,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:*, react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0, react-dom@npm:^19.2.6":
+"react-dom@npm:*, react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
   version: 19.2.6
   resolution: "react-dom@npm:19.2.6"
   dependencies:
@@ -13049,6 +13049,17 @@ __metadata:
   peerDependencies:
     react: ^19.2.6
   checksum: 10/695122e37dec3460311231ff1f9a96368d74457d4ccf60010eaebc08c3e1c47b054c9267b40d98c689ae99d0c29a340acacfd405016a954a4f11613146191e68
+  languageName: node
+  linkType: hard
+
+"react-dom@npm:^19.2.7":
+  version: 19.2.7
+  resolution: "react-dom@npm:19.2.7"
+  dependencies:
+    scheduler: "npm:^0.27.0"
+  peerDependencies:
+    react: ^19.2.7
+  checksum: 10/9564f4b83843ca5518ed5f807c93cb1663706559cde52f3ef814b41e60b63b16e684d849926458f0ba436745d7eabf822cba1c528be370e7b2f35a4c91e35941
   languageName: node
   linkType: hard
 
@@ -13086,12 +13097,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.76.0":
-  version: 7.76.0
-  resolution: "react-hook-form@npm:7.76.0"
+"react-hook-form@npm:^7.77.0":
+  version: 7.77.0
+  resolution: "react-hook-form@npm:7.77.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
-  checksum: 10/5561707e200bc1031de407e0f7b9e3625444eaeef91765182e7387654853d65314498db0dd2e290fead147453c5f42df6359ea16c674de2034cbb2a6327dcae2
+  checksum: 10/0edcc9ebac61991ac300df400917797f67cd41f81cbead16903698ccc04fe5b1eda48960d262c7d3331ae33c6a2517287a10112be6e16c0da73285f09862f4f8
   languageName: node
   linkType: hard
 
@@ -13123,21 +13134,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^7.15.1":
-  version: 7.15.1
-  resolution: "react-router-dom@npm:7.15.1"
+"react-router-dom@npm:^7.16.0":
+  version: 7.16.0
+  resolution: "react-router-dom@npm:7.16.0"
   dependencies:
-    react-router: "npm:7.15.1"
+    react-router: "npm:7.16.0"
   peerDependencies:
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10/9cb9bbfc48983eaeb50e3dd24ee97c7f4c43e503a586563a0fd70629dffeec1aea27595bc099cd849ef25adae227945641f4477c031b5e1c338415aff254ecc7
+  checksum: 10/f8d7da28bf1276c8a3bd2d85948b104810aa1b08e1ac761fbeccafbeb2f381aeb04c4ff3ec53c43e6a4e96564d1aa571d16b3a07e115f2b3782a16705bfde2c3
   languageName: node
   linkType: hard
 
-"react-router@npm:7.15.1":
-  version: 7.15.1
-  resolution: "react-router@npm:7.15.1"
+"react-router@npm:7.16.0":
+  version: 7.16.0
+  resolution: "react-router@npm:7.16.0"
   dependencies:
     cookie: "npm:^1.0.1"
     set-cookie-parser: "npm:^2.6.0"
@@ -13147,7 +13158,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10/0d9f352839708f13586e41bc21d4e74d1ef94ac747d8ba99a424734d17c7f9512926b16ac28a7659cc44ee4dd60b64f63ed58c704deb1cc68800056b377d3b40
+  checksum: 10/2c77d27170eab1dfa6f0593e846f9d352424cc789a505aaee9bee9c9da1ed9d6a044d0a476e3eaf240e73b09169b4ffb85b5910d026a34abd055aed5b2f5a5cb
   languageName: node
   linkType: hard
 
@@ -13175,10 +13186,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0, react@npm:^19.2.6":
+"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
   version: 19.2.6
   resolution: "react@npm:19.2.6"
   checksum: 10/205f0db93bd6c6485f94471d1c3437ae1d410f322297c76186fe4f658f88a6786bb0805e3cf8f330f24d1daa923b6b610ec63960d2461e9201bca64ca8361db9
+  languageName: node
+  linkType: hard
+
+"react@npm:^19.2.7":
+  version: 19.2.7
+  resolution: "react@npm:19.2.7"
+  checksum: 10/2939997e87d7f0ee0d9d2bb556866b616b999dfb7916283647034eda867a045a39c4f7a736c8ea6beffffcd78397fc30f63a7a3aaf8425b683c3060670859560
   languageName: node
   linkType: hard
 
@@ -14718,11 +14736,11 @@ __metadata:
     "@emotion/styled": "npm:^11.14.1"
     "@eslint/js": "npm:^10.0.1"
     "@fortawesome/fontawesome-free": "npm:^7.2.0"
-    "@hookform/resolvers": "npm:^5.2.2"
+    "@hookform/resolvers": "npm:^5.4.0"
     "@mui/icons-material": "npm:^9.0.1"
     "@mui/lab": "npm:^9.0.0-beta.3"
     "@mui/material": "npm:^9.0.1"
-    "@mui/x-data-grid": "npm:^9.1.0"
+    "@mui/x-data-grid": "npm:^9.3.0"
     "@playwright/test": "npm:^1.60.0"
     "@popperjs/core": "npm:^2.11.8"
     "@rolldown/binding-wasm32-wasi": "npm:^1.0.3"
@@ -14781,15 +14799,15 @@ __metadata:
     prettier: "npm:^3.8.3"
     pretty-quick: "npm:^4.2.2"
     prop-types: "npm:^15.8.1"
-    react: "npm:^19.2.6"
+    react: "npm:^19.2.7"
     react-animate-height: "npm:^3.2.4"
     react-cookie: "npm:^8.1.2"
     react-docgen-typescript: "npm:^2.4.0"
-    react-dom: "npm:^19.2.6"
+    react-dom: "npm:^19.2.7"
     react-dropzone: "npm:^15.0.0"
     react-helmet: "npm:^6.1.0"
-    react-hook-form: "npm:^7.76.0"
-    react-router-dom: "npm:^7.15.1"
+    react-hook-form: "npm:^7.77.0"
+    react-router-dom: "npm:^7.16.0"
     rimraf: "npm:^6.1.3"
     rollup-plugin-visualizer: "npm:^7.0.1"
     sass: "npm:^1.100.0"
