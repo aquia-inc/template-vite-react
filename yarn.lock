@@ -2775,7 +2775,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^9.0.1":
+"@mui/utils@npm:9.0.1, @mui/utils@npm:^9.0.1":
   version: 9.0.1
   resolution: "@mui/utils@npm:9.0.1"
   dependencies:
@@ -2795,14 +2795,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-data-grid@npm:^9.1.0":
-  version: 9.1.0
-  resolution: "@mui/x-data-grid@npm:9.1.0"
+"@mui/x-data-grid@npm:^9.3.0":
+  version: 9.3.0
+  resolution: "@mui/x-data-grid@npm:9.3.0"
   dependencies:
     "@babel/runtime": "npm:^7.29.2"
-    "@mui/utils": "npm:9.0.0"
+    "@mui/utils": "npm:9.0.1"
     "@mui/x-internals": "npm:^9.1.0"
-    "@mui/x-virtualizer": "npm:9.0.0-alpha.5"
+    "@mui/x-virtualizer": "npm:9.0.0-alpha.7"
     clsx: "npm:^2.1.1"
     prop-types: "npm:^15.8.1"
     use-sync-external-store: "npm:^1.6.0"
@@ -2818,7 +2818,7 @@ __metadata:
       optional: true
     "@emotion/styled":
       optional: true
-  checksum: 10/f6d8f65bbaf75960315d9e1a8aadb3def11e09665676e5a494cf7b039ea456526235ed7145d7dcd714d2462fd835d6514c0bba472df37779c0b799e445f15053
+  checksum: 10/126be784af31fe043c06329a50ee3972248557644661b7d0d374b14b3cfc90908c8be6e144c0971da3300398be599e03255c2a8dbe07db9d0a12fd8582aa4f00
   languageName: node
   linkType: hard
 
@@ -2836,17 +2836,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-virtualizer@npm:9.0.0-alpha.5":
-  version: 9.0.0-alpha.5
-  resolution: "@mui/x-virtualizer@npm:9.0.0-alpha.5"
+"@mui/x-virtualizer@npm:9.0.0-alpha.7":
+  version: 9.0.0-alpha.7
+  resolution: "@mui/x-virtualizer@npm:9.0.0-alpha.7"
   dependencies:
     "@babel/runtime": "npm:^7.29.2"
-    "@mui/utils": "npm:9.0.0"
+    "@mui/utils": "npm:9.0.1"
     "@mui/x-internals": "npm:^9.1.0"
   peerDependencies:
     react: ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10/e77ebd664d4999d10f7dece00c26aa60090b72cb8febaa7a8f068d035a7911d12d9864276636e97fc4722cdee184d890d1a61e50803d9075990d240653e62154
+  checksum: 10/32a6ebf2eebd12149b61708a97143e37f376cc55c26ccc88623cc9abba4ae139044639f15f698a6606b3acd410df9191028c8d399d11726f1f8ae7eab70e698c
   languageName: node
   linkType: hard
 
@@ -14722,7 +14722,7 @@ __metadata:
     "@mui/icons-material": "npm:^9.0.1"
     "@mui/lab": "npm:^9.0.0-beta.3"
     "@mui/material": "npm:^9.0.1"
-    "@mui/x-data-grid": "npm:^9.1.0"
+    "@mui/x-data-grid": "npm:^9.3.0"
     "@playwright/test": "npm:^1.60.0"
     "@popperjs/core": "npm:^2.11.8"
     "@rolldown/binding-wasm32-wasi": "npm:^1.0.3"
