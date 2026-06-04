@@ -3786,14 +3786,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rolldown/binding-wasm32-wasi@npm:1.0.3, @rolldown/binding-wasm32-wasi@npm:^1.0.3":
+"@rolldown/binding-wasm32-wasi@npm:1.0.3":
   version: 1.0.3
   resolution: "@rolldown/binding-wasm32-wasi@npm:1.0.3"
   dependencies:
     "@emnapi/core": "npm:1.10.0"
     "@emnapi/runtime": "npm:1.10.0"
     "@napi-rs/wasm-runtime": "npm:^1.1.4"
-  checksum: 10/f540fdaebd7747dc436271fb8e22a60d08deac0b125e02f63cf0fd29cc0d228969d6ee6d49e150d9fd4f8bcd24795c116f86949bedce3cff505402ab2f4455a2
+  conditions: cpu=wasm32
+  languageName: node
+  linkType: hard
+
+"@rolldown/binding-wasm32-wasi@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@rolldown/binding-wasm32-wasi@npm:1.1.0"
+  dependencies:
+    "@emnapi/core": "npm:1.10.0"
+    "@emnapi/runtime": "npm:1.10.0"
+    "@napi-rs/wasm-runtime": "npm:^1.1.4"
+  checksum: 10/1a1fbd2db7584ad5af3c8f9697edcf14ec3fd2224dda2fb83c99402a5f16acded18a8279d9c0eea4340408f72a7457d41aca6fb687b8909a398e52be00fbfc6b
   conditions: cpu=wasm32
   languageName: node
   linkType: hard
@@ -14743,7 +14754,7 @@ __metadata:
     "@mui/x-data-grid": "npm:^9.3.0"
     "@playwright/test": "npm:^1.60.0"
     "@popperjs/core": "npm:^2.11.8"
-    "@rolldown/binding-wasm32-wasi": "npm:^1.0.3"
+    "@rolldown/binding-wasm32-wasi": "npm:^1.1.0"
     "@semantic-release/changelog": "npm:^6.0.3"
     "@semantic-release/commit-analyzer": "npm:^13.0.1"
     "@semantic-release/github": "npm:^12.0.8"
