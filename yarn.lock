@@ -7088,12 +7088,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-fetch@npm:^3.0.4":
-  version: 3.1.8
-  resolution: "cross-fetch@npm:3.1.8"
+"cross-fetch@npm:^3.1.8":
+  version: 3.2.0
+  resolution: "cross-fetch@npm:3.2.0"
   dependencies:
-    node-fetch: "npm:^2.6.12"
-  checksum: 10/ac8c4ca87d2ac0e17a19b6a293a67ee8934881aee5ec9a5a8323c30e9a9a60a0f5291d3c0d633ec2a2f970cbc60978d628804dfaf03add92d7e720b6d37f392c
+    node-fetch: "npm:^2.7.0"
+  checksum: 10/e4ab1d390a5b6ca8bb0605f028af2ffc1127d2e407b954654949f506d04873c4863ece264662c074865d7874060e35f938cec74fe7b5736d46d545e2685f6aec
   languageName: node
   linkType: hard
 
@@ -7412,6 +7412,15 @@ __metadata:
     "@babel/runtime": "npm:^7.8.7"
     csstype: "npm:^3.0.2"
   checksum: 10/bed2341adf8864bf932b3289c24f35fdd99930af77df46688abf2d753ff291df49a15850c874d686d9be6ec4e1c6835673906e64dbd8b2839d227f117a11fd41
+  languageName: node
+  linkType: hard
+
+"domexception@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "domexception@npm:4.0.0"
+  dependencies:
+    webidl-conversions: "npm:^7.0.0"
+  checksum: 10/4ed443227d2871d76c58d852b2e93c68e0443815b2741348f20881bedee8c1ad4f9bfc5d30c7dec433cd026b57da63407c010260b1682fef4c8847e7181ea43f
   languageName: node
   linkType: hard
 
@@ -10057,13 +10066,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-fetch-mock@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "jest-fetch-mock@npm:3.0.3"
+"jest-fetch-mock@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "jest-fetch-mock@npm:3.2.0"
   dependencies:
-    cross-fetch: "npm:^3.0.4"
-    promise-polyfill: "npm:^8.1.3"
-  checksum: 10/c119a87fc8b084b94089f44fd83433fc7b8b0f180507b2ffa3b50eb4213a01f9917fab564b303f0d588dee30506942bb0bd611828f368bdd75cb163cf5d967c0
+    cross-fetch: "npm:^3.1.8"
+    domexception: "npm:^4.0.0"
+  checksum: 10/69cd8aa0700a9fae40b63adb609efa40720b70b92fbb1ac835971160dbc1105e38c9ba7c71174d4ca340e34568a1e8c19b2544b86fca65ae077a8cbdc9f24578
   languageName: node
   linkType: hard
 
@@ -11636,7 +11645,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.12":
+"node-fetch@npm:^2.7.0":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -12972,13 +12981,6 @@ __metadata:
   version: 3.0.1
   resolution: "promise-call-limit@npm:3.0.1"
   checksum: 10/f1b3c4d3a9c5482ce27ec5f40311e1389adb9bb10c16166e61c96d29ab22c701691d5225bf6745a162858f45dfb46cc82275fd09e7aa57846fc446c7855c2f06
-  languageName: node
-  linkType: hard
-
-"promise-polyfill@npm:^8.1.3":
-  version: 8.3.0
-  resolution: "promise-polyfill@npm:8.3.0"
-  checksum: 10/f735f59e464174f720fec9c41c5029ec1014e62e05d61e39d8d2290a0bc4dd7c36a0782d3202f1775d09d0b33a47fef289db38c437534769b187da22e03bfa23
   languageName: node
   linkType: hard
 
@@ -14870,7 +14872,7 @@ __metadata:
     jest-date-mock: "npm:^1.0.10"
     jest-environment-jsdom: "npm:^30.4.1"
     jest-environment-node: "npm:^30.4.1"
-    jest-fetch-mock: "npm:^3.0.3"
+    jest-fetch-mock: "npm:^3.2.0"
     jest-watch-typeahead: "npm:^3.0.1"
     lint-staged: "npm:^17.0.7"
     lodash: "npm:^4.18.1"
