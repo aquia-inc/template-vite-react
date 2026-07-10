@@ -5,9 +5,7 @@ import { styled } from '@mui/material/styles'
 import MuiDrawer, { DrawerProps } from '@mui/material/Drawer'
 import { MuiDrawerWidth } from '@/theme/theme'
 
-const StyledDrawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
+const StyledDrawer = styled(MuiDrawer)(({ theme, open }) => ({
   '& .MuiPaper-root': {
     backgroundColor:
       theme.palette.mode === 'light'
