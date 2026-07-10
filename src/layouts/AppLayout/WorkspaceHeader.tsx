@@ -4,6 +4,8 @@ import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 import HeaderAuthButton from '@/components/HeaderAuthButton'
@@ -22,13 +24,21 @@ const WorkspaceHeader = ({
   onSearchChange,
   onUnavailable,
 }: WorkspaceHeaderProps): JSX.Element => {
+  const theme = useTheme()
+  const isCompact = useMediaQuery(theme.breakpoints.down('lg'))
   const searchInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const focusSearch = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      const searchInput = searchInputRef.current
+      if (
+        searchInput &&
+        !searchInput.disabled &&
+        (event.metaKey || event.ctrlKey) &&
+        event.key.toLowerCase() === 'k'
+      ) {
         event.preventDefault()
-        searchInputRef.current?.focus()
+        searchInput.focus()
       }
     }
     window.addEventListener('keydown', focusSearch)
@@ -43,20 +53,24 @@ const WorkspaceHeader = ({
         top: 0,
         zIndex: (theme) => theme.zIndex.appBar,
         minHeight: (theme) =>
-          isMobile ? theme.workspace.mobileHeaderHeight : 80,
+          isMobile ? theme.workspace.mobileHeaderHeight : isCompact ? 72 : 80,
         ml: (theme) => (isMobile ? 0 : `${theme.workspace.railWidth}px`),
         px: (theme) =>
-          `${isMobile ? theme.workspace.gutter.xs : theme.workspace.gutter.sm}px`,
+          `${
+            isMobile || isCompact
+              ? theme.workspace.gutter.xs
+              : theme.workspace.gutter.sm
+          }px`,
         py: 2,
         display: 'flex',
         alignItems: 'center',
-        gap: 3,
+        gap: isCompact ? 0.75 : 3,
         bgcolor: 'rgba(255, 255, 255, 0.88)',
         backdropFilter: 'blur(16px)',
         borderBottom: (theme) => `1px solid ${theme.workspace.border}`,
       }}
     >
-      <Box sx={{ minWidth: 0, mr: 'auto' }}>
+      <Box sx={{ minWidth: 0, mr: 'auto', flexShrink: 1 }}>
         {!isMobile && (
           <Typography
             component="p"
@@ -77,7 +91,7 @@ const WorkspaceHeader = ({
           data-testid="appbar-title"
           sx={{
             color: (theme) => theme.workspace.text,
-            fontSize: isMobile ? 20 : 24,
+            fontSize: isMobile || isCompact ? 20 : 24,
             fontWeight: 750,
             lineHeight: 1.2,
           }}
@@ -90,13 +104,15 @@ const WorkspaceHeader = ({
         <>
           <Box
             sx={{
-              width: 'min(38vw, 420px)',
-              minWidth: 240,
+              flex: isCompact ? '1 1 180px' : '0 1 420px',
+              width: isCompact ? 'auto' : 'min(38vw, 420px)',
+              minWidth: isCompact ? 0 : 240,
+              maxWidth: 420,
               height: 44,
-              px: 3,
+              px: isCompact ? 2 : 3,
               display: 'flex',
               alignItems: 'center',
-              gap: 2,
+              gap: isCompact ? 1 : 2,
               bgcolor: (theme) => theme.workspace.canvasCool,
               border: (theme) => `1px solid ${theme.workspace.border}`,
               borderRadius: 3,
@@ -132,13 +148,13 @@ const WorkspaceHeader = ({
               component="span"
               sx={{
                 flexShrink: 0,
-                px: 1.5,
+                px: isCompact ? 1 : 1.5,
                 py: 0.5,
                 color: (theme) => theme.workspace.textMuted,
                 bgcolor: 'common.white',
                 border: (theme) => `1px solid ${theme.workspace.border}`,
                 borderRadius: 1.5,
-                fontSize: 11,
+                fontSize: isCompact ? 10 : 11,
                 fontWeight: 700,
                 lineHeight: 1.4,
               }}
@@ -166,7 +182,17 @@ const WorkspaceHeader = ({
         </>
       )}
 
-      <Stack direction="row" sx={{ flexShrink: 0 }}>
+      <Stack
+        direction="row"
+        sx={{
+          flexShrink: 0,
+          ...(isCompact && {
+            '& > .MuiBox-root': { m: 0, p: 0 },
+            '& > .MuiBox-root > .MuiBox-root': { m: 0, p: 0 },
+            '& .MuiButton-root': { minWidth: 52, px: 1.5 },
+          }),
+        }}
+      >
         <HeaderAuthButton />
       </Stack>
     </Box>

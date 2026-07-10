@@ -177,15 +177,29 @@ const WorkspaceNavigation = ({
         >
           <SettingsOutlinedIcon />
         </IconButton>
-        <Avatar
+        <IconButton
+          aria-label="Profile"
+          onClick={() => onUnavailable('Profile')}
           sx={{
-            width: 38,
-            height: 38,
-            bgcolor: (theme) => theme.workspace.navigationActive,
+            width: 44,
+            height: 44,
+            p: 0,
+            '&:focus-visible': {
+              outline: '2px solid white',
+              outlineOffset: 2,
+            },
           }}
         >
-          UR
-        </Avatar>
+          <Avatar
+            sx={{
+              width: 38,
+              height: 38,
+              bgcolor: (theme) => theme.workspace.navigationActive,
+            }}
+          >
+            UR
+          </Avatar>
+        </IconButton>
       </Stack>
     </Box>
   )

@@ -1,9 +1,17 @@
+import { useState } from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { ThemeProvider } from '@mui/material/styles'
 import WorkspaceHeader from '@/layouts/AppLayout/WorkspaceHeader'
 import theme from '@/theme/theme'
+
+jest.mock('@mui/material/useMediaQuery')
+
+const mockedUseMediaQuery = useMediaQuery as jest.MockedFunction<
+  typeof useMediaQuery
+>
 
 const Wrapper = ({ children }: React.PropsWithChildren) => (
   <ThemeProvider theme={theme}>
@@ -11,33 +19,51 @@ const Wrapper = ({ children }: React.PropsWithChildren) => (
   </ThemeProvider>
 )
 
-test('renders desktop search controls and sends user input', async () => {
-  const user = userEvent.setup()
-  const onSearchChange = jest.fn()
-  const onUnavailable = jest.fn()
+const StatefulWorkspaceHeader = ({
+  onUnavailable,
+}: {
+  onUnavailable: (feature: 'Notifications') => void
+}) => {
+  const [searchQuery, setSearchQuery] = useState('')
 
-  render(
+  return (
     <WorkspaceHeader
       isMobile={false}
-      searchQuery=""
-      onSearchChange={onSearchChange}
+      searchQuery={searchQuery}
+      onSearchChange={setSearchQuery}
       onUnavailable={onUnavailable}
-    />,
-    { wrapper: Wrapper },
+    />
   )
+}
+
+beforeEach(() => {
+  mockedUseMediaQuery.mockReset()
+  mockedUseMediaQuery.mockReturnValue(false)
+})
+
+test('renders desktop search controls and preserves the full query', async () => {
+  const user = userEvent.setup()
+  const onUnavailable = jest.fn()
+
+  render(<StatefulWorkspaceHeader onUnavailable={onUnavailable} />, {
+    wrapper: Wrapper,
+  })
 
   const search = screen.getByRole('searchbox', { name: 'Search dashboard' })
   expect(search).toHaveAttribute('placeholder', 'Search records')
   expect(screen.getByText('⌘ K')).toBeVisible()
 
   await user.type(search, 'audit')
-  expect(onSearchChange).toHaveBeenLastCalledWith('t')
+  expect(search).toHaveValue('audit')
 
   await user.click(screen.getByRole('button', { name: 'Notifications' }))
   expect(onUnavailable).toHaveBeenCalledWith('Notifications')
 })
 
-test('focuses dashboard search with the command palette shortcut', () => {
+test.each([
+  ['Meta', { metaKey: true }],
+  ['Control', { ctrlKey: true }],
+])('focuses dashboard search with the %s+K shortcut', (_, modifier) => {
   render(
     <WorkspaceHeader
       isMobile={false}
@@ -48,11 +74,52 @@ test('focuses dashboard search with the command palette shortcut', () => {
     { wrapper: Wrapper },
   )
 
-  fireEvent.keyDown(window, { key: 'k', metaKey: true })
+  fireEvent.keyDown(window, { key: 'k', ...modifier })
 
   expect(
     screen.getByRole('searchbox', { name: 'Search dashboard' }),
   ).toHaveFocus()
+})
+
+test('does not cancel the search shortcut when search is not mounted', () => {
+  render(
+    <WorkspaceHeader
+      isMobile
+      searchQuery=""
+      onSearchChange={jest.fn()}
+      onUnavailable={jest.fn()}
+    />,
+    { wrapper: Wrapper },
+  )
+
+  const shortcutEvent = new KeyboardEvent('keydown', {
+    key: 'k',
+    metaKey: true,
+    cancelable: true,
+  })
+  fireEvent(window, shortcutEvent)
+
+  expect(shortcutEvent.defaultPrevented).toBe(false)
+})
+
+test('keeps search flexible in the compact desktop header', () => {
+  mockedUseMediaQuery.mockReturnValue(true)
+  render(
+    <WorkspaceHeader
+      isMobile={false}
+      searchQuery=""
+      onSearchChange={jest.fn()}
+      onUnavailable={jest.fn()}
+    />,
+    { wrapper: Wrapper },
+  )
+
+  const header = screen.getByRole('banner')
+  const search = screen.getByRole('searchbox', { name: 'Search dashboard' })
+  const searchContainer = search.parentElement?.parentElement
+
+  expect(header).toHaveStyle({ gap: '6px' })
+  expect(searchContainer).toHaveStyle('flex: 1 1 180px; min-width: 0;')
 })
 
 test('keeps the title and auth control while hiding desktop actions on mobile', () => {

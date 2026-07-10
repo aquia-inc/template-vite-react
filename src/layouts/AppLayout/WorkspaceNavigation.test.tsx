@@ -38,6 +38,27 @@ test('renders the desktop rail and navigates between dashboard sections', async 
   expect(onUnavailable).toHaveBeenCalledWith('Settings')
 })
 
+test('renders desktop profile as an accessible unavailable action', async () => {
+  const user = userEvent.setup()
+  const onUnavailable = jest.fn()
+
+  render(
+    <WorkspaceNavigation
+      activeSection="overview"
+      isMobile={false}
+      onNavigate={jest.fn()}
+      onUnavailable={onUnavailable}
+    />,
+    { wrapper: Wrapper },
+  )
+
+  const profileButton = screen.getByRole('button', { name: 'Profile' })
+  expect(profileButton).toHaveStyle({ width: '44px', height: '44px' })
+
+  await user.click(profileButton)
+  expect(onUnavailable).toHaveBeenCalledWith('Profile')
+})
+
 test('renders the compact mobile actions and reports profile as unavailable', async () => {
   const user = userEvent.setup()
   const onNavigate = jest.fn()
