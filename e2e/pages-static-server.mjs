@@ -13,6 +13,12 @@ const normalizeBasePath = (value = '/template-vite-react/') => {
     : `${withLeadingSlash}/`
 }
 const basePath = normalizeBasePath(process.env.PAGES_E2E_BASE_PATH)
+const indexFile = join(distDir, 'index.html')
+
+if (!existsSync(indexFile)) {
+  console.error('Missing dist/index.html. Run yarn build before serving Pages.')
+  process.exit(1)
+}
 
 const contentTypes = new Map([
   ['.css', 'text/css; charset=utf-8'],
