@@ -6,18 +6,19 @@ of 2026-05-13 at commit `4616531`.
 ## Commands Run
 
 ```shell
-mise exec node@24 -- yarn install --immutable
-mise exec node@24 -- yarn npm audit --recursive --severity moderate --json
-mise exec node@24 -- yarn outdated --json
-mise exec node@24 -- yarn why node-gyp
-mise exec node@24 -- yarn why tar
-mise exec node@24 -- yarn why minimatch
-mise exec node@24 -- yarn why glob
-mise exec node@24 -- yarn why ajv
-mise exec node@24 -- yarn why @types/testing-library__jest-dom
-mise exec node@24 -- yarn why @types/uuid
-mise exec node@24 -- yarn why filelist
-mise exec node@24 -- yarn why whatwg-encoding
+mise install
+mise exec -- yarn install --immutable
+mise exec -- yarn npm audit --recursive --severity moderate --json
+mise exec -- yarn outdated --json
+mise exec -- yarn why node-gyp
+mise exec -- yarn why tar
+mise exec -- yarn why minimatch
+mise exec -- yarn why glob
+mise exec -- yarn why ajv
+mise exec -- yarn why @types/testing-library__jest-dom
+mise exec -- yarn why @types/uuid
+mise exec -- yarn why filelist
+mise exec -- yarn why whatwg-encoding
 ```
 
 ## Summary
@@ -58,7 +59,7 @@ mise exec node@24 -- yarn why whatwg-encoding
 
 1. Keep `@types/node` on the Node 24 line:
    - `yarn outdated --json` reports latest `@types/node@25.7.0`, but the repo
-     runtime is Node 24 in `.nvmrc`, `package.json`, and CI.
+     runtime is Node 24 in `mise.toml`, `package.json`, and CI.
    - Do not move to Node 25 typings until the runtime pin changes.
 
 2. Track Jest/jsdom transitive deprecations:
