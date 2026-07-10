@@ -61,6 +61,7 @@ export interface MultiDropzoneStyleProps {
 
 export interface MultiDropzoneProps extends MultiDropzoneStyleProps {
   accept?: AcceptType
+  appearance?: 'default' | 'workspace'
   maxFiles?: number
   maxSize?: number
   onFileSelect: (files: File[]) => void
@@ -69,6 +70,7 @@ export interface MultiDropzoneProps extends MultiDropzoneStyleProps {
 }
 
 export interface UploadFileCellProps {
+  allowRemoveComplete?: boolean
   file: UploadedFile
   onRemoveFile: (id: string) => void
   uploading: boolean

@@ -1,4 +1,5 @@
 import { render, fireEvent, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import MultiDropzone from '@/components/MultiDropzone/MultiDropzone'
 
 const onFileSelect = jest.fn()
@@ -96,4 +97,47 @@ test('displays an error message when a file exceeds the maxSize', async () => {
       0,
     )
   })
+})
+
+test('exposes the workspace dropzone appearance', () => {
+  render(
+    <MultiDropzone
+      appearance="workspace"
+      accept={{ 'application/json': ['.json'], 'text/csv': ['.csv'] }}
+      multiple
+      onFileSelect={jest.fn()}
+      onRemoveFile={jest.fn()}
+      uploadedFiles={[]}
+      uploading={false}
+    />,
+  )
+
+  expect(screen.getByTestId('multi-dropzone')).toHaveAttribute(
+    'data-appearance',
+    'workspace',
+  )
+  expect(screen.getByText('JSON and CSV supported')).toBeVisible()
+})
+
+test('allows completed workspace files to be removed', async () => {
+  const user = userEvent.setup()
+  const handleRemoveFile = jest.fn()
+
+  render(
+    <MultiDropzone
+      appearance="workspace"
+      accept={{ 'application/json': ['.json'] }}
+      onFileSelect={jest.fn()}
+      onRemoveFile={handleRemoveFile}
+      uploadedFiles={[
+        { id: 'requirements', name: 'requirements.json', progress: 100 },
+      ]}
+      uploading={false}
+    />,
+  )
+
+  await user.click(
+    screen.getByRole('button', { name: 'Remove requirements.json' }),
+  )
+  expect(handleRemoveFile).toHaveBeenCalledWith('requirements')
 })

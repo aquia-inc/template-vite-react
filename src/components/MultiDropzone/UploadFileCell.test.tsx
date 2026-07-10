@@ -170,3 +170,22 @@ test('renders ErrorIcon when hasError is true', () => {
 
   expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument()
 })
+
+test('allows a completed file to be removed when enabled', () => {
+  const removeCompleteFile = jest.fn()
+
+  render(
+    <UploadFileCell
+      allowRemoveComplete
+      file={{ ...mockFile, progress: 100 }}
+      uploading={false}
+      uploadStatus={UploadStatus.COMPLETE}
+      onRemoveFile={removeCompleteFile}
+    />,
+  )
+
+  expect(screen.getByTestId('CheckIcon')).toBeInTheDocument()
+  fireEvent.click(screen.getByRole('button', { name: 'Remove testFile.json' }))
+
+  expect(removeCompleteFile).toHaveBeenCalledWith('1')
+})
