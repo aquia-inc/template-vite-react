@@ -4,6 +4,8 @@
  * @module views/Dashboard/Dashboard
  */
 import Box from '@mui/material/Box'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { useLoaderData, useOutletContext } from 'react-router-dom'
 import type { AppLayoutOutletContext } from '@/layouts/AppLayout/types'
 import { DashboardHero } from './DashboardHero'
@@ -17,6 +19,26 @@ import {
 export interface DashboardContentProps {
   username?: string
   searchQuery?: string
+}
+
+const DashboardActivityRegion = (): JSX.Element => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+  return (
+    <Box
+      aria-hidden={isMobile || undefined}
+      aria-label="Template activity"
+      role="region"
+      sx={{
+        display: isMobile ? 'none' : 'block',
+        gridArea: { lg: 'activity' },
+        minWidth: 0,
+      }}
+    >
+      <DashboardActivityPanel />
+    </Box>
+  )
 }
 
 export const DashboardContent = ({
@@ -68,13 +90,7 @@ export const DashboardContent = ({
       >
         <DashboardUploadPanel />
       </Box>
-      <Box
-        aria-label="Template activity"
-        role="region"
-        sx={{ gridArea: { lg: 'activity' }, minWidth: 0 }}
-      >
-        <DashboardActivityPanel />
-      </Box>
+      <DashboardActivityRegion />
     </Box>
   </Box>
 )
