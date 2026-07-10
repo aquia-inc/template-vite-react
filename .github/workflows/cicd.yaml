@@ -53,26 +53,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: PREPARE - PR quality, builds, browser
+        if: github.event_name == 'pull_request'
+        run: yarn ci:pr:prepare
+
       - name: LINT, UNIT TEST
+        if: github.event_name == 'push'
         run: yarn ci
 
-      - name: BUILD - PR app and Storybook
-        if: github.event_name == 'pull_request'
-        run: yarn run-p build build-storybook
-        env:
-          PAGES_E2E_BASE_PATH: '/template-vite-react/'
-          VITE_AWS_REGION: ''
-          VITE_CF_DOMAIN: 'http://127.0.0.1:4174'
-          VITE_COGNITO_DOMAIN: ''
-          VITE_COGNITO_REDIRECT_SIGN_IN: ''
-          VITE_COGNITO_REDIRECT_SIGN_OUT: ''
-          VITE_DEMO_AUTH_ENABLED: 'true'
-          VITE_IDP_ENABLED: 'false'
-          VITE_PUBLIC_BASE_PATH: '/template-vite-react/'
-          VITE_USER_POOL_CLIENT_ID: ''
-          VITE_USER_POOL_ID: ''
-
       - name: INSTALL - Playwright browser
+        if: github.event_name == 'push'
         run: yarn test:e2e:install
 
       - name: E2E TEST
