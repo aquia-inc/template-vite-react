@@ -29,10 +29,10 @@ jobs:
       CI: true
     steps:
       - name: CHECKOUT
-        uses: actions/checkout@v6
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: INSTALL - node.js, yarn
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -82,7 +82,7 @@ jobs:
           VITE_IDP_ENABLED: 'false'
 
       - name: UPLOAD - build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         if: github.ref == 'refs/heads/main'
         with:
           name: dist
@@ -90,6 +90,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: test_build
     if: github.ref == 'refs/heads/main'
     permissions:
@@ -98,10 +99,10 @@ jobs:
       pull-requests: write
     steps:
       - name: CHECKOUT
-        uses: actions/checkout@v6
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: INSTALL - node.js, yarn
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -111,7 +112,7 @@ jobs:
         run: yarn install --immutable
 
       - name: DOWNLOAD - build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
         with:
           name: dist
           path: './dist'
@@ -124,6 +125,7 @@ jobs:
 
   deploy_pages:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: release
     if: github.ref == 'refs/heads/main'
     permissions:
@@ -138,7 +140,7 @@ jobs:
       url: ${{ steps.pages-deployment.outputs.page_url }}
     steps:
       - name: DOWNLOAD - build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
         with:
           name: dist
           path: './dist'
@@ -147,13 +149,13 @@ jobs:
         run: cp dist/index.html dist/404.html
 
       - name: CONFIGURE - GitHub Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
       - name: UPLOAD - GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: './dist'
 
       - name: DEPLOY - GitHub Pages
         id: pages-deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
