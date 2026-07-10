@@ -106,7 +106,11 @@ export const DashboardActivityPanel = (): JSX.Element => (
     component="section"
     elevation={0}
     id="activity"
-    sx={{ ...cardStyles, display: { xs: 'none', sm: 'block' } }}
+    sx={{
+      ...cardStyles,
+      display: { xs: 'none', sm: 'block' },
+      scrollMarginTop: 96,
+    }}
   >
     <Typography component="h2" variant="h6">
       Template activity

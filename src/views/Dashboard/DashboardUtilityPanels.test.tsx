@@ -26,6 +26,23 @@ test('renders upload files and the activity timeline', () => {
   expect(screen.getByText('Stable')).toBeVisible()
 })
 
+test('offsets the upload and activity anchors below the sticky header', () => {
+  render(
+    <>
+      <DashboardUploadPanel />
+      <DashboardActivityPanel />
+    </>,
+    { wrapper: Wrapper },
+  )
+
+  expect(document.getElementById('upload')).toHaveStyle({
+    scrollMarginTop: '96px',
+  })
+  expect(document.getElementById('activity')).toHaveStyle({
+    scrollMarginTop: '96px',
+  })
+})
+
 test('appends selected files and removes every displayed workspace file', async () => {
   const user = userEvent.setup()
 
