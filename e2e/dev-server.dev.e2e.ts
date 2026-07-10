@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test, type Locator, type Page } from '@playwright/test'
 
 const demoEmail = 'reviewer@example.com'
 const demoPassword = 'password123'
@@ -42,6 +42,60 @@ const expectDashboardFitsViewport = async (page: Page) => {
   )
   expect(layout.mainLeft).toBeGreaterThanOrEqual(0)
   expect(layout.mainRight).toBeLessThanOrEqual(layout.documentClientWidth)
+}
+
+const getFocusAppearance = (control: Locator) =>
+  control.evaluate((element) => {
+    const styles = window.getComputedStyle(element)
+
+    return {
+      backgroundColor: styles.backgroundColor,
+      borderColor: styles.borderColor,
+      boxShadow: styles.boxShadow,
+      outlineColor: styles.outlineColor,
+      outlineStyle: styles.outlineStyle,
+      outlineWidth: styles.outlineWidth,
+    }
+  })
+
+const expectVisibleKeyboardFocus = async (
+  page: Page,
+  label: string,
+  control: Locator,
+) => {
+  const blurredAppearance = await getFocusAppearance(control)
+
+  await control.focus()
+  await page.keyboard.press('Shift+Tab')
+  await page.keyboard.press('Tab')
+  await expect(control).toBeFocused()
+  const transitionTime = await control.evaluate((element) => {
+    const styles = window.getComputedStyle(element)
+    const toMilliseconds = (value: string) =>
+      value.endsWith('ms')
+        ? Number.parseFloat(value)
+        : Number.parseFloat(value) * 1000
+    const durations = styles.transitionDuration.split(',').map(toMilliseconds)
+    const delays = styles.transitionDelay.split(',').map(toMilliseconds)
+
+    return Math.max(
+      0,
+      ...durations.map(
+        (duration, index) => duration + (delays[index] ?? delays[0] ?? 0),
+      ),
+    )
+  })
+  await page.waitForTimeout(Math.min(transitionTime + 50, 1000))
+
+  const focusedAppearance = await getFocusAppearance(control)
+  const hasVisibleOutline =
+    focusedAppearance.outlineStyle !== 'none' &&
+    Number.parseFloat(focusedAppearance.outlineWidth) > 0
+
+  expect
+    .soft(focusedAppearance, `${label} focus appearance`)
+    .not.toEqual(blurredAppearance)
+  expect.soft(hasVisibleOutline, `${label} visible focus outline`).toBeTruthy()
 }
 
 test('dev server renders the public home page', async ({ page }) => {
@@ -155,6 +209,74 @@ test('renders readable data grid column headers', async ({ page }) => {
 
     expect(colors.foreground).not.toBe(colors.background)
   }
+})
+
+test('shows visible focus for dashboard keyboard controls', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1600, height: 1000 })
+  await signInWithDemoAuth(page, 'keyboard-focus@example.com')
+
+  const homeControl = page
+    .getByRole('navigation', { name: 'Dashboard sections' })
+    .getByRole('button', { name: 'Home' })
+  await expectVisibleKeyboardFocus(page, 'rail Home', homeControl)
+  expect((await getFocusAppearance(homeControl)).outlineColor).toBe(
+    'rgb(255, 255, 255)',
+  )
+
+  const notificationsControl = page.getByRole('button', {
+    name: 'Notifications',
+  })
+  await expectVisibleKeyboardFocus(page, 'Notifications', notificationsControl)
+  expect((await getFocusAppearance(notificationsControl)).outlineColor).toBe(
+    'rgb(49, 87, 255)',
+  )
+
+  const searchControl = page.getByRole('searchbox', {
+    name: 'Search dashboard',
+  })
+  const searchContainer = searchControl.locator('xpath=../..')
+  const blurredSearchAppearance = await getFocusAppearance(searchContainer)
+  await searchControl.focus()
+  await page.keyboard.press('Shift+Tab')
+  await page.keyboard.press('Tab')
+  await expect(searchControl).toBeFocused()
+  const focusedSearchAppearance = await getFocusAppearance(searchContainer)
+
+  expect(focusedSearchAppearance).not.toEqual(blurredSearchAppearance)
+  expect(focusedSearchAppearance.borderColor).toBe('rgb(49, 87, 255)')
+  expect(focusedSearchAppearance.boxShadow).not.toBe('none')
+
+  await page.locator('#upload input[type="file"]').setInputFiles({
+    name: 'keyboard-focus.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from('{"focus":true}'),
+  })
+
+  for (const [label, control] of [
+    ['Logout', page.getByRole('button', { name: 'Logout' })],
+    ['New record', page.getByRole('button', { name: 'New record' })],
+    [
+      'record action',
+      page.getByRole('button', { name: 'Open actions for Route map' }),
+    ],
+    ['upload dropzone', page.getByTestId('multi-dropzone')],
+    [
+      'upload-row remove',
+      page.getByRole('button', { name: 'Remove keyboard-focus.json' }),
+    ],
+  ]) {
+    await expectVisibleKeyboardFocus(page, label, control)
+  }
+
+  await homeControl.click()
+  const pointerAppearance = await getFocusAppearance(homeControl)
+
+  expect(
+    pointerAppearance.outlineStyle === 'none' ||
+      Number.parseFloat(pointerAppearance.outlineWidth) === 0,
+  ).toBeTruthy()
 })
 
 test('filters records and navigates dashboard sections locally', async ({

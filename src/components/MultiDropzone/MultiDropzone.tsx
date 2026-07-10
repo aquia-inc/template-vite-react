@@ -61,6 +61,10 @@ const StyledBox = styled(Box, {
   outline: 'none',
   padding: theme.spacing(4),
   transition: 'border .24s ease-in-out',
+  '&:focus-visible': {
+    outline: `2px solid ${theme.workspace?.primary ?? workspaceTokens.primary}`,
+    outlineOffset: 2,
+  },
   '&.active': {
     border: `2px dashed ${theme.palette.primary.light}`,
   },

@@ -718,6 +718,14 @@ theme = createTheme(theme, {
       defaultProps: {
         disableRipple: false,
       },
+      styleOverrides: {
+        root: {
+          '&.Mui-focusVisible': {
+            outline: `2px solid ${theme.workspace.primary}`,
+            outlineOffset: 2,
+          },
+        },
+      },
     },
     MuiButtonGroup: {
       styleOverrides: {
