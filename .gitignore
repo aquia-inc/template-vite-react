@@ -34,6 +34,8 @@ tmp/
 **/temp/
 **/.cache/
 **/.temp/
+/.superpowers/
+/docs/superpowers/
 
 # macos
 **/.DS_Store
