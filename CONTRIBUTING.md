@@ -58,6 +58,22 @@ yarn test:e2e:install
 yarn test:e2e
 ```
 
+Local E2E runs dynamically reserve separate development and Pages ports. This
+keeps concurrent runs from separate worktrees isolated. The runner logs both
+ports and their source before Playwright starts. CI defaults to development port
+`4173` and Pages port `4174` for repeatable prebuilt artifacts.
+
+Override either or both ports for a stable debugging URL:
+
+```shell
+E2E_DEV_PORT=5173 E2E_PAGES_PORT=5174 yarn test:e2e
+E2E_DEV_PORT=5173 E2E_PAGES_PORT=5174 yarn test:e2e:headed
+```
+
+Overrides must be distinct, available decimal integers from `1` through
+`65535`. Headless and headed commands otherwise use the same allocation,
+validation, retry, and cleanup behavior.
+
 For shared UI or Storybook changes, also run:
 
 ```shell

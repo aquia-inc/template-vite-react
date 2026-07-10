@@ -156,10 +156,24 @@ yarn test:e2e:install
 yarn test:e2e
 ```
 
-For headed E2E debugging:
+Local E2E runs reserve an available development and Pages port automatically,
+so multiple checkouts can run Playwright at the same time. The selected ports
+and whether they are `dynamic`, `explicit`, or `ci-default` are printed before
+Playwright starts. CI uses deterministic ports `4173` and `4174` by default.
+
+Set either or both ports explicitly when a stable URL helps with debugging:
+
+```shell
+E2E_DEV_PORT=5173 E2E_PAGES_PORT=5174 yarn test:e2e
+```
+
+Explicit ports must be available decimal integers from `1` through `65535` and
+must differ. For headed E2E debugging, the same allocation and override rules
+apply:
 
 ```shell
 yarn test:e2e:headed
+E2E_DEV_PORT=5173 E2E_PAGES_PORT=5174 yarn test:e2e:headed
 ```
 
 Build Storybook before changing shared UI or stories:
