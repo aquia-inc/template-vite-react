@@ -26,6 +26,7 @@
     "dev": "vite",
     "dev:e2e": "node e2e/dev-server.mjs",
     "build": "tsc -p tsconfig.prod.json && vite build --mode production",
+    "archive:dist": "node scripts/create-distribution-archive.mjs",
     "preview": "vite preview",
     "clean": "rimraf dist",
     "init:template": "node scripts/init-template.mjs",
@@ -39,9 +40,10 @@
     "test:e2e": "node e2e/run.mjs",
     "test:e2e:headed": "node e2e/run.mjs --headed",
     "test:e2e:runner": "node --test test/e2e-runner/*.test.mjs",
+    "test:release-pipeline": "node --test scripts/release-pipeline.test.mjs",
     "ci:pr:build": "PAGES_E2E_BASE_PATH=/template-vite-react/ VITE_AWS_REGION= VITE_CF_DOMAIN=http://127.0.0.1:${E2E_PAGES_PORT:-4174} VITE_COGNITO_DOMAIN= VITE_COGNITO_REDIRECT_SIGN_IN= VITE_COGNITO_REDIRECT_SIGN_OUT= VITE_DEMO_AUTH_ENABLED=true VITE_IDP_ENABLED=false VITE_PUBLIC_BASE_PATH=/template-vite-react/ VITE_USER_POOL_CLIENT_ID= VITE_USER_POOL_ID= run-p --print-label build build-storybook",
-    "ci:pr": "run-p 'lint:js' 'lint:other' 'test:ci:pr'",
-    "ci": "run-p 'lint:js' 'lint:other' 'test:ci' 'test:e2e:runner'",
+    "ci:pr": "run-p 'lint:js' 'lint:other' 'test:release-pipeline' 'test:ci:pr'",
+    "ci": "run-p 'lint:js' 'lint:other' 'test:release-pipeline' 'test:ci' 'test:e2e:runner'",
     "lint": "run-p 'lint:js' 'lint:other'",
     "lint:js": "eslint . --cache --max-warnings=0",
     "lint:other": "prettier --check . --ignore-path .gitignore --ignore-path .prettierignore",
@@ -90,7 +92,7 @@
     "@rolldown/binding-wasm32-wasi": "^1.1.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
-    "@semantic-release/github": "^12.0.8",
+    "@semantic-release/github": "^12.0.9",
     "@semantic-release/npm": "^13.1.5",
     "@semantic-release/release-notes-generator": "^14.1.1",
     "@storybook/addon-docs": "^10.4.6",
@@ -212,8 +214,9 @@
         {
           "assets": [
             {
-              "path": "dist",
-              "label": "Distribution"
+              "path": "release/template-vite-react.tar.gz",
+              "name": "template-vite-react-${nextRelease.gitTag}.tar.gz",
+              "label": "Distribution archive"
             },
             {
               "path": "CHANGELOG.md",

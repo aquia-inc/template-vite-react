@@ -102,6 +102,9 @@ jobs:
     timeout-minutes: 15
     needs: test_build
     if: github.ref == 'refs/heads/main'
+    concurrency:
+      group: release-publishing
+      queue: max
     permissions:
       contents: write
       issues: write
@@ -125,6 +128,9 @@ jobs:
         with:
           name: dist
           path: './dist'
+
+      - name: ARCHIVE - distribution
+        run: yarn archive:dist
 
       # semantic-release will only run on pushes to main (see package.json)
       - name: RELEASE

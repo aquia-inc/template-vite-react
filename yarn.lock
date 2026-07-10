@@ -4008,9 +4008,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/github@npm:^12.0.0, @semantic-release/github@npm:^12.0.8":
-  version: 12.0.8
-  resolution: "@semantic-release/github@npm:12.0.8"
+"@semantic-release/github@npm:^12.0.0, @semantic-release/github@npm:^12.0.9":
+  version: 12.0.9
+  resolution: "@semantic-release/github@npm:12.0.9"
   dependencies:
     "@octokit/core": "npm:^7.0.0"
     "@octokit/plugin-paginate-rest": "npm:^14.0.0"
@@ -4031,7 +4031,7 @@ __metadata:
     url-join: "npm:^5.0.0"
   peerDependencies:
     semantic-release: ">=24.1.0"
-  checksum: 10/deb6f37f2c77dd5fad73b991323ce92dd45c9b751ebf2fd6d4795c52472f92a4016d38fbcfa9aeea63f9be75f2dd6c0cc6e73690f22c93778bb7000dd6dfef39
+  checksum: 10/34abc6a9f246cbe2f249041d20422c50f681020fe12dd0991b1ac9fd4852574ab86733d2b0ea02ac527b9f8378cbab5d3b37f030c2ef0c97c19b46df0f390a50
   languageName: node
   linkType: hard
 
@@ -14954,7 +14954,7 @@ __metadata:
     "@rolldown/binding-wasm32-wasi": "npm:^1.1.0"
     "@semantic-release/changelog": "npm:^6.0.3"
     "@semantic-release/commit-analyzer": "npm:^13.0.1"
-    "@semantic-release/github": "npm:^12.0.8"
+    "@semantic-release/github": "npm:^12.0.9"
     "@semantic-release/npm": "npm:^13.1.5"
     "@semantic-release/release-notes-generator": "npm:^14.1.1"
     "@storybook/addon-docs": "npm:^10.4.6"
