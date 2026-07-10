@@ -17,6 +17,7 @@ lerna-debug.log*
 dist
 dist-ssr
 storybook-static
+release
 *.local
 
 # editors

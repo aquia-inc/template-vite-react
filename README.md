@@ -200,7 +200,10 @@ yarn build
 
 Release automation runs only on pushes to `main`. The release job uses
 semantic-release with conventional commits, writes release notes/changelog
-metadata, creates GitHub releases, and keeps npm publishing disabled.
+metadata, creates GitHub releases, and keeps npm publishing disabled. Release
+publishers run one at a time with queued runs preserved. Each release includes
+README and changelog assets plus a version-named `template-vite-react-v*.tar.gz`
+distribution archive with sorted files and normalized tar and gzip metadata.
 
 The GitHub Pages deployment job uses the built `dist` artifact after the release
 job succeeds.
