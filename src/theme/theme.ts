@@ -6,10 +6,18 @@
  */
 import { createTheme } from '@mui/material/styles'
 import type { CSSProperties } from 'react'
+import type { WorkspaceTokens } from '@/theme/workspaceTokens'
+import { workspaceTokens } from '@/theme/workspaceTokens'
 
 export const MuiDrawerWidth = 200
 
 declare module '@mui/material/styles' {
+  interface Theme {
+    workspace: WorkspaceTokens
+  }
+  interface ThemeOptions {
+    workspace?: WorkspaceTokens
+  }
   interface Palette {
     dark?: Palette['primary']
   }
@@ -59,6 +67,10 @@ theme = createTheme({
     // hack around the typing for border radius being wrong
     borderRadius: +`${theme.spacing(2)}`.replace('px', ''),
   },
+})
+
+theme = createTheme(theme, {
+  workspace: workspaceTokens,
 })
 
 // ** Palette Base

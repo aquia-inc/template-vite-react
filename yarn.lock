@@ -1935,6 +1935,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource-variable/inter@npm:^5.2.8":
+  version: 5.2.8
+  resolution: "@fontsource-variable/inter@npm:5.2.8"
+  checksum: 10/7f45ab415f0d3c43f31129dd9972dcbfb60ebe51801891b9a88a7ba395d4be664c507b0027138f42307b9ffe91bdd564fcae98bce5b244046274f4aceae07382
+  languageName: node
+  linkType: hard
+
 "@fortawesome/fontawesome-free@npm:^7.2.0":
   version: 7.2.0
   resolution: "@fortawesome/fontawesome-free@npm:7.2.0"
@@ -14479,6 +14486,7 @@ __metadata:
     "@emotion/react": "npm:^11.14.0"
     "@emotion/styled": "npm:^11.14.1"
     "@eslint/js": "npm:^10.0.1"
+    "@fontsource-variable/inter": "npm:^5.2.8"
     "@fortawesome/fontawesome-free": "npm:^7.2.0"
     "@hookform/resolvers": "npm:^5.4.0"
     "@mui/icons-material": "npm:^9.0.1"
