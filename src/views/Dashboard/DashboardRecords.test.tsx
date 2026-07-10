@@ -116,7 +116,8 @@ test('shows the unfiltered empty state when there are no rows', () => {
   expect(screen.getByRole('status')).toHaveTextContent('No records yet.')
 })
 
-test('uses record cards on mobile', () => {
+test('uses accessible record-card actions on mobile', async () => {
+  const user = userEvent.setup()
   mockedUseMediaQuery.mockReturnValue(true)
   render(<DashboardRecords />, { wrapper: Wrapper })
 
@@ -124,4 +125,14 @@ test('uses record cards on mobile', () => {
   expect(screen.getAllByRole('listitem')).toHaveLength(dashboardRecords.length)
   expect(screen.queryByRole('grid')).not.toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'New record' })).toBeVisible()
+
+  const routeMapActions = screen.getByRole('button', {
+    name: 'Open actions for Route map',
+  })
+  expect(routeMapActions).toHaveStyle({ minHeight: '44px', minWidth: '44px' })
+
+  await user.click(routeMapActions)
+  expect(
+    screen.getByRole('menuitem', { name: 'Delete Route map' }),
+  ).toBeVisible()
 })

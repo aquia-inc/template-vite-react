@@ -187,6 +187,7 @@ const RecordMobileCard = ({ record, onOpenActions }: RecordMobileCardProps) => (
         aria-label={`Open actions for ${record.name}`}
         onClick={(event) => onOpenActions(event.currentTarget, record)}
         size="small"
+        sx={{ minHeight: 44, minWidth: 44 }}
       >
         <MoreHorizIcon />
       </IconButton>
