@@ -64,9 +64,11 @@ For shared UI or Storybook changes, also run:
 yarn build-storybook
 ```
 
-CI installs dependencies with `yarn install --immutable`, installs Playwright
-Chromium, runs `yarn ci`, runs `yarn test:e2e`, builds the app, and runs
-semantic-release on pushes to `main`.
+CI installs dependencies and runs quality checks first. On pull requests, it
+builds the app and Storybook concurrently, installs Playwright Chromium, and
+reuses the app build for E2E. Pushes to `main` keep a separate production build
+for semantic-release and GitHub Pages deployment. Local `yarn test:e2e` runs
+continue to build the Pages fixture automatically.
 
 ## Environment And Auth Changes
 

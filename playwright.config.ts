@@ -3,6 +3,7 @@ import { defineConfig } from '@playwright/test'
 const devBaseURL = 'http://127.0.0.1:4173'
 const pagesBaseURL = 'http://127.0.0.1:4174'
 const isCI = process.env.CI === 'true'
+const reusePagesBuild = process.env.PLAYWRIGHT_REUSE_PAGES_BUILD === 'true'
 const normalizePagesBasePath = (value = '/template-vite-react/') => {
   const withLeadingSlash = value.startsWith('/') ? value : `/${value}`
 
@@ -62,7 +63,9 @@ const webServer = [
   ...(shouldRunProject('chromium-pages')
     ? [
         {
-          command: 'yarn build && node e2e/pages-static-server.mjs',
+          command: reusePagesBuild
+            ? 'node e2e/pages-static-server.mjs'
+            : 'yarn build && node e2e/pages-static-server.mjs',
           env: {
             ...process.env,
             ...pagesEnv,
