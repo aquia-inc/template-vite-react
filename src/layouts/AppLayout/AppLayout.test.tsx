@@ -64,6 +64,20 @@ test('renders the rail and searchable header above the mobile breakpoint', () =>
   ).not.toBeInTheDocument()
 })
 
+test('scopes Inter typography to the authenticated workspace shell', () => {
+  mockedUseMediaQuery.mockReturnValue(false)
+  render(
+    <ThemeProvider theme={theme}>
+      <AppLayout />
+    </ThemeProvider>,
+    { wrapper: RouterAndAlertWrapper },
+  )
+
+  expect(window.getComputedStyle(screen.getByTestId('app')).fontFamily).toBe(
+    '"Inter Variable", Inter, sans-serif',
+  )
+})
+
 test('shows feedback for unavailable shell actions', async () => {
   const user = userEvent.setup()
   mockedUseMediaQuery.mockReturnValue(false)

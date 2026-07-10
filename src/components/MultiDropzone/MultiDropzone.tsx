@@ -123,10 +123,21 @@ const WorkspaceCTA = (): JSX.Element => (
   <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center' }}>
     <UploadOutlinedIcon color="primary" />
     <Box>
-      <Typography variant="subtitle2" color="primary.main">
+      <Typography
+        variant="subtitle2"
+        sx={{
+          color: (theme) => theme.workspace?.primary ?? workspaceTokens.primary,
+        }}
+      >
         Drop files here
       </Typography>
-      <Typography variant="caption" color="text.secondary">
+      <Typography
+        variant="caption"
+        sx={{
+          color: (theme) =>
+            theme.workspace?.textMuted ?? workspaceTokens.textMuted,
+        }}
+      >
         JSON and CSV supported
       </Typography>
     </Box>

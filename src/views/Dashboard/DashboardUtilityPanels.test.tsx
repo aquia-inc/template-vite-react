@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from '@/theme/theme'
+import { getElementContrastRatio } from './contrast.test-utils'
 import {
   DashboardActivityPanel,
   DashboardUploadPanel,
@@ -24,6 +25,14 @@ test('renders upload files and the activity timeline', () => {
   expect(screen.getByText('sample-data.csv')).toBeVisible()
   expect(screen.getByText('Environment config')).toBeVisible()
   expect(screen.getByText('Stable')).toBeVisible()
+})
+
+test('keeps the activity health label at normal-text contrast', () => {
+  render(<DashboardActivityPanel />, { wrapper: Wrapper })
+
+  expect(
+    getElementContrastRatio(screen.getByText('Stable')),
+  ).toBeGreaterThanOrEqual(4.5)
 })
 
 test('offsets the upload and activity anchors below the sticky header', () => {

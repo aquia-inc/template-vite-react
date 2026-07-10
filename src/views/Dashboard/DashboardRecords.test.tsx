@@ -9,6 +9,7 @@ import userEvent from '@testing-library/user-event'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from '@/theme/theme'
+import { getElementContrastRatio } from './contrast.test-utils'
 import { dashboardRecords } from './dashboardData'
 import {
   DashboardRecords,
@@ -58,6 +59,17 @@ test('renders seeded dashboard records and filtered count', () => {
   expect(screen.getByText('Upload flow')).toBeInTheDocument()
   expect(screen.getByText('3 records')).toBeInTheDocument()
 })
+
+test.each(['Ready', 'Configured', 'Example'])(
+  'keeps the %s record status at normal-text contrast',
+  (status) => {
+    render(<DashboardRecords />, { wrapper: Wrapper })
+
+    const chip = screen.getByText(status).closest('.MuiChip-root')
+    expect(chip).not.toBeNull()
+    expect(getElementContrastRatio(chip as Element)).toBeGreaterThanOrEqual(4.5)
+  },
+)
 
 test('deletes a record through its overflow menu', async () => {
   const user = userEvent.setup()

@@ -87,7 +87,7 @@ const WorkspaceHeader = ({
           </Typography>
         )}
         <Typography
-          component="h1"
+          component="p"
           data-testid="appbar-title"
           sx={{
             color: (theme) => theme.workspace.text,
@@ -189,7 +189,7 @@ const WorkspaceHeader = ({
           ...(isCompact && {
             '& > .MuiBox-root': { m: 0, p: 0 },
             '& > .MuiBox-root > .MuiBox-root': { m: 0, p: 0 },
-            '& .MuiButton-root': { minWidth: 52, px: 1.5 },
+            '& .MuiButton-root': { minHeight: 44, minWidth: 52, px: 1.5 },
           }),
         }}
       >

@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid'
 import MultiDropzone from '@/components/MultiDropzone/MultiDropzone'
 import type { UploadedFile } from '@/components/MultiDropzone/types'
 import { dashboardActivity } from './dashboardData'
+import { dashboardLabelColors } from './dashboardLabelColors'
 
 const uploadedFiles: UploadedFile[] = [
   {
@@ -178,7 +179,7 @@ export const DashboardActivityPanel = (): JSX.Element => (
         Baseline health
       </Typography>
       <Typography
-        sx={(theme) => ({ color: theme.workspace.success, fontWeight: 750 })}
+        sx={{ color: dashboardLabelColors.success.foreground, fontWeight: 750 }}
         variant="subtitle2"
       >
         Stable

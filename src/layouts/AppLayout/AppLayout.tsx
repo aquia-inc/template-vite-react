@@ -59,6 +59,7 @@ const AppLayout: React.FC = (): JSX.Element => {
           minHeight: '100dvh',
           overflowX: 'clip',
           bgcolor: (theme) => theme.workspace.canvas,
+          fontFamily: '"Inter Variable", Inter, sans-serif',
         }}
       >
         <AlertMessage />

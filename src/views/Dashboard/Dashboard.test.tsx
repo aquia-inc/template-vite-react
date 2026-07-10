@@ -46,6 +46,16 @@ test('passes the shell search query to records', () => {
   expect(screen.queryByText('Route map')).not.toBeInTheDocument()
 })
 
+test('exposes the records region as a local navigation target', () => {
+  render(<DashboardContent username="reviewer" searchQuery="" />, {
+    wrapper: Wrapper,
+  })
+
+  expect(
+    screen.getByRole('region', { name: 'Example records' }),
+  ).toHaveAttribute('id', 'records')
+})
+
 test('keeps activity mounted but hides its region from the mobile accessibility tree', () => {
   mockedUseMediaQuery.mockReturnValue(true)
 

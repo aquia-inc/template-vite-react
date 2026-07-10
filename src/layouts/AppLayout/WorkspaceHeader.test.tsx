@@ -120,6 +120,10 @@ test('keeps search flexible in the compact desktop header', () => {
 
   expect(header).toHaveStyle({ gap: '6px' })
   expect(searchContainer).toHaveStyle('flex: 1 1 180px; min-width: 0;')
+  expect(
+    window.getComputedStyle(screen.getByRole('button', { name: /login/i }))
+      .minHeight,
+  ).toBe('44px')
 })
 
 test('keeps the title and auth control while hiding desktop actions on mobile', () => {
@@ -133,7 +137,10 @@ test('keeps the title and auth control while hiding desktop actions on mobile', 
     { wrapper: Wrapper },
   )
 
-  expect(screen.getByRole('heading', { name: 'Dashboard' })).toBeVisible()
+  expect(screen.getByTestId('appbar-title')).toHaveTextContent('Dashboard')
+  expect(
+    screen.queryByRole('heading', { name: 'Dashboard' }),
+  ).not.toBeInTheDocument()
   expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument()
   expect(screen.queryByText('Workspace')).not.toBeInTheDocument()
   expect(screen.queryByRole('searchbox')).not.toBeInTheDocument()

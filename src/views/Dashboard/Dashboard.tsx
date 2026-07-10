@@ -69,8 +69,9 @@ export const DashboardContent = ({
     </Box>
     <Box
       aria-label="Example records"
+      id="records"
       role="region"
-      sx={{ gridArea: 'records', minWidth: 0 }}
+      sx={{ gridArea: 'records', minWidth: 0, scrollMarginTop: 96 }}
     >
       <DashboardRecords searchQuery={searchQuery} />
     </Box>

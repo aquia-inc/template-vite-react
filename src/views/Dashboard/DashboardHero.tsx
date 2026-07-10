@@ -9,6 +9,7 @@ import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { alpha } from '@mui/material/styles'
 import { readinessItems } from './dashboardData'
+import { dashboardLabelColors } from './dashboardLabelColors'
 import type { ReadinessItem } from './dashboard.types'
 
 export interface DashboardHeroProps {
@@ -19,13 +20,6 @@ interface ReadinessCardProps {
   items: ReadinessItem[]
   value: number
 }
-
-const toneColor =
-  (tone: ReadinessItem['tone']) =>
-  (theme: {
-    workspace: { primary: string; violet: string; success: string }
-  }) =>
-    theme.workspace[tone]
 
 const StatusDot = () => (
   <Box
@@ -127,18 +121,22 @@ const ReadinessCard = ({ items, value }: ReadinessCardProps) => (
         spacing={1}
         sx={{ flexWrap: 'wrap', justifyContent: 'center', rowGap: 1 }}
       >
-        {items.map((item) => (
-          <Chip
-            key={item.label}
-            label={item.label}
-            size="small"
-            sx={{
-              bgcolor: (theme) => alpha(toneColor(item.tone)(theme), 0.1),
-              color: toneColor(item.tone),
-              fontWeight: 700,
-            }}
-          />
-        ))}
+        {items.map((item) => {
+          const colors = dashboardLabelColors[item.tone]
+
+          return (
+            <Chip
+              key={item.label}
+              label={item.label}
+              size="small"
+              sx={{
+                bgcolor: colors.background,
+                color: colors.foreground,
+                fontWeight: 700,
+              }}
+            />
+          )
+        })}
       </Stack>
     </Stack>
   </Paper>
@@ -204,8 +202,8 @@ export const DashboardHero = ({ username }: DashboardHeroProps) => {
             size="small"
             sx={{
               alignSelf: 'flex-start',
-              bgcolor: (theme) => alpha(theme.workspace.primary, 0.1),
-              color: (theme) => theme.workspace.primary,
+              bgcolor: dashboardLabelColors.primary.background,
+              color: dashboardLabelColors.primary.foreground,
               fontWeight: 700,
               '& .MuiChip-icon': {
                 color: 'inherit',

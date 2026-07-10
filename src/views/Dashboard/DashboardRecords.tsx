@@ -23,6 +23,7 @@ import CreateForm from '@/components/crud/CreateForm'
 import type { FormField } from '@/types'
 import type { DashboardRecord, DashboardStatusTone } from './dashboard.types'
 import { dashboardRecords } from './dashboardData'
+import { dashboardLabelColors } from './dashboardLabelColors'
 
 export interface DashboardRecordsProps {
   initialRecords?: DashboardRecord[]
@@ -139,18 +140,18 @@ const RecordIcon = ({ record }: { record: DashboardRecord }) => {
 
 const StatusChip = ({ status }: { status: string }) => {
   const tone = getStatusTone(status)
+  const labelTone =
+    tone === 'ready' ? 'success' : tone === 'configured' ? 'primary' : 'violet'
+  const colors = dashboardLabelColors[labelTone]
 
   return (
     <Chip
       label={status}
       size="small"
-      sx={(theme) => {
-        const color = statusColor(tone, theme)
-        return {
-          bgcolor: alpha(color, 0.1),
-          color,
-          fontWeight: 700,
-        }
+      sx={{
+        bgcolor: colors.background,
+        color: colors.foreground,
+        fontWeight: 700,
       }}
     />
   )

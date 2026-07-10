@@ -98,6 +98,101 @@ const expectVisibleKeyboardFocus = async (
   expect.soft(hasVisibleOutline, `${label} visible focus outline`).toBeTruthy()
 }
 
+const expectMinimumTargetSize = async (
+  control: Locator,
+  label: string,
+  minimum = 44,
+) => {
+  const box = await control.boundingBox()
+
+  expect(box, `${label} bounding box`).not.toBeNull()
+  expect(box?.width ?? 0, `${label} width`).toBeGreaterThanOrEqual(minimum)
+  expect(box?.height ?? 0, `${label} height`).toBeGreaterThanOrEqual(minimum)
+}
+
+const parseCssColor = (value: string) => {
+  const channels = value.match(/[\d.]+/g)?.map(Number) ?? []
+  if (channels.length < 3) throw new Error(`Unsupported CSS color: ${value}`)
+
+  return {
+    red: channels[0],
+    green: channels[1],
+    blue: channels[2],
+    alpha: channels[3] ?? 1,
+  }
+}
+
+type RgbaColor = ReturnType<typeof parseCssColor>
+
+const composite = (foreground: RgbaColor, background: RgbaColor) => {
+  const alpha = foreground.alpha + background.alpha * (1 - foreground.alpha)
+  const blend = (foregroundChannel: number, backgroundChannel: number) =>
+    alpha === 0
+      ? 0
+      : (foregroundChannel * foreground.alpha +
+          backgroundChannel * background.alpha * (1 - foreground.alpha)) /
+        alpha
+
+  return {
+    red: blend(foreground.red, background.red),
+    green: blend(foreground.green, background.green),
+    blue: blend(foreground.blue, background.blue),
+    alpha,
+  }
+}
+
+const relativeLuminance = ({ red, green, blue }: RgbaColor) => {
+  const linearize = (channel: number) => {
+    const normalized = channel / 255
+    return normalized <= 0.04045
+      ? normalized / 12.92
+      : ((normalized + 0.055) / 1.055) ** 2.4
+  }
+
+  return (
+    0.2126 * linearize(red) +
+    0.7152 * linearize(green) +
+    0.0722 * linearize(blue)
+  )
+}
+
+const getTextContrast = (locator: Locator) =>
+  locator.evaluate((element) => {
+    const foreground = window.getComputedStyle(element).color
+    const backgrounds: string[] = []
+    let current: Element | null = element
+
+    while (current) {
+      const background = window.getComputedStyle(current).backgroundColor
+      if (background !== 'rgba(0, 0, 0, 0)') backgrounds.push(background)
+      current = current.parentElement
+    }
+
+    return { foreground, backgrounds }
+  })
+
+const expectNormalTextContrast = async (locator: Locator, label: string) => {
+  const colors = await getTextContrast(locator)
+  const white = { red: 255, green: 255, blue: 255, alpha: 1 }
+  const background = colors.backgrounds
+    .map(parseCssColor)
+    .reverse()
+    .reduce((result, layer) => composite(layer, result), white)
+  const foreground = composite(parseCssColor(colors.foreground), background)
+  const foregroundLuminance = relativeLuminance(foreground)
+  const backgroundLuminance = relativeLuminance(background)
+  const ratio =
+    (Math.max(foregroundLuminance, backgroundLuminance) + 0.05) /
+    (Math.min(foregroundLuminance, backgroundLuminance) + 0.05)
+
+  expect(
+    ratio,
+    `${label} contrast (${colors.foreground} over ${colors.backgrounds.join(
+      ', ',
+    )})`,
+  ).toBeGreaterThanOrEqual(4.5)
+}
+
 test('dev server renders the public home page', async ({ page }) => {
   await page.goto('/')
 
@@ -180,6 +275,22 @@ for (const viewport of [
     await expectDashboard(page, viewport.name)
     await expectDashboardFitsViewport(page)
     await expect(page.getByRole('button', { name: 'Logout' })).toBeVisible()
+
+    if (viewport.name === 'mobile') {
+      await expectMinimumTargetSize(
+        page.getByRole('button', { name: 'Logout' }),
+        'compact Logout',
+      )
+      const mobileNavigation = page.getByRole('navigation', {
+        name: 'Mobile dashboard',
+      })
+      for (const label of ['Home', 'Records', 'Upload', 'Profile']) {
+        await expectMinimumTargetSize(
+          mobileNavigation.getByRole('button', { name: label }),
+          `mobile ${label}`,
+        )
+      }
+    }
 
     await expect(page.getByRole('complementary')).toHaveCount(
       viewport.hasRail ? 1 : 0,
@@ -291,11 +402,22 @@ test('filters records and navigates dashboard sections locally', async ({
   await expect(page.getByText('Route map')).toBeHidden()
 
   await search.clear()
-  await page
-    .getByRole('navigation', { name: 'Dashboard sections' })
-    .getByRole('button', { name: 'Upload' })
-    .click()
-  await expect(page.locator('#upload')).toBeInViewport()
+
+  const navigation = page.getByRole('navigation', {
+    name: 'Dashboard sections',
+  })
+  for (const { label, target, start } of [
+    { label: 'Home', target: 'overview', start: 'upload' },
+    { label: 'Records', target: 'records', start: 'overview' },
+    { label: 'Upload', target: 'upload', start: 'overview' },
+    { label: 'Activity', target: 'activity', start: 'overview' },
+  ]) {
+    await page.locator(`#${start}`).evaluate((element) => {
+      element.scrollIntoView({ block: 'start' })
+    })
+    await navigation.getByRole('button', { name: label }).click()
+    await expect(page.locator(`#${target}`)).toBeInViewport()
+  }
 })
 
 test('navigates dashboard sections from the mobile bottom navigation', async ({
@@ -307,8 +429,53 @@ test('navigates dashboard sections from the mobile bottom navigation', async ({
   const mobileNavigation = page.getByRole('navigation', {
     name: 'Mobile dashboard',
   })
-  await mobileNavigation.getByRole('button', { name: 'Upload' }).click()
-  await expect(page.locator('#upload')).toBeInViewport()
+  for (const { label, target, start } of [
+    { label: 'Home', target: 'overview', start: 'upload' },
+    { label: 'Records', target: 'records', start: 'overview' },
+    { label: 'Upload', target: 'upload', start: 'overview' },
+  ]) {
+    await page.locator(`#${start}`).evaluate((element) => {
+      element.scrollIntoView({ block: 'start' })
+    })
+    await mobileNavigation.getByRole('button', { name: label }).click()
+    await expect(page.locator(`#${target}`)).toBeInViewport()
+  }
+
+  await expect(
+    mobileNavigation.getByRole('button', { name: 'Activity' }),
+  ).toHaveCount(0)
+  await expect(page.locator('#activity')).toBeHidden()
+})
+
+test('uses scoped Inter, one primary heading, and accessible dashboard labels', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1600, height: 1000 })
+  await signInWithDemoAuth(page, 'acceptance-details@example.com')
+
+  await expect(page.locator('h1')).toHaveCount(1)
+  await expect(page.getByTestId('app')).toHaveCSS(
+    'font-family',
+    /Inter Variable/,
+  )
+
+  for (const label of [
+    'Protected workspace',
+    'Routes',
+    'MUI',
+    'Storybook',
+    'Ready',
+    'Configured',
+    'Example',
+    'JSON and CSV supported',
+    'Drop files here',
+    'Stable',
+  ]) {
+    const text = page.getByText(label, { exact: true })
+    await expectNormalTextContrast(text, label)
+  }
+
+  await expectDashboardFitsViewport(page)
 })
 
 test('reports unavailable notification controls', async ({ page }) => {
