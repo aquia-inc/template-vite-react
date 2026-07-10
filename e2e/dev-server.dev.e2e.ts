@@ -27,17 +27,21 @@ const expectDashboardFitsViewport = async (page: Page) => {
     const mainBounds = main?.getBoundingClientRect()
 
     return {
-      clientWidth: app.clientWidth,
-      mainLeft: mainBounds?.left,
-      mainRight: mainBounds?.right,
-      scrollWidth: app.scrollWidth,
-      viewportWidth: document.documentElement.clientWidth,
+      appClientWidth: app.clientWidth,
+      appScrollWidth: app.scrollWidth,
+      documentClientWidth: document.documentElement.clientWidth,
+      documentScrollWidth: document.documentElement.scrollWidth,
+      mainLeft: mainBounds?.left ?? -1,
+      mainRight: mainBounds?.right ?? Number.POSITIVE_INFINITY,
     }
   })
 
-  expect(layout.scrollWidth).toBeLessThanOrEqual(layout.clientWidth)
+  expect(layout.appScrollWidth).toBeLessThanOrEqual(layout.appClientWidth)
+  expect(layout.documentScrollWidth).toBeLessThanOrEqual(
+    layout.documentClientWidth,
+  )
   expect(layout.mainLeft).toBeGreaterThanOrEqual(0)
-  expect(layout.mainRight).toBeLessThanOrEqual(layout.viewportWidth)
+  expect(layout.mainRight).toBeLessThanOrEqual(layout.documentClientWidth)
 }
 
 test('dev server renders the public home page', async ({ page }) => {
@@ -98,36 +102,90 @@ test('dev server supports the local CRUD starter records flow', async ({
   await expect(page.getByText('Operations')).toBeVisible()
   await expect(page.getByText('Draft')).toBeVisible()
 
-  await page.getByRole('button', { name: 'Delete Policy checklist' }).click()
+  await page
+    .getByRole('button', { name: 'Open actions for Policy checklist' })
+    .click()
+  await page.getByRole('menuitem', { name: 'Delete Policy checklist' }).click()
 
   await expect(page.getByText('Policy checklist')).toBeHidden()
 })
 
-test('dev server renders the authenticated dashboard on mobile', async ({
+for (const viewport of [
+  { name: 'mobile', width: 430, height: 932, hasRail: false },
+  { name: 'tablet', width: 1024, height: 1366, hasRail: true },
+  { name: 'desktop', width: 1600, height: 1000, hasRail: true },
+]) {
+  test(`renders the adaptive dashboard at ${viewport.name} size`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({
+      width: viewport.width,
+      height: viewport.height,
+    })
+    await signInWithDemoAuth(page, `${viewport.name}@example.com`)
+    await expectDashboard(page, viewport.name)
+    await expectDashboardFitsViewport(page)
+
+    await expect(page.getByRole('complementary')).toHaveCount(
+      viewport.hasRail ? 1 : 0,
+    )
+    await expect(
+      page.getByRole('navigation', { name: 'Mobile dashboard' }),
+    ).toHaveCount(viewport.hasRail ? 0 : 1)
+  })
+}
+
+test('filters records and navigates dashboard sections locally', async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 390, height: 844 })
+  await page.setViewportSize({ width: 1600, height: 1000 })
+  await signInWithDemoAuth(page)
 
-  await signInWithDemoAuth(page, 'mobile@example.com')
+  const search = page.getByRole('searchbox', { name: 'Search dashboard' })
+  await search.fill('platform')
+  await expect(page.getByText('Auth loader')).toBeVisible()
+  await expect(page.getByText('Route map')).toBeHidden()
 
-  await expectDashboard(page, 'mobile')
-  await expect(page.getByRole('button', { name: 'Logout' })).toBeVisible()
+  await search.clear()
+  await page
+    .getByRole('navigation', { name: 'Dashboard sections' })
+    .getByRole('button', { name: 'Upload' })
+    .click()
+  await expect(page.locator('#upload')).toBeInViewport()
+})
 
-  const drawer = page.getByTestId('app-drawer')
+test('navigates dashboard sections from the mobile bottom navigation', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 430, height: 932 })
+  await signInWithDemoAuth(page, 'mobile-navigation@example.com')
 
-  await expect(drawer).toHaveAttribute('data-open', 'false')
-  await expect(drawer).toBeHidden()
-  await expectDashboardFitsViewport(page)
+  const mobileNavigation = page.getByRole('navigation', {
+    name: 'Mobile dashboard',
+  })
+  await mobileNavigation.getByRole('button', { name: 'Upload' }).click()
+  await expect(page.locator('#upload')).toBeInViewport()
+})
 
-  await page.getByRole('button', { name: 'open drawer' }).click()
+test('reports unavailable notification controls', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 1000 })
+  await signInWithDemoAuth(page)
 
-  await expect(drawer).toHaveAttribute('data-open', 'true')
-  await expect(drawer).toBeVisible()
-  await expectDashboardFitsViewport(page)
+  await page.getByRole('button', { name: 'Notifications' }).click()
+  await expect(page.getByRole('alert')).toContainText(
+    'Notifications are not configured in this template.',
+  )
+})
 
-  await page.getByRole('button', { name: 'close drawer' }).click()
+test('reports unavailable profile controls on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 430, height: 932 })
+  await signInWithDemoAuth(page, 'mobile-profile@example.com')
 
-  await expect(drawer).toHaveAttribute('data-open', 'false')
-  await expect(drawer).toBeHidden()
-  await expectDashboardFitsViewport(page)
+  const mobileNavigation = page.getByRole('navigation', {
+    name: 'Mobile dashboard',
+  })
+  await mobileNavigation.getByRole('button', { name: 'Profile' }).click()
+  await expect(page.getByRole('alert')).toContainText(
+    'Profile is not configured in this template.',
+  )
 })
