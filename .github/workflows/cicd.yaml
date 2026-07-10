@@ -24,6 +24,7 @@ concurrency:
 jobs:
   test_build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       CI: true
     steps:
