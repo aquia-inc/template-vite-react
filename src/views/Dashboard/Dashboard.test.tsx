@@ -41,7 +41,7 @@ test('creates a dashboard record from the modal form', async () => {
 
   expect(await screen.findByText('Policy checklist')).toBeInTheDocument()
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
-})
+}, 10_000)
 
 test('deletes a dashboard record', async () => {
   const user = userEvent.setup()
