@@ -2483,19 +2483,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/icons-material@npm:^9.0.1":
-  version: 9.0.1
-  resolution: "@mui/icons-material@npm:9.0.1"
+"@mui/icons-material@npm:^9.2.0":
+  version: 9.2.0
+  resolution: "@mui/icons-material@npm:9.2.0"
   dependencies:
     "@babel/runtime": "npm:^7.29.2"
   peerDependencies:
-    "@mui/material": ^9.0.1
+    "@mui/material": ^9.2.0
     "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
     react: ^17.0.0 || ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10/1dd53f2bea9f5d17e24d4cfc868abad51af8929cb7f6dc18d3d84d6403be107595ac23f6759c81511e35eae36a5930fe1a57ae85f7048b9c6cc8e986bbd4614c
+  checksum: 10/53e9a9124ef298b6afd10467f0cd07e5b7a51d99dfa994d7385aeedf83e29c184a47aaab472b5c7980cd5dffc3fe716daa32124b7786a13621cd7cc351d081c3
   languageName: node
   linkType: hard
 
@@ -14578,7 +14578,7 @@ __metadata:
     "@fontsource-variable/inter": "npm:^5.2.8"
     "@fortawesome/fontawesome-free": "npm:^7.2.0"
     "@hookform/resolvers": "npm:^5.4.0"
-    "@mui/icons-material": "npm:^9.0.1"
+    "@mui/icons-material": "npm:^9.2.0"
     "@mui/lab": "npm:^9.0.0-beta.3"
     "@mui/material": "npm:^9.2.0"
     "@mui/x-data-grid": "npm:^9.9.0"
