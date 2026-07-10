@@ -134,7 +134,7 @@ const UploadFileCell: React.FC<UploadFileCellProps> = ({
                 <CheckIcon />
               ))}
             {isUploading && fileIcon}
-            {!isUploading && (
+            {!isUploading && (!isComplete || allowRemoveComplete) && (
               <IconButton
                 role="button"
                 aria-label={
@@ -146,11 +146,7 @@ const UploadFileCell: React.FC<UploadFileCellProps> = ({
                 onClick={handleRemoveFile}
                 color={hasError ? 'error' : 'primary'}
               >
-                {hasError ? (
-                  <ErrorIcon color="error" />
-                ) : !isComplete || allowRemoveComplete ? (
-                  <DeleteIcon />
-                ) : null}
+                {hasError ? <ErrorIcon color="error" /> : <DeleteIcon />}
               </IconButton>
             )}
           </Box>

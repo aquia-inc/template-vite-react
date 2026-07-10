@@ -25,7 +25,7 @@ test('renders correctly when uploading', () => {
   expect(screen.getByText(/testFile.json/)).toBeInTheDocument()
 })
 
-test('renders correctly when upload is complete', () => {
+test('renders a completed file without a removal action by default', () => {
   render(
     <UploadFileCell
       file={mockFile}
@@ -37,6 +37,7 @@ test('renders correctly when upload is complete', () => {
 
   expect(screen.getByTestId('CheckIcon')).toBeInTheDocument()
   expect(screen.getByText(/testFile.json/i)).toBeInTheDocument()
+  expect(screen.queryByRole('button')).not.toBeInTheDocument()
 })
 
 test('renders correctly when there is an error after uploading is done', () => {
