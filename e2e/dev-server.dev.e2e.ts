@@ -125,6 +125,7 @@ for (const viewport of [
     await signInWithDemoAuth(page, `${viewport.name}@example.com`)
     await expectDashboard(page, viewport.name)
     await expectDashboardFitsViewport(page)
+    await expect(page.getByRole('button', { name: 'Logout' })).toBeVisible()
 
     await expect(page.getByRole('complementary')).toHaveCount(
       viewport.hasRail ? 1 : 0,
@@ -134,6 +135,27 @@ for (const viewport of [
     ).toHaveCount(viewport.hasRail ? 0 : 1)
   })
 }
+
+test('renders readable data grid column headers', async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 1366 })
+  await signInWithDemoAuth(page, 'header-contrast@example.com')
+
+  for (const name of ['Record', 'Owner', 'Status', 'Updated']) {
+    const header = page.getByRole('columnheader', { name })
+    await expect(header).toBeVisible()
+
+    const colors = await header.evaluate((element) => {
+      const styles = window.getComputedStyle(element)
+
+      return {
+        background: styles.backgroundColor,
+        foreground: styles.color,
+      }
+    })
+
+    expect(colors.foreground).not.toBe(colors.background)
+  }
+})
 
 test('filters records and navigates dashboard sections locally', async ({
   page,

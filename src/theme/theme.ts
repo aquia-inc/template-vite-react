@@ -965,6 +965,7 @@ theme = createTheme(theme, {
           fontWeight: theme.typography.fontWeightMedium,
         },
         columnHeader: {
+          backgroundColor: theme.palette.primary.light,
           padding: `${theme.spacing(1.5)} ${theme.spacing(3.5)}`,
           textTransform: 'capitalize',
 
