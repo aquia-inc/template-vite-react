@@ -128,3 +128,44 @@ test('Pages server closes cleanly on SIGTERM and releases its port', async () =>
   const rebound = await listen(port)
   await close(rebound)
 })
+
+test('development server reports a rejected shutdown without an unhandled rejection', async () => {
+  const probe = await listen()
+  const { port } = probe.address()
+  await close(probe)
+  const cwd = await fixtureDirectory()
+  await writeFile(
+    join(cwd, 'vite.config.mjs'),
+    `export default {
+      plugins: [{
+        name: 'reject-close',
+        configureServer(server) {
+          const close = server.close.bind(server)
+          server.close = async () => {
+            await close()
+            throw new Error('simulated close failure')
+          }
+        },
+      }],
+    }`,
+  )
+  const server = spawnServer('e2e/dev-server.mjs', {
+    cwd,
+    env: {
+      E2E_DEV_PORT: String(port),
+      E2E_PAGES_PORT: String(port),
+    },
+  })
+
+  await waitFor(() => server.output().stdout.includes(String(port)))
+  server.child.kill('SIGINT')
+  const result = await server.closed
+
+  assert.deepEqual(result, { code: 1, signal: null })
+  assert.match(
+    server.output().stderr,
+    /Failed to close Vite development server: simulated close failure/,
+  )
+  const rebound = await listen(port)
+  await close(rebound)
+})

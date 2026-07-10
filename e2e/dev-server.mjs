@@ -12,8 +12,18 @@ const shutdown = async () => {
   await server?.close()
 }
 
-process.once('SIGINT', shutdown)
-process.once('SIGTERM', shutdown)
+const reportShutdownError = (error) => {
+  const message = error instanceof Error ? error.message : String(error)
+  console.error(`Failed to close Vite development server: ${message}`)
+  process.exitCode = 1
+}
+
+const shutdownOnSignal = () => {
+  void shutdown().catch(reportShutdownError)
+}
+
+process.once('SIGINT', shutdownOnSignal)
+process.once('SIGTERM', shutdownOnSignal)
 
 try {
   server = await createServer({
@@ -35,6 +45,6 @@ try {
   } else {
     console.error(error)
   }
-  await shutdown()
+  await shutdown().catch(reportShutdownError)
   process.exitCode = 1
 }

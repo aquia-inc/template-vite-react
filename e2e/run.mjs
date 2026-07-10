@@ -164,8 +164,6 @@ export const runE2E = async ({
       '[e2e] Dynamic port bind collision detected; retrying with a fresh allocation.\n',
     )
   }
-
-  return { attempts: MAX_ATTEMPTS, exitCode: 1 }
 }
 
 const isMain =
