@@ -80,10 +80,11 @@ For shared UI or Storybook changes, also run:
 yarn build-storybook
 ```
 
-CI installs dependencies and validates PR metadata first. On pull requests, it
-runs lint and unit tests, the app and Storybook builds, and Playwright's Chromium
-headless-shell installation concurrently; E2E then reuses the app build. Pushes
-to `main` retain separate quality checks, E2E fixture setup, and a
+CI installs dependencies and validates PR metadata first. On pull requests,
+distinct parallel workflow steps run lint and unit tests, the app and Storybook
+builds, and Playwright's Chromium headless-shell installation; E2E then reuses
+the app build. PR unit tests cap Jest at 50% workers, while pushes to `main`
+retain the 100% worker setting, separate E2E fixture setup, and a
 production-configured build for semantic-release and GitHub Pages. Local
 `yarn test:e2e:install` and `yarn test:e2e` behavior is unchanged.
 
