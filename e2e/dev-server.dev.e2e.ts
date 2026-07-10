@@ -21,6 +21,25 @@ const signInWithDemoAuth = async (page: Page, email = demoEmail) => {
   await page.getByRole('button', { name: 'Sign In' }).click()
 }
 
+const expectDashboardFitsViewport = async (page: Page) => {
+  const layout = await page.getByTestId('app').evaluate((app) => {
+    const main = app.querySelector('main')
+    const mainBounds = main?.getBoundingClientRect()
+
+    return {
+      clientWidth: app.clientWidth,
+      mainLeft: mainBounds?.left,
+      mainRight: mainBounds?.right,
+      scrollWidth: app.scrollWidth,
+      viewportWidth: document.documentElement.clientWidth,
+    }
+  })
+
+  expect(layout.scrollWidth).toBeLessThanOrEqual(layout.clientWidth)
+  expect(layout.mainLeft).toBeGreaterThanOrEqual(0)
+  expect(layout.mainRight).toBeLessThanOrEqual(layout.viewportWidth)
+}
+
 test('dev server renders the public home page', async ({ page }) => {
   await page.goto('/')
 
@@ -93,4 +112,22 @@ test('dev server renders the authenticated dashboard on mobile', async ({
 
   await expectDashboard(page, 'mobile')
   await expect(page.getByRole('button', { name: 'Logout' })).toBeVisible()
+
+  const drawer = page.getByTestId('app-drawer')
+
+  await expect(drawer).toHaveAttribute('data-open', 'false')
+  await expect(drawer).toBeHidden()
+  await expectDashboardFitsViewport(page)
+
+  await page.getByRole('button', { name: 'open drawer' }).click()
+
+  await expect(drawer).toHaveAttribute('data-open', 'true')
+  await expect(drawer).toBeVisible()
+  await expectDashboardFitsViewport(page)
+
+  await page.getByRole('button', { name: 'close drawer' }).click()
+
+  await expect(drawer).toHaveAttribute('data-open', 'false')
+  await expect(drawer).toBeHidden()
+  await expectDashboardFitsViewport(page)
 })

@@ -12,8 +12,10 @@ import IconButton from '@mui/material/IconButton'
 import List from '@mui/material/List'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import MenuIcon from '@mui/icons-material/Menu'
+import { useTheme } from '@mui/material/styles'
 import AlertMessage from '@/components/AlertMessage'
 import AppBar from '@/components/AppBar'
 import AppDrawer from '@/components/AppDrawer'
@@ -27,11 +29,26 @@ import { DASHBOARD_TITLE } from '@/locales/en'
  * @returns {JSX.Element} The main application layout component.
  */
 const AppLayout: React.FC = (): JSX.Element => {
-  const [drawerOpen, setDrawerOpen] = useState(true)
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const [drawerState, setDrawerState] = useState({
+    isMobile,
+    open: !isMobile,
+  })
+
+  if (drawerState.isMobile !== isMobile) {
+    setDrawerState({ isMobile, open: !isMobile })
+  }
+
+  const drawerOpen = drawerState.open
 
   const toggleDrawer = useCallback(() => {
-    setDrawerOpen(!drawerOpen)
-  }, [drawerOpen])
+    setDrawerState(({ open }) => ({ isMobile, open: !open }))
+  }, [isMobile])
+
+  const closeDrawer = useCallback(() => {
+    setDrawerState({ isMobile, open: false })
+  }, [isMobile])
 
   return (
     <>
@@ -48,7 +65,11 @@ const AppLayout: React.FC = (): JSX.Element => {
         <AlertMessage />
 
         {/* top nav bar */}
-        <AppBar position="absolute" open={drawerOpen} color="secondary">
+        <AppBar
+          position="absolute"
+          open={drawerOpen && !isMobile}
+          color="secondary"
+        >
           <Toolbar>
             <IconButton
               edge="start"
@@ -82,6 +103,14 @@ const AppLayout: React.FC = (): JSX.Element => {
         {/* menu drawer */}
         <AppDrawer
           open={drawerOpen}
+          variant={isMobile ? 'temporary' : 'permanent'}
+          onClose={closeDrawer}
+          ModalProps={isMobile ? { keepMounted: true } : undefined}
+          sx={
+            isMobile
+              ? { zIndex: (theme) => theme.zIndex.drawer + 2 }
+              : undefined
+          }
           data-open={drawerOpen}
           data-testid="app-drawer"
         >
@@ -94,7 +123,7 @@ const AppLayout: React.FC = (): JSX.Element => {
             }}
           >
             <IconButton
-              onClick={toggleDrawer}
+              onClick={closeDrawer}
               aria-label="close drawer"
               data-testid="close-drawer-button"
               name="close drawer"
