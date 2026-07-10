@@ -22,11 +22,7 @@ export type AppFeatureFlags = {
 }
 
 export type AppEnvironmentProfile =
-  | 'local-disabled'
-  | 'local-demo'
-  | 'cognito'
-  | 'pages-demo'
-  | 'unknown'
+  'local-disabled' | 'local-demo' | 'cognito' | 'pages-demo' | 'unknown'
 
 export type AppConfigProfileResult = {
   profile: AppEnvironmentProfile
@@ -48,11 +44,6 @@ export type FormField = {
 }
 
 export type ThemeColor =
-  | 'primary'
-  | 'secondary'
-  | 'error'
-  | 'warning'
-  | 'info'
-  | 'success'
+  'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
 
 export type ThemeSkin = 'filled' | 'light' | 'light-static'
