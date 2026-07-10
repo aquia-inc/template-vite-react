@@ -12,11 +12,10 @@ setup, validation, and release behavior are kept explicit.
 
 ## System Requirements
 
-- [Node 24](https://nodejs.org/en/download)
-- Yarn 4.14.1, pinned by `packageManager`, `.yarnrc.yml`, and
+- [mise](https://mise.jdx.dev/getting-started.html), installed and activated in
+  your shell. `mise.toml` pins Node 24 and Yarn 4.14.1.
+- The Yarn package-manager pin remains in `packageManager`, `.yarnrc.yml`, and
   `.yarn/releases/yarn-4.14.1.cjs`
-- [nvm](https://github.com/nvm-sh/nvm), [n](https://github.com/tj/n), or another
-  Node version manager
 - [GitLeaks](https://github.com/gitleaks/gitleaks/tree/master#installing) for
   local secret scanning
 
@@ -29,16 +28,15 @@ git clone git@github.com:aquia-inc/template-vite-react.git
 cd template-vite-react
 ```
 
-2. Select the pinned Node version and enable Yarn through Corepack:
+2. Install mise and activate it in your shell by following the
+   [official getting-started guide](https://mise.jdx.dev/getting-started.html).
+   Then install the configured toolchain:
 
 ```shell
-# using nvm
-nvm install
-nvm use
-
-# enable package-manager shims
-corepack enable
+mise install
 ```
+
+`mise install` installs the Node and Yarn versions from `mise.toml`.
 
 3. Install dependencies:
 

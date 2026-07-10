@@ -8,12 +8,13 @@ validated, and easy to reuse in downstream projects.
 Use the pinned runtime and package manager:
 
 ```shell
-nvm use
-corepack enable
+mise install
 yarn install --immutable
 yarn setup
 yarn doctor
 ```
+
+`mise.toml` is the source for Node 24 and Yarn 4.14.1.
 
 `yarn setup` verifies Node 24 and Yarn 4.14.1, creates
 `.env.development.local` from `.env.example` only when the local file is missing,
