@@ -134,7 +134,7 @@ const UploadFileCell: React.FC<UploadFileCellProps> = ({
                 <CheckIcon />
               ))}
             {isUploading && fileIcon}
-            {!isUploading && (!isComplete || allowRemoveComplete) && (
+            {(!isComplete || allowRemoveComplete) && (
               <IconButton
                 role="button"
                 aria-label={
