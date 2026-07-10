@@ -10,7 +10,7 @@ import router from '@/router/router'
 import onPerfEntry from '@/utils/onPerfEntry'
 import { getRuntimeEnv } from '@/utils/runtime'
 import { SIGN_IN_GREETING } from '@/locales/en'
-import '@fontsource-variable/inter'
+import '@fontsource-variable/inter/index.css'
 import '@/sass/style.scss'
 
 // IIFE that initializes the root node and renders the application.
