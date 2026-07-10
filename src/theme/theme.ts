@@ -6,10 +6,18 @@
  */
 import { createTheme } from '@mui/material/styles'
 import type { CSSProperties } from 'react'
+import type { WorkspaceTokens } from '@/theme/workspaceTokens'
+import { workspaceTokens } from '@/theme/workspaceTokens'
 
 export const MuiDrawerWidth = 200
 
 declare module '@mui/material/styles' {
+  interface Theme {
+    workspace: WorkspaceTokens
+  }
+  interface ThemeOptions {
+    workspace?: WorkspaceTokens
+  }
   interface Palette {
     dark?: Palette['primary']
   }
@@ -59,6 +67,10 @@ theme = createTheme({
     // hack around the typing for border radius being wrong
     borderRadius: +`${theme.spacing(2)}`.replace('px', ''),
   },
+})
+
+theme = createTheme(theme, {
+  workspace: workspaceTokens,
 })
 
 // ** Palette Base
@@ -706,6 +718,14 @@ theme = createTheme(theme, {
       defaultProps: {
         disableRipple: false,
       },
+      styleOverrides: {
+        root: {
+          '&.Mui-focusVisible': {
+            outline: `2px solid ${theme.workspace.primary}`,
+            outlineOffset: 2,
+          },
+        },
+      },
     },
     MuiButtonGroup: {
       styleOverrides: {
@@ -953,6 +973,7 @@ theme = createTheme(theme, {
           fontWeight: theme.typography.fontWeightMedium,
         },
         columnHeader: {
+          backgroundColor: theme.palette.primary.light,
           padding: `${theme.spacing(1.5)} ${theme.spacing(3.5)}`,
           textTransform: 'capitalize',
 

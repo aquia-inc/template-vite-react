@@ -32,6 +32,7 @@ import {
  * @returns {React.FC} - The UploadFileCell component
  */
 const UploadFileCell: React.FC<UploadFileCellProps> = ({
+  allowRemoveComplete = false,
   file,
   uploading,
   uploadStatus,
@@ -126,21 +127,26 @@ const UploadFileCell: React.FC<UploadFileCellProps> = ({
           </Box>
         ) : (
           <Box>
-            {isComplete && <CheckIcon />}
+            {isComplete &&
+              (allowRemoveComplete ? (
+                <CheckIcon color="success" />
+              ) : (
+                <CheckIcon />
+              ))}
             {isUploading && fileIcon}
-            {!isUploading && (
+            {(!isComplete || allowRemoveComplete) && (
               <IconButton
                 role="button"
-                aria-label="file-action"
+                aria-label={
+                  allowRemoveComplete && isComplete
+                    ? `Remove ${name}`
+                    : 'file-action'
+                }
                 disabled={uploading}
                 onClick={handleRemoveFile}
                 color={hasError ? 'error' : 'primary'}
               >
-                {hasError ? (
-                  <ErrorIcon color="error" />
-                ) : !isComplete ? (
-                  <DeleteIcon />
-                ) : null}
+                {hasError ? <ErrorIcon color="error" /> : <DeleteIcon />}
               </IconButton>
             )}
           </Box>

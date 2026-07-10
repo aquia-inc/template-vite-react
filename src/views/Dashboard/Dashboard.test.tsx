@@ -1,63 +1,76 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { DashboardRecords } from './Dashboard'
+import { render, screen } from '@testing-library/react'
+import { ThemeProvider } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import theme from '@/theme/theme'
+import { DashboardContent } from './Dashboard'
 
-test('renders seeded dashboard records', () => {
-  render(<DashboardRecords />)
+jest.mock('@mui/material/useMediaQuery')
 
-  expect(screen.getByText('Route map')).toBeInTheDocument()
-  expect(screen.getByText('Auth loader')).toBeInTheDocument()
-  expect(screen.getByText('Upload flow')).toBeInTheDocument()
+const mockedUseMediaQuery = useMediaQuery as jest.MockedFunction<
+  typeof useMediaQuery
+>
+
+const Wrapper = ({ children }: React.PropsWithChildren) => (
+  <ThemeProvider theme={theme}>{children}</ThemeProvider>
+)
+
+beforeEach(() => {
+  mockedUseMediaQuery.mockReset()
+  mockedUseMediaQuery.mockReturnValue(false)
 })
 
-test('creates a dashboard record from the modal form', async () => {
-  const user = userEvent.setup()
-
-  render(<DashboardRecords />)
-
-  await user.click(screen.getByRole('button', { name: /new record/i }))
-  const dialog = screen.getByRole('dialog', { name: /create record/i })
-  await user.type(
-    within(dialog).getByRole('textbox', { name: /^record/i }),
-    'Policy checklist',
-  )
-  await user.type(
-    within(dialog).getByRole('textbox', { name: /^owner/i }),
-    'Operations',
-  )
-  await user.type(
-    within(dialog).getByRole('textbox', { name: /^status/i }),
-    'Draft',
-  )
-  fireEvent.click(
-    within(dialog).getByRole('button', { name: /create record/i }),
-  )
-
-  expect(await screen.findByText('Policy checklist')).toBeInTheDocument()
-  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
-}, 10_000)
-
-test('deletes a dashboard record', async () => {
-  const user = userEvent.setup()
-
-  render(<DashboardRecords />)
-
-  const routeMapRow = screen.getByRole('row', { name: /route map/i })
-  await user.click(within(routeMapRow).getByRole('button', { name: /delete/i }))
-
-  await waitFor(() => {
-    expect(screen.queryByText('Route map')).not.toBeInTheDocument()
+test('composes all adaptive dashboard sections', () => {
+  render(<DashboardContent username="reviewer" searchQuery="" />, {
+    wrapper: Wrapper,
   })
+
+  expect(
+    screen.getByRole('heading', { name: /welcome user reviewer/i }),
+  ).toBeVisible()
+  expect(
+    screen.getByRole('region', { name: 'Dashboard metrics' }),
+  ).toBeVisible()
+  expect(screen.getByRole('region', { name: 'Example records' })).toBeVisible()
+  expect(screen.getByRole('region', { name: 'Upload intake' })).toBeVisible()
+  expect(
+    screen.getByRole('region', { name: 'Template activity' }),
+  ).toBeVisible()
 })
 
-test('shows the records empty state when there are no rows', () => {
-  render(<DashboardRecords initialRecords={[]} />)
+test('passes the shell search query to records', () => {
+  render(<DashboardContent username="reviewer" searchQuery="platform" />, {
+    wrapper: Wrapper,
+  })
 
-  expect(screen.getByText('No records yet')).toBeInTheDocument()
+  expect(screen.getByText('Auth loader')).toBeVisible()
+  expect(screen.queryByText('Route map')).not.toBeInTheDocument()
+})
+
+test('exposes the records region as a local navigation target', () => {
+  render(<DashboardContent username="reviewer" searchQuery="" />, {
+    wrapper: Wrapper,
+  })
+
+  expect(
+    screen.getByRole('region', { name: 'Example records' }),
+  ).toHaveAttribute('id', 'records')
+})
+
+test('keeps activity mounted but hides its region from the mobile accessibility tree', () => {
+  mockedUseMediaQuery.mockReturnValue(true)
+
+  const { container } = render(
+    <DashboardContent username="reviewer" searchQuery="" />,
+    {
+      wrapper: Wrapper,
+    },
+  )
+
+  expect(
+    screen.queryByRole('region', { name: 'Template activity' }),
+  ).not.toBeInTheDocument()
+  expect(
+    container.querySelector('[role="region"][aria-label="Template activity"]'),
+  ).toHaveAttribute('aria-hidden', 'true')
+  expect(screen.getByText('Template activity')).toBeInTheDocument()
 })

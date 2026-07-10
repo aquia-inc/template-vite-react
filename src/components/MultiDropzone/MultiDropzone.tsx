@@ -9,7 +9,9 @@ import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Collapse from '@mui/material/Collapse'
+import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import UploadOutlinedIcon from '@mui/icons-material/UploadOutlined'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import UploadFileCell from '@/components/MultiDropzone/UploadFileCell'
 import {
@@ -35,6 +37,11 @@ import {
   getUploadStatus,
 } from '@/components/MultiDropzone/utils'
 import formatBytes from '@/utils/formatBytes'
+import { workspaceTokens } from '@/theme/workspaceTokens'
+
+interface StyledBoxOwnerState {
+  appearance: NonNullable<MultiDropzoneProps['appearance']>
+}
 
 /**
  * The styled container that's the target for the drag and drop functionality.
@@ -42,7 +49,9 @@ import formatBytes from '@/utils/formatBytes'
  * @param {Theme} props.theme - The theme object provided by the ThemeProvider
  * @returns {React.FC} - The styled container
  */
-const StyledBox = styled(Box)(({ theme }) => ({
+const StyledBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'ownerState',
+})<{ ownerState: StyledBoxOwnerState }>(({ ownerState, theme }) => ({
   alignItems: 'center',
   border: `3px dashed ${theme.palette.primary.main}`,
   borderRadius: theme.shape.borderRadius,
@@ -52,6 +61,10 @@ const StyledBox = styled(Box)(({ theme }) => ({
   outline: 'none',
   padding: theme.spacing(4),
   transition: 'border .24s ease-in-out',
+  '&:focus-visible': {
+    outline: `2px solid ${theme.workspace?.primary ?? workspaceTokens.primary}`,
+    outlineOffset: 2,
+  },
   '&.active': {
     border: `2px dashed ${theme.palette.primary.light}`,
   },
@@ -66,6 +79,16 @@ const StyledBox = styled(Box)(({ theme }) => ({
   '& .MuiDialogTitle-root': {
     fontWeight: theme.typography.fontWeightMedium,
   },
+  ...(ownerState.appearance === 'workspace' && {
+    alignItems: 'flex-start',
+    backgroundColor: theme.workspace?.canvasCool ?? workspaceTokens.canvasCool,
+    border: `1px dashed ${theme.workspace?.primary ?? workspaceTokens.primary}`,
+    borderRadius: 14,
+    padding: theme.spacing(4.5, 4),
+    '&.active': {
+      border: `1px dashed ${theme.palette.primary.light}`,
+    },
+  }),
 }))
 
 /**
@@ -94,6 +117,31 @@ const DefaultCTA: React.FC = (): JSX.Element => (
       Browse
     </Button>
   </span>
+)
+
+const WorkspaceCTA = (): JSX.Element => (
+  <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center' }}>
+    <UploadOutlinedIcon color="primary" />
+    <Box>
+      <Typography
+        variant="subtitle2"
+        sx={{
+          color: (theme) => theme.workspace?.primary ?? workspaceTokens.primary,
+        }}
+      >
+        Drop files here
+      </Typography>
+      <Typography
+        variant="caption"
+        sx={{
+          color: (theme) =>
+            theme.workspace?.textMuted ?? workspaceTokens.textMuted,
+        }}
+      >
+        JSON and CSV supported
+      </Typography>
+    </Box>
+  </Stack>
 )
 
 /**
@@ -135,6 +183,7 @@ const CallToAction: React.FC<MultiDropzoneStyleProps> = ({
  */
 const MultiDropZone: React.FC<MultiDropzoneProps> = ({
   accept,
+  appearance = 'default',
   isCondensed = false,
   maxFiles = 0,
   maxSize,
@@ -218,21 +267,30 @@ const MultiDropZone: React.FC<MultiDropzoneProps> = ({
         className={`${isDragActive ? 'active' : ''} ${
           uploading ? 'disabled' : ''
         }`}
+        data-appearance={appearance}
+        data-testid="multi-dropzone"
         {...getRootProps()}
+        ownerState={{ appearance }}
       >
         <input aria-label="Drag and Drop File Selection" {...getInputProps()} />
-        <UploadFileIcon
-          color="primary"
-          fontSize={isCondensed ? 'small' : 'large'}
-        />
-        <CallToAction
-          isCondensed={isCondensed}
-          textOverrides={textOverrides}
-          uploading={uploading}
-        />
-        <Typography variant="body2" color="textSecondary">
-          {textOverrides?.supportsText || placeholder}
-        </Typography>
+        {appearance === 'workspace' ? (
+          <WorkspaceCTA />
+        ) : (
+          <>
+            <UploadFileIcon
+              color="primary"
+              fontSize={isCondensed ? 'small' : 'large'}
+            />
+            <CallToAction
+              isCondensed={isCondensed}
+              textOverrides={textOverrides}
+              uploading={uploading}
+            />
+            <Typography variant="body2" color="textSecondary">
+              {textOverrides?.supportsText || placeholder}
+            </Typography>
+          </>
+        )}
       </StyledBox>
 
       {errors.length > 0 && (
@@ -249,6 +307,7 @@ const MultiDropZone: React.FC<MultiDropzoneProps> = ({
         <Box sx={{ mt: 2 }}>
           {uploadedFiles.map((file) => (
             <UploadFileCell
+              allowRemoveComplete={appearance === 'workspace'}
               file={file}
               key={file.id}
               onRemoveFile={handleRemoveFile}

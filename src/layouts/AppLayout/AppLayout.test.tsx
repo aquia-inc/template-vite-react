@@ -1,8 +1,12 @@
-import { BrowserRouter } from 'react-router-dom'
-import { render, screen, fireEvent } from '@testing-library/react'
+import type { PropsWithChildren } from 'react'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { ThemeProvider } from '@mui/material/styles'
 import AppLayout from '@/layouts/AppLayout/AppLayout'
-import { DASHBOARD_TITLE } from '@/locales/en'
+import { AlertProvider } from '@/hooks/useAlert'
+import theme from '@/theme/theme'
 
 jest.mock('@mui/material/useMediaQuery')
 
@@ -10,78 +14,83 @@ const mockedUseMediaQuery = useMediaQuery as jest.MockedFunction<
   typeof useMediaQuery
 >
 
+const RouterAndAlertWrapper = ({ children }: PropsWithChildren) => (
+  <MemoryRouter initialEntries={['/app']}>
+    <AlertProvider>
+      <Routes>
+        <Route path="/app" element={children}>
+          <Route index element={<div data-testid="outlet-fixture" />} />
+        </Route>
+      </Routes>
+    </AlertProvider>
+  </MemoryRouter>
+)
+
 beforeEach(() => {
-  mockedUseMediaQuery.mockReturnValue(false)
+  mockedUseMediaQuery.mockReset()
 })
 
-test('renders the main application layout', () => {
-  render(<AppLayout />, { wrapper: (props) => <BrowserRouter {...props} /> })
-
-  expect(screen.getByTestId('appbar-title')).toHaveTextContent(DASHBOARD_TITLE)
-  expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument()
-})
-
-test('toggles the drawer open and closed', async () => {
-  render(<AppLayout />, {
-    wrapper: (props) => <BrowserRouter {...props} />,
-  })
-
-  expect(screen.getByTestId('app-drawer')).toBeVisible()
-  expect(screen.getByTestId('app-drawer')).toHaveAttribute('data-open', 'true')
-
-  fireEvent.click(screen.getByRole('button', { name: /close drawer/i }))
-  expect(screen.getByTestId('app-drawer')).toHaveAttribute('data-open', 'false')
-
-  fireEvent.click(screen.getByRole('button', { name: /open drawer/i }))
-  expect(screen.getByTestId('app-drawer')).toHaveAttribute('data-open', 'true')
-})
-
-test('uses a closed temporary drawer without shrinking the app bar on mobile', () => {
+test('renders the compact mobile shell without a side rail', () => {
   mockedUseMediaQuery.mockReturnValue(true)
+  render(
+    <ThemeProvider theme={theme}>
+      <AppLayout />
+    </ThemeProvider>,
+    { wrapper: RouterAndAlertWrapper },
+  )
 
-  render(<AppLayout />, {
-    wrapper: (props) => <BrowserRouter {...props} />,
-  })
-
-  const appBar = screen.getByRole('banner')
-  const drawer = screen.getByTestId('app-drawer')
-
-  expect(drawer).toHaveAttribute('data-open', 'false')
-  expect(drawer).not.toHaveClass('MuiDrawer-docked')
-  expect(appBar).toHaveStyle('width: 100%')
-
-  fireEvent.click(screen.getByRole('button', { name: /open drawer/i }))
-
-  expect(drawer).toHaveAttribute('data-open', 'true')
-  expect(appBar).toHaveStyle('width: 100%')
-
-  fireEvent.click(screen.getByTestId('close-drawer-button'))
-  expect(drawer).toHaveAttribute('data-open', 'false')
+  expect(screen.queryByRole('complementary')).not.toBeInTheDocument()
+  expect(
+    screen.getByRole('navigation', { name: 'Mobile dashboard' }),
+  ).toBeVisible()
+  expect(screen.queryByRole('searchbox')).not.toBeInTheDocument()
 })
 
-test('resets the drawer state when crossing the mobile breakpoint', () => {
-  let isMobile = false
-  mockedUseMediaQuery.mockImplementation(() => isMobile)
+test('renders the rail and searchable header above the mobile breakpoint', () => {
+  mockedUseMediaQuery.mockReturnValue(false)
+  render(
+    <ThemeProvider theme={theme}>
+      <AppLayout />
+    </ThemeProvider>,
+    { wrapper: RouterAndAlertWrapper },
+  )
 
-  const { rerender } = render(<AppLayout />, {
-    wrapper: (props) => <BrowserRouter {...props} />,
-  })
+  expect(screen.getByRole('complementary')).toBeVisible()
+  expect(
+    screen.getByRole('searchbox', { name: 'Search dashboard' }),
+  ).toBeVisible()
+  expect(
+    screen.queryByRole('navigation', { name: 'Mobile dashboard' }),
+  ).not.toBeInTheDocument()
+})
 
-  expect(screen.getByTestId('app-drawer')).toHaveAttribute('data-open', 'true')
+test('scopes Inter typography to the authenticated workspace shell', () => {
+  mockedUseMediaQuery.mockReturnValue(false)
+  render(
+    <ThemeProvider theme={theme}>
+      <AppLayout />
+    </ThemeProvider>,
+    { wrapper: RouterAndAlertWrapper },
+  )
 
-  fireEvent.click(screen.getByTestId('close-drawer-button'))
-  expect(screen.getByTestId('app-drawer')).toHaveAttribute('data-open', 'false')
+  expect(window.getComputedStyle(screen.getByTestId('app')).fontFamily).toBe(
+    '"Inter Variable", Inter, sans-serif',
+  )
+})
 
-  isMobile = true
-  rerender(<AppLayout />)
-  expect(screen.getByTestId('app-drawer')).toHaveAttribute('data-open', 'false')
-  expect(screen.getByTestId('app-drawer')).not.toHaveClass('MuiDrawer-docked')
+test('shows feedback for unavailable shell actions', async () => {
+  const user = userEvent.setup()
+  mockedUseMediaQuery.mockReturnValue(false)
+  render(
+    <ThemeProvider theme={theme}>
+      <AppLayout />
+    </ThemeProvider>,
+    { wrapper: RouterAndAlertWrapper },
+  )
 
-  fireEvent.click(screen.getByTestId('open-drawer-button'))
-  expect(screen.getByTestId('app-drawer')).toHaveAttribute('data-open', 'true')
+  await user.click(screen.getByRole('button', { name: 'Notifications' }))
 
-  isMobile = false
-  rerender(<AppLayout />)
-  expect(screen.getByTestId('app-drawer')).toHaveAttribute('data-open', 'true')
-  expect(screen.getByTestId('app-drawer')).toHaveClass('MuiDrawer-docked')
+  expect(screen.getByRole('alert')).toHaveTextContent(
+    'Notifications are not configured in this template.',
+  )
 })
