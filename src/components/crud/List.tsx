@@ -26,13 +26,11 @@ const List: React.FC<ListProps> = ({
   }
 
   const columns: GridColDef[] = [
-    ...schema.map(
-      ({ label, name }: FormField): GridColDef => ({
-        field: name,
-        flex: 1,
-        headerName: toTitleCase(label || name),
-      }),
-    ),
+    ...schema.map(({ label, name }: FormField): GridColDef => ({
+      field: name,
+      flex: 1,
+      headerName: toTitleCase(label || name),
+    })),
     {
       field: 'action',
       headerName: 'Action',

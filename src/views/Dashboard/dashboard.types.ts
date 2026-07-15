@@ -1,10 +1,6 @@
 export type DashboardStatusTone = 'ready' | 'configured' | 'example'
 export type DashboardTone =
-  | 'primary'
-  | 'violet'
-  | 'success'
-  | 'warning'
-  | 'info'
+  'primary' | 'violet' | 'success' | 'warning' | 'info'
 
 export interface DashboardRecord {
   id: string
