@@ -79,7 +79,7 @@
     "react-hook-form": "^7.81.0",
     "react-router-dom": "^7.16.0",
     "uswds": "^2.14.0",
-    "uuid": "^14.0.0",
+    "uuid": "^14.0.1",
     "yup": "^1.7.1"
   },
   "devDependencies": {
