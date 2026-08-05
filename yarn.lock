@@ -4481,21 +4481,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-links@npm:^10.4.6":
-  version: 10.4.6
-  resolution: "@storybook/addon-links@npm:10.4.6"
+"@storybook/addon-links@npm:^10.5.0":
+  version: 10.5.0
+  resolution: "@storybook/addon-links@npm:10.5.0"
   dependencies:
     "@storybook/global": "npm:^5.0.0"
   peerDependencies:
     "@types/react": ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-    storybook: ^10.4.6
+    storybook: ^10.5.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
     react:
       optional: true
-  checksum: 10/109e09c01cb56da47e0749746b456e838b22c2d40b9dfc3c157559109e5024a243e43ca82a8a21d777bc3a713ee748b2349d4ea1941be9dfe4e3400ed476fdf2
+  checksum: 10/808ccba56b1cdd47afd9761e9fc7ea8bd9ba68c0ac47046741f61ebde5d04beff7f7bfba740c81254dfa96eb5f5f7d4be8160c5991d671bdb9170bb97e2079bc
   languageName: node
   linkType: hard
 
@@ -14646,7 +14646,7 @@ __metadata:
     "@semantic-release/npm": "npm:^13.1.5"
     "@semantic-release/release-notes-generator": "npm:^14.1.1"
     "@storybook/addon-docs": "npm:^10.4.6"
-    "@storybook/addon-links": "npm:^10.4.6"
+    "@storybook/addon-links": "npm:^10.5.0"
     "@storybook/react": "npm:^10.4.6"
     "@storybook/react-vite": "npm:^10.4.2"
     "@swc/core": "npm:^1.15.43"
