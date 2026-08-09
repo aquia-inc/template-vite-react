@@ -73,7 +73,7 @@
     "react": "^19.2.8",
     "react-animate-height": "^3.2.4",
     "react-cookie": "^8.1.2",
-    "react-dom": "^19.2.7",
+    "react-dom": "^19.2.8",
     "react-dropzone": "^15.0.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.81.0",
