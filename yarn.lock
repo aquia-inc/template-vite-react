@@ -1548,6 +1548,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emnapi/core@npm:2.0.0-alpha.3":
+  version: 2.0.0-alpha.3
+  resolution: "@emnapi/core@npm:2.0.0-alpha.3"
+  dependencies:
+    "@emnapi/wasi-threads": "npm:2.0.1"
+    tslib: "npm:^2.4.0"
+  checksum: 10/cd71d0af78c858daf14d378d960922ac9a00e108401c76d852fe467916fd5ac8d5575303a14c73d24eaed8dc626464f2a29f2905542b9a457e4b90a6ed519008
+  languageName: node
+  linkType: hard
+
 "@emnapi/runtime@npm:1.10.0, @emnapi/runtime@npm:^1.4.3":
   version: 1.10.0
   resolution: "@emnapi/runtime@npm:1.10.0"
@@ -1575,6 +1585,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emnapi/runtime@npm:2.0.0-alpha.3":
+  version: 2.0.0-alpha.3
+  resolution: "@emnapi/runtime@npm:2.0.0-alpha.3"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  checksum: 10/f5acb0f51e225b18f4aba6223016e3628d23a05f90ef4be11f7a25b09e0c8b285350f095818e087946945b696127286a50a57f7aaf94d420e6116f5e2101c531
+  languageName: node
+  linkType: hard
+
 "@emnapi/wasi-threads@npm:1.2.1":
   version: 1.2.1
   resolution: "@emnapi/wasi-threads@npm:1.2.1"
@@ -1590,6 +1609,15 @@ __metadata:
   dependencies:
     tslib: "npm:^2.4.0"
   checksum: 10/297fb6b1d89744bd0b41d5fec32bade05dc8dcf1f70eba86527226609fb3f6ad3fa96b3b2377b7449709715b3bd1569654c9def1dbbc85fb6b9cb0cff5bc5ebf
+  languageName: node
+  linkType: hard
+
+"@emnapi/wasi-threads@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@emnapi/wasi-threads@npm:2.0.1"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  checksum: 10/91dbd7d2ec4ebe01e0e889d9d4d6b79a2a3180ed61e2bdc537c2f7dcb026ac2f8d54126a0966bbcf6fc714f834638d40462c6c9a9bcfb35ee2a7b9897cd06877
   languageName: node
   linkType: hard
 
@@ -2769,6 +2797,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@napi-rs/wasm-runtime@npm:~1.2.2":
+  version: 1.2.3
+  resolution: "@napi-rs/wasm-runtime@npm:1.2.3"
+  dependencies:
+    "@tybys/wasm-util": "npm:^0.10.3"
+  peerDependencies:
+    "@emnapi/core": ^1.7.1 || ^2.0.0-alpha.4
+    "@emnapi/runtime": ^1.7.1 || ^2.0.0-alpha.4
+  checksum: 10/86f7f092309eb005ff9e456c12a9f81ae06ff823602740a8c9c54b2dfc17620d9b4d88c4cd179541c794aed521ac57c7e37457a00e87a624867d78f6bbce0d7c
+  languageName: node
+  linkType: hard
+
 "@nodable/entities@npm:2.1.0, @nodable/entities@npm:^2.1.0":
   version: 2.1.0
   resolution: "@nodable/entities@npm:2.1.0"
@@ -3682,15 +3722,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rolldown/binding-wasm32-wasi@npm:1.1.5, @rolldown/binding-wasm32-wasi@npm:^1.1.5":
+"@rolldown/binding-wasm32-wasi@npm:1.1.5":
   version: 1.1.5
   resolution: "@rolldown/binding-wasm32-wasi@npm:1.1.5"
   dependencies:
     "@emnapi/core": "npm:1.11.1"
     "@emnapi/runtime": "npm:1.11.1"
     "@napi-rs/wasm-runtime": "npm:^1.1.6"
-  checksum: 10/76b5952fff32a964a5e2f2a470e2562e641736e5f726fbdbe26ec3344816526c19681fda0a4b8b730be4e802513aac9c8f5a167698211ace023bfaa553be6a93
   conditions: cpu=wasm32
+  languageName: node
+  linkType: hard
+
+"@rolldown/binding-wasm32-wasi@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "@rolldown/binding-wasm32-wasi@npm:1.2.3"
+  dependencies:
+    "@emnapi/core": "npm:2.0.0-alpha.3"
+    "@emnapi/runtime": "npm:2.0.0-alpha.3"
+    "@napi-rs/wasm-runtime": "npm:~1.2.2"
+  checksum: 10/30b4cc63054603c298238c17114b47058fc19f7f564094307c3cba1068509a5b70e5694eaeaff3dbb6f047bd2af5a66fa01076b9a7c0b4383eab3b1ed3db87a2
   languageName: node
   linkType: hard
 
@@ -14756,7 +14806,7 @@ __metadata:
     "@mui/x-data-grid": "npm:^9.9.0"
     "@playwright/test": "npm:^1.61.1"
     "@popperjs/core": "npm:^2.11.8"
-    "@rolldown/binding-wasm32-wasi": "npm:^1.1.5"
+    "@rolldown/binding-wasm32-wasi": "npm:^1.2.3"
     "@semantic-release/changelog": "npm:^6.0.3"
     "@semantic-release/commit-analyzer": "npm:^13.0.1"
     "@semantic-release/github": "npm:^12.0.9"
