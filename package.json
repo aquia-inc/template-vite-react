@@ -97,7 +97,7 @@
     "@storybook/addon-docs": "10.6.5",
     "@storybook/addon-links": "10.6.5",
     "@storybook/react": "10.6.5",
-    "@storybook/react-vite": "10.6.5",
+    "@storybook/react-vite": "10.6.8",
     "@swc/core": "^1.16.21",
     "@swc/jest": "^0.2.39",
     "@testing-library/dom": "^10.4.2",
